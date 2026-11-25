@@ -1,0 +1,1106 @@
+<!-- ... existing code ... -->
+            <!-- Right Controls: Sync Status, Timer & Theme -->
+            <div class="flex items-center gap-2 sm:gap-2.5">
+                <!-- Cloud Sync Status Pill -->
+                <button onclick="openSyncModal()" id="sync-status-btn" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer" title="Thiết lập tự động đồng bộ giữa máy tính và điện thoại">
+                    <span id="sync-indicator-dot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+                    <span id="sync-status-text" class="truncate max-w-[110px] sm:max-w-[170px]">⚙️ Thiết lập đồng bộ</span>
+                </button>
+
+                <div class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-semibold" title="Thời gian học phiên hôm nay">
+                    <i data-lucide="timer" class="w-3.5 h-3.5"></i>
+                    <span id="session-timer">00:00</span> / 15:00
+                </div>
+                <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" title="Đổi giao diện Sáng/Tối">
+                    <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
+                    <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+<!-- ... existing code ... -->
+                            <!-- SRS 4 Rating Buttons -->
+                            <div class="pt-2">
+                                <p class="text-center text-xs text-slate-400 mb-2.5">Đánh giá mức độ ghi nhớ của bạn (Phím tắt 1 - 4):</p>
+                                <div class="grid grid-cols-4 gap-2 sm:gap-3">
+                                    <button onclick="rateCard(1)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-red-50 hover:bg-red-100 active:scale-95 dark:bg-red-950/40 dark:hover:bg-red-900/60 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-300 transition-all cursor-pointer">
+                                        <span class="font-bold text-xs sm:text-sm">1. Quên</span>
+                                        <span id="interval-1" class="text-[11px] opacity-80 mt-0.5">1 phút</span>
+                                    </button>
+                                    <button onclick="rateCard(2)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-amber-50 hover:bg-amber-100 active:scale-95 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 transition-all cursor-pointer">
+                                        <span class="font-bold text-xs sm:text-sm">2. Khó</span>
+                                        <span id="interval-2" class="text-[11px] opacity-80 mt-0.5">12 giờ</span>
+                                    </button>
+                                    <button onclick="rateCard(3)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 active:scale-95 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 transition-all cursor-pointer">
+                                        <span class="font-bold text-xs sm:text-sm">3. Tốt</span>
+                                        <span id="interval-3" class="text-[11px] opacity-80 mt-0.5">1 ngày</span>
+                                    </button>
+                                    <button onclick="rateCard(4)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-blue-50 hover:bg-blue-100 active:scale-95 dark:bg-blue-950/40 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 transition-all cursor-pointer">
+                                        <span class="font-bold text-xs sm:text-sm">4. Dễ</span>
+                                        <span id="interval-4" class="text-[11px] opacity-80 mt-0.5">4 ngày</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+<!-- ... existing code ... -->
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="openAddCardModal()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Thêm thẻ mới
+                        </button>
+                        <button onclick="exportData()" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs sm:text-sm font-medium flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="download" class="w-4 h-4"></i> Xuất JSON
+                        </button>
+                        <label class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs sm:text-sm font-medium flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="upload" class="w-4 h-4"></i> Nhập JSON
+                            <input type="file" accept=".json" onchange="importData(event)" class="hidden">
+                        </label>
+                    </div>
+                </div>
+<!-- ... existing code ... -->
+    <!-- ==================== MODAL: CLOUD SYNC SETTINGS ==================== -->
+    <div id="sync-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-lg flex items-center gap-2">
+                        <i data-lucide="cloud" class="w-5 h-5 text-emerald-500"></i>
+                        Tự động Đồng bộ Đám mây (2 Thiết bị)
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Tự động lưu sau mỗi thao tác (300ms) và tải dữ liệu mới nhất khi mở web.</p>
+                </div>
+                <button onclick="closeSyncModal()" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Sync Provider Selector -->
+            <div class="grid grid-cols-2 gap-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-800">
+                <button type="button" onclick="selectSyncProvider('firebase')" id="btn-provider-firebase" class="py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer">
+                    1. Firebase URL (Khuyên dùng)
+                </button>
+                <button type="button" onclick="selectSyncProvider('gist')" id="btn-provider-gist" class="py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer">
+                    2. GitHub Token (Gist)
+                </button>
+            </div>
+
+            <!-- Option 1: Firebase Realtime Database -->
+            <div id="sync-panel-firebase" class="space-y-3 text-sm">
+                <div class="p-3 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/70 dark:border-emerald-800/40 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                    <p class="font-bold text-emerald-800 dark:text-emerald-300">Thiết lập 1 lần dùng vĩnh viễn (Miễn phí):</p>
+                    <p>1. Vào <strong>console.firebase.google.com</strong> → Tạo dự án → Chọn <strong>Realtime Database</strong> (chế độ Test Mode).</p>
+                    <p>2. Dán đường link Database URL vào ô bên dưới trên cả Máy tính và Điện thoại.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Firebase Realtime Database URL *</label>
+                    <input type="url" id="sync-firebase-url" placeholder="https://ten-du-an-default-rtdb.asia-southeast1.firebasedatabase.app" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Mã định danh cá nhân (Sync Key)</label>
+                    <input type="text" id="sync-firebase-key" value="hanngu_loc_2y" placeholder="hanngu_loc_2y" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+            </div>
+
+            <!-- Option 2: GitHub Personal Access Token (Gist) -->
+            <div id="sync-panel-gist" class="hidden space-y-3 text-sm">
+                <div class="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/20 border border-blue-200/70 dark:border-blue-800/40 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                    <p class="font-bold text-blue-800 dark:text-blue-300">Dùng chính tài khoản GitHub của bạn:</p>
+                    <p>Tạo <strong>Personal Access Token (Classic)</strong> với duy nhất quyền tích chọn là <code class="px-1 py-0.5 bg-white dark:bg-slate-800 rounded">gist</code>. Ứng dụng sẽ tự tạo một Secret Gist ẩn tên <code>hanngu_pro_2y_data.json</code> để đồng bộ.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">GitHub Personal Access Token *</label>
+                    <input type="password" id="sync-github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Gist ID (Tự động điền sau lần đầu đồng bộ)</label>
+                    <input type="text" id="sync-github-gist-id" placeholder="Để trống để tự động tìm/tạo mới" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+            </div>
+
+            <!-- Daily Goal Quick Setting -->
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-bold block">Mục tiêu thẻ mới mỗi ngày</span>
+                    <span class="text-[11px] text-slate-400">Mặc định 8 từ/ngày (~12-15 phút)</span>
+                </div>
+                <input type="number" id="setting-daily-new" min="3" max="30" value="8" class="w-20 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-center">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                <button type="button" onclick="manualSyncNow()" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Đồng bộ ngay
+                </button>
+                <div class="flex gap-2">
+                    <button type="button" onclick="disconnectSync()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer">Ngắt kết nối</button>
+                    <button type="button" onclick="saveSyncSettings()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm cursor-pointer">Lưu & Kết nối</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // 1. KHO DỮ LIỆU TỪ VỰNG KHỞI ĐẦU (45 THẺ CHUẨN HÁN VIỆT & CHIẾT TỰ LOGIC)
+        // ============================================================================
+        const INITIAL_VOCABULARY = [
+// ... existing code ...
+            {
+                id: "v40", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "潜移默化", pinyin: "qián yí mò huà", tones: [2, 2, 4, 4], hanviet: "TIỀM DI MẶC HÓA", meaning: "Thay đổi một cách âm thầm, tự nhiên mà sâu sắc",
+                hint: "Thành ngữ HSK 6 mô tả sự thẩm thấu ngôn ngữ",
+                etymology: "潜 (Tiềm - ngầm, sâu) + 移 (Di - dịch chuyển) + 默 (Mặc - im lặng) + 化 (Hóa - chuyển hóa). Sự biến đổi âm thầm qua tích lũy hằng ngày.",
+                exZh: "每天的阅读对思维有潜移默化的影响。", exPy: "Měitiān de yuèdú duì sīwéi yǒu qiányí-mòhuà de yǐngxiǎng.", exVi: "Việc đọc mỗi ngày có ảnh hưởng thẩm thấu âm thầm đến tư duy."
+            },
+            {
+                id: "v41", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "综合", pinyin: "zōng hé", tones: [1, 2], hanviet: "TỔNG HỢP", meaning: "Tổng hợp, toàn diện",
+                hint: "Từ vựng học thuật dùng trong đánh giá, phân tích",
+                etymology: "综 (Tổng - gom các sợi tơ lại, có bộ Mịch 纟) + 合 (Hợp - gộp chung lại). Gom nhiều yếu tố lại để đánh giá toàn diện.",
+                exZh: "我们需要综合考虑各方面的因素。", exPy: "Wǒmen xūyào zōnghé kǎolǜ gè fāngmiàn de yīnsù.", exVi: "Chúng ta cần xem xét tổng hợp các yếu tố từ mọi khía cạnh."
+            },
+            {
+                id: "v42", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "趋势", pinyin: "qū shì", tones: [1, 4], hanviet: "XU THẾ", meaning: "Xu thế, xu hướng phát triển",
+                hint: "Xu (hướng tới) + Thế (thế lực, tình hình)",
+                etymology: "趋 (Xu - chạy nhanh về một hướng, có bộ Tẩu 走) + 势 (Thế - tình thế, sức mạnh). Chiều hướng vận động tất yếu.",
+                exZh: "人工智能是未来发展的重要趋势。", exPy: "Réngōng zhìnéng shì wèilái fāzhǎn de zhòngyào qūshì.", exVi: "Trí tuệ nhân tạo là xu thế quan trọng của sự phát triển tương lai."
+            },
+            {
+                id: "v43", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "显著", pinyin: "xiǎn zhù", tones: [3, 4], hanviet: "HIỂN TRỨ", meaning: "Rõ rệt, đáng kể, nổi bật",
+                hint: "Tính từ học thuật tương đương 'significant' trong IELTS 7.0",
+                etymology: "显 (Hiển - hiện rõ ra ngoài) + 著 (Trứ - nổi bật, rõ ràng). Hiệu quả thể hiện rõ rệt, dễ nhận thấy.",
+                exZh: "坚持两年后，他的中文水平有了显著提高。", exPy: "Jiānchí liǎng nián hòu, tā de Zhōngwén shuǐpíng yǒule xiǎnzhù tígāo.", exVi: "Sau 2 năm kiên trì, trình độ tiếng Trung của anh ấy đã nâng cao rõ rệt."
+            },
+            {
+                id: "v44", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "权衡", pinyin: "quán héng", tones: [2, 2], hanviet: "QUYỀN HÀNH", meaning: "Cân nhắc, đong đếm thiệt hơn",
+                hint: "Động từ cấp cao trong ra quyết định",
+                etymology: "权 (Quyền - quả cân) + 衡 (Hành - đòn cân). Dùng cân để đo lường nặng nhẹ → cân nhắc lợi hại trước khi quyết định.",
+                exZh: "在做决定之前，必须权衡利弊。", exPy: "Zài zuò juédìng zhīqián, bìxū quánhéng lìbì.", exVi: "Trước khi đưa ra quyết định, bắt buộc phải cân nhắc lợi hại."
+            },
+            {
+                id: "v45", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "融会贯通", pinyin: "róng huì guàn tōng", tones: [2, 4, 4, 1], hanviet: "DUNG HỘI QUÁN THÔNG", meaning: "Hiểu thấu đáo và vận dụng linh hoạt mọi kiến thức",
+                hint: "Thành ngữ đỉnh cao của việc học tập",
+                etymology: "融 (Dung - hòa tan) + 会 (Hội - hội tụ) + 贯 (Quán - xuyên suốt) + 通 (Thông - thông suốt). Hòa quyện và thông suốt toàn bộ hệ thống kiến thức.",
+                exZh: "把新旧知识融会贯通，才能真正掌握一门语言。", exPy: "Bǎ xīn-jiù zhīshi rónghuì-guàntōng, cáinéng zhēnzhèng zhǎngwò yì mén yǔyán.", exVi: "Hòa quyện thông suốt kiến thức mới và cũ mới có thể thực sự làm chủ một ngôn ngữ."
+            }
+        ];
+
+        // ============================================================================
+        // 2. STATE MANAGEMENT, LOCALSTORAGE & AUTO CLOUD SYNC ENGINE
+        // ============================================================================
+        const STORAGE_KEY = 'hanngu_pro_2y_data_v1';
+        const SYNC_CONFIG_KEY = 'hanngu_pro_2y_sync_cfg_v1';
+
+        let appState = {
+            vocab: [],
+            srsProgress: {}, // { cardId: { reps, interval, easeFactor, dueDate, status } }
+            stats: {
+                streak: 1,
+                lastStudyDate: null,
+                dailyHistory: {}, // { 'YYYY-MM-DD': count }
+                totalReviews: 0,
+                correctReviews: 0
+            },
+            dailyNewLimit: 8,
+            selectedDeck: 'all',
+            theme: 'light',
+            lastUpdated: 0
+        };
+
+        let syncConfig = {
+            enabled: false,
+            provider: 'firebase', // 'firebase' | 'gist'
+            firebaseUrl: '',
+            firebaseKey: 'hanngu_loc_2y',
+            githubToken: '',
+            gistId: ''
+        };
+
+        let syncDebounceTimer = null;
+        let isSyncing = false;
+        let studyQueue = [];
+        let currentCard = null;
+        let isCardRevealed = false;
+        let sessionSeconds = 0;
+        let timerInterval = null;
+        let hanziWriters = [];
+
+        function getTodayStr() {
+            const d = new Date();
+            return d.toISOString().split('T')[0];
+        }
+
+        function applyTheme(theme) {
+            const htmlEl = document.documentElement;
+            if (theme === 'dark') {
+                htmlEl.classList.add('dark');
+            } else {
+                htmlEl.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+            applyTheme(appState.theme);
+            saveAppState(true);
+        }
+
+        function checkStreak() {
+            const today = getTodayStr();
+            const last = appState.stats.lastStudyDate;
+            if (!last) {
+                appState.stats.streak = 1;
+                return;
+            }
+            const lastDate = new Date(last);
+            const todayDate = new Date(today);
+            const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+            if (diffDays > 1) {
+                appState.stats.streak = 0;
+            }
+        }
+
+        function loadAppState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    appState = { ...appState, ...parsed };
+                    const existingIds = new Set(appState.vocab.map(v => v.id));
+                    INITIAL_VOCABULARY.forEach(item => {
+                        if (!existingIds.has(item.id)) {
+                            appState.vocab.push(item);
+                        }
+                    });
+                } else {
+                    appState.vocab = [...INITIAL_VOCABULARY];
+                    appState.lastUpdated = Date.now();
+                }
+            } catch (e) {
+                console.error("Lỗi đọc dữ liệu cục bộ:", e);
+                appState.vocab = [...INITIAL_VOCABULARY];
+            }
+            applyTheme(appState.theme);
+            checkStreak();
+        }
+
+        function saveAppState(triggerCloud = true) {
+            try {
+                appState.lastUpdated = Date.now();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+                if (triggerCloud && syncConfig.enabled) {
+                    scheduleCloudPush();
+                }
+            } catch (e) {
+                console.error("Lỗi lưu dữ liệu cục bộ:", e);
+            }
+        }
+
+        // ============================================================================
+        // 3. AUTO CLOUD SYNC ENGINE (FIREBASE & GITHUB GIST)
+        // ============================================================================
+        function loadSyncConfig() {
+            try {
+                const raw = localStorage.getItem(SYNC_CONFIG_KEY);
+                if (raw) {
+                    syncConfig = { ...syncConfig, ...JSON.parse(raw) };
+                }
+            } catch (e) {
+                console.error("Lỗi đọc cấu hình đồng bộ:", e);
+            }
+            updateSyncStatusUI();
+        }
+
+        function saveSyncConfigToLocal() {
+            localStorage.setItem(SYNC_CONFIG_KEY, JSON.stringify(syncConfig));
+        }
+
+        function updateSyncStatusUI(customText = null, state = 'idle') {
+            const dot = document.getElementById('sync-indicator-dot');
+            const text = document.getElementById('sync-status-text');
+            if (!dot || !text) return;
+
+            if (!syncConfig.enabled) {
+                dot.className = "w-2 h-2 rounded-full bg-slate-400";
+                text.textContent = "⚙️ Thiết lập đồng bộ";
+                return;
+            }
+
+            if (state === 'syncing') {
+                dot.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
+                text.textContent = customText || "🔄 Đang đồng bộ...";
+            } else if (state === 'error') {
+                dot.className = "w-2 h-2 rounded-full bg-red-500";
+                text.textContent = customText || "⚠️ Lỗi đồng bộ";
+            } else {
+                dot.className = "w-2 h-2 rounded-full bg-emerald-500";
+                const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                text.textContent = customText || `☁️ Đã lưu ${timeStr}`;
+            }
+        }
+
+        function scheduleCloudPush() {
+            if (!syncConfig.enabled) return;
+            updateSyncStatusUI("🔄 Đang đồng bộ...", "syncing");
+            clearTimeout(syncDebounceTimer);
+            syncDebounceTimer = setTimeout(() => {
+                pushToCloud();
+            }, 300);
+        }
+
+        async function pushToCloud() {
+            if (!syncConfig.enabled || isSyncing) return;
+            isSyncing = true;
+            try {
+                if (syncConfig.provider === 'firebase' && syncConfig.firebaseUrl) {
+                    const baseUrl = syncConfig.firebaseUrl.replace(/\/$/, '');
+                    const key = (syncConfig.firebaseKey || 'hanngu_loc_2y').replace(/[^a-zA-Z0-9_-]/g, '');
+                    const res = await fetch(`${baseUrl}/users/${key}.json`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(appState)
+                    });
+                    if (!res.ok) throw new Error("Firebase PUT thất bại");
+                } else if (syncConfig.provider === 'gist' && syncConfig.githubToken) {
+                    const headers = {
+                        'Authorization': `token ${syncConfig.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    };
+                    const payload = {
+                        description: "HánNgữPro 2Y - Dữ liệu học tập đồng bộ tự động",
+                        public: false,
+                        files: {
+                            "hanngu_pro_2y_data.json": {
+                                content: JSON.stringify(appState, null, 2)
+                            }
+                        }
+                    };
+                    if (syncConfig.gistId) {
+                        const res = await fetch(`https://api.github.com/gists/${syncConfig.gistId}`, {
+                            method: 'PATCH',
+                            headers,
+                            body: JSON.stringify(payload)
+                        });
+                        if (!res.ok) throw new Error("Cập nhật Gist thất bại");
+                    } else {
+                        const res = await fetch(`https://api.github.com/gists`, {
+                            method: 'POST',
+                            headers,
+                            body: JSON.stringify(payload)
+                        });
+                        if (!res.ok) throw new Error("Tạo Gist mới thất bại");
+                        const data = await res.json();
+                        syncConfig.gistId = data.id;
+                        saveSyncConfigToLocal();
+                    }
+                }
+                updateSyncStatusUI(null, "success");
+            } catch (err) {
+                console.error("Cloud push error:", err);
+                updateSyncStatusUI("⚠️ Lỗi đồng bộ", "error");
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        async function pullFromCloud(forceOverwrite = false) {
+            if (!syncConfig.enabled || isSyncing) return;
+            isSyncing = true;
+            updateSyncStatusUI("🔄 Đang kiểm tra...", "syncing");
+            try {
+                let cloudData = null;
+                if (syncConfig.provider === 'firebase' && syncConfig.firebaseUrl) {
+                    const baseUrl = syncConfig.firebaseUrl.replace(/\/$/, '');
+                    const key = (syncConfig.firebaseKey || 'hanngu_loc_2y').replace(/[^a-zA-Z0-9_-]/g, '');
+                    const res = await fetch(`${baseUrl}/users/${key}.json`);
+                    if (res.ok) cloudData = await res.json();
+                } else if (syncConfig.provider === 'gist' && syncConfig.githubToken) {
+                    const headers = {
+                        'Authorization': `token ${syncConfig.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    };
+                    if (!syncConfig.gistId) {
+                        const listRes = await fetch(`https://api.github.com/gists`, { headers });
+                        if (listRes.ok) {
+                            const gists = await listRes.json();
+                            const found = gists.find(g => g.files && g.files["hanngu_pro_2y_data.json"]);
+                            if (found) {
+                                syncConfig.gistId = found.id;
+                                saveSyncConfigToLocal();
+                            }
+                        }
+                    }
+                    if (syncConfig.gistId) {
+                        const res = await fetch(`https://api.github.com/gists/${syncConfig.gistId}`, { headers });
+                        if (res.ok) {
+                            const gistObj = await res.json();
+                            const fileObj = gistObj.files["hanngu_pro_2y_data.json"];
+                            if (fileObj && fileObj.content) {
+                                cloudData = JSON.parse(fileObj.content);
+                            }
+                        }
+                    }
+                }
+
+                if (cloudData && cloudData.lastUpdated) {
+                    if (forceOverwrite || cloudData.lastUpdated > (appState.lastUpdated || 0)) {
+                        appState = { ...appState, ...cloudData };
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+                        applyTheme(appState.theme);
+                        refreshAllUI();
+                        showToast("☁️ Đã tải dữ liệu mới nhất từ đám mây!");
+                    } else if ((appState.lastUpdated || 0) > cloudData.lastUpdated) {
+                        isSyncing = false;
+                        await pushToCloud();
+                        return;
+                    }
+                } else if (appState.vocab.length > 0) {
+                    isSyncing = false;
+                    await pushToCloud();
+                    return;
+                }
+                updateSyncStatusUI(null, "success");
+            } catch (err) {
+                console.error("Cloud pull error:", err);
+                updateSyncStatusUI("⚠️ Lỗi tải dữ liệu", "error");
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        // ============================================================================
+        // 4. THUẬT TOÁN SRS (SM-2) & XÂY DỰNG HÀNG ĐỢI HỌC TẬP
+        // ============================================================================
+        function calculateNextSRS(cardId, quality) {
+            const now = Date.now();
+            const current = appState.srsProgress[cardId] || {
+                reps: 0,
+                interval: 0,
+                easeFactor: 2.5,
+                dueDate: now,
+                status: 'new'
+            };
+
+            let { reps, interval, easeFactor } = current;
+            let status = 'learning';
+
+            if (quality === 1) {
+                reps = 0;
+                interval = 1 / (24 * 60); // 1 phút
+                easeFactor = Math.max(1.3, easeFactor - 0.2);
+                status = 'learning';
+            } else if (quality === 2) {
+                if (reps === 0) interval = 0.5;
+                else interval = Math.max(1, interval * 1.2);
+                easeFactor = Math.max(1.3, easeFactor - 0.15);
+                reps += 1;
+                status = interval >= 21 ? 'mastered' : 'learning';
+            } else if (quality === 3) {
+                if (reps === 0) interval = 1;
+                else if (reps === 1) interval = 3;
+                else interval = Math.round(interval * easeFactor);
+                reps += 1;
+                status = interval >= 21 ? 'mastered' : 'learning';
+            } else if (quality === 4) {
+                if (reps === 0) interval = 4;
+                else if (reps === 1) interval = 7;
+                else interval = Math.round(interval * easeFactor * 1.3);
+                easeFactor += 0.15;
+                reps += 1;
+                status = interval >= 21 ? 'mastered' : 'learning';
+            }
+
+            const dueDate = now + interval * 24 * 60 * 60 * 1000;
+            return { reps, interval, easeFactor, dueDate, status };
+        }
+
+        function formatIntervalLabel(days) {
+            if (days < 1 / 24) return `${Math.max(1, Math.round(days * 24 * 60))} phút`;
+            if (days < 1) return `${Math.round(days * 24)} giờ`;
+            if (days < 30) return `${Math.round(days)} ngày`;
+            return `${(days / 30).toFixed(1)} tháng`;
+        }
+
+        function buildStudyQueue() {
+            const now = Date.now();
+            const deckFilter = appState.selectedDeck;
+            const filteredVocab = deckFilter === 'all'
+                ? appState.vocab
+                : appState.vocab.filter(v => v.lesson === deckFilter);
+
+            const dueCards = [];
+            const newCards = [];
+
+            filteredVocab.forEach(card => {
+                const prog = appState.srsProgress[card.id];
+                if (!prog) {
+                    newCards.push({ ...card, queueType: 'new' });
+                } else if (prog.dueDate <= now) {
+                    dueCards.push({ ...card, queueType: 'due' });
+                }
+            });
+
+            const todayStr = getTodayStr();
+            const reviewedToday = appState.stats.dailyHistory[todayStr] || 0;
+            const remainingNewQuota = Math.max(0, (appState.dailyNewLimit || 8) - Math.min(reviewedToday, appState.dailyNewLimit || 8));
+            const selectedNew = newCards.slice(0, remainingNewQuota || Math.min(newCards.length, appState.dailyNewLimit || 8));
+
+            studyQueue = [...dueCards, ...selectedNew];
+            updateHeaderStats();
+        }
+
+        // ============================================================================
+        // 5. HIỂN THỊ THẺ FLASHCARD, ÂM THANH & MÔ PHỎNG NÉT VIẾT
+        // ============================================================================
+        function renderCurrentCard() {
+            const cardContainer = document.getElementById('flashcard-container');
+            const emptyState = document.getElementById('session-complete-state');
+            const frontPanel = document.getElementById('card-front');
+            const backPanel = document.getElementById('card-back');
+            const strokeBox = document.getElementById('stroke-order-box');
+
+            if (strokeBox) strokeBox.classList.add('hidden');
+            isCardRevealed = false;
+
+            if (studyQueue.length === 0) {
+                if (cardContainer) cardContainer.classList.add('hidden');
+                if (emptyState) emptyState.classList.remove('hidden');
+                return;
+            }
+
+            if (cardContainer) cardContainer.classList.remove('hidden');
+            if (emptyState) emptyState.classList.add('hidden');
+            if (frontPanel) frontPanel.classList.remove('hidden');
+            if (backPanel) backPanel.classList.add('hidden');
+
+            currentCard = studyQueue[0];
+
+            // Cập nhật thông tin mặt trước
+            const badgeEl = document.getElementById('card-type-badge');
+            if (badgeEl) {
+                badgeEl.textContent = currentCard.queueType === 'new' ? 'Từ mới' : 'Cần ôn tập';
+                badgeEl.className = currentCard.queueType === 'new'
+                    ? 'px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300'
+                    : 'px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300';
+            }
+
+            const levelEl = document.getElementById('card-level-badge');
+            if (levelEl) levelEl.textContent = `${currentCard.level} • ${currentCard.lesson.split(':')[0]}`;
+
+            const hanziFront = document.getElementById('card-hanzi-front');
+            if (hanziFront) hanziFront.textContent = currentCard.hanzi;
+
+            const hintEl = document.getElementById('card-hint-text');
+            if (hintEl) hintEl.textContent = currentCard.hint || '';
+
+            // Cập nhật thông tin mặt sau
+            const hanziBack = document.getElementById('card-hanzi-back');
+            if (hanziBack) hanziBack.textContent = currentCard.hanzi;
+
+            const pinyinBack = document.getElementById('card-pinyin-back');
+            if (pinyinBack) pinyinBack.innerHTML = renderToneColoredPinyin(currentCard.pinyin, currentCard.tones);
+
+            const hanvietBack = document.getElementById('card-hanviet-back');
+            if (hanvietBack) hanvietBack.textContent = currentCard.hanviet;
+
+            const meaningBack = document.getElementById('card-meaning-back');
+            if (meaningBack) meaningBack.textContent = currentCard.meaning;
+
+            const etymologyBack = document.getElementById('card-etymology-back');
+            if (etymologyBack) etymologyBack.textContent = currentCard.etymology;
+
+            const exZh = document.getElementById('card-example-zh');
+            if (exZh) exZh.textContent = currentCard.exZh;
+
+            const exPy = document.getElementById('card-example-py');
+            if (exPy) exPy.textContent = currentCard.exPy;
+
+            const exVi = document.getElementById('card-example-vi');
+            if (exVi) exVi.textContent = currentCard.exVi;
+
+            // Dự đoán khoảng thời gian cho 4 nút SRS
+            [1, 2, 3, 4].forEach(q => {
+                const sim = calculateNextSRS(currentCard.id, q);
+                const lbl = document.getElementById(`interval-${q}`);
+                if (lbl) lbl.textContent = formatIntervalLabel(sim.interval);
+            });
+
+            // Tự động đọc phát âm
+            speakText(currentCard.hanzi, 1.0);
+        }
+
+        function renderToneColoredPinyin(pinyinStr, tones = []) {
+            const syllables = pinyinStr.trim().split(/\s+/);
+            const toneClasses = {
+                1: 'text-rose-600 dark:text-rose-400',
+                2: 'text-emerald-600 dark:text-emerald-400',
+                3: 'text-blue-600 dark:text-blue-400',
+                4: 'text-purple-600 dark:text-purple-400',
+                5: 'text-slate-500 dark:text-slate-400'
+            };
+            return syllables.map((syl, idx) => {
+                const t = tones[idx] || 5;
+                return `<span class="${toneClasses[t] || toneClasses[5]} font-bold">${syl}</span>`;
+            }).join(' ');
+        }
+
+        function revealCard() {
+            if (!currentCard || isCardRevealed) return;
+            isCardRevealed = true;
+            const frontPanel = document.getElementById('card-front');
+            const backPanel = document.getElementById('card-back');
+            if (frontPanel) frontPanel.classList.add('hidden');
+            if (backPanel) backPanel.classList.remove('hidden');
+        }
+
+        function rateCard(quality) {
+            if (!currentCard || !isCardRevealed) return;
+
+            const nextSRS = calculateNextSRS(currentCard.id, quality);
+            appState.srsProgress[currentCard.id] = nextSRS;
+
+            const today = getTodayStr();
+            appState.stats.dailyHistory[today] = (appState.stats.dailyHistory[today] || 0) + 1;
+            appState.stats.totalReviews += 1;
+            if (quality >= 3) appState.stats.correctReviews += 1;
+
+            if (appState.stats.lastStudyDate !== today) {
+                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                if (appState.stats.lastStudyDate === yesterday) {
+                    appState.stats.streak += 1;
+                } else {
+                    appState.stats.streak = 1;
+                }
+                appState.stats.lastStudyDate = today;
+            }
+
+            const finishedCard = studyQueue.shift();
+            if (quality === 1) {
+                // Nếu quên, đưa lại vào cuối hàng đợi phiên hiện tại để ôn ngay
+                studyQueue.splice(Math.min(2, studyQueue.length), 0, { ...finishedCard, queueType: 'due' });
+            }
+
+            saveAppState(true);
+            updateHeaderStats();
+            renderCurrentCard();
+        }
+
+        function speakText(text, rate = 1.0) {
+            if (!text || !('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'zh-CN';
+                utter.rate = rate;
+                window.speechSynthesis.speak(utter);
+            } catch (e) {
+                console.warn("Trình duyệt không hỗ trợ đọc giọng nói:", e);
+            }
+        }
+
+        function toggleStrokeOrder() {
+            const box = document.getElementById('stroke-order-box');
+            const target = document.getElementById('hanzi-writer-target');
+            if (!box || !target || !currentCard) return;
+
+            if (!box.classList.contains('hidden')) {
+                box.classList.add('hidden');
+                return;
+            }
+
+            box.classList.remove('hidden');
+            target.innerHTML = '';
+            hanziWriters = [];
+
+            if (typeof HanziWriter === 'undefined') {
+                target.innerHTML = '<p class="text-xs text-slate-400">Đang tải thư viện mô phỏng nét viết...</p>';
+                return;
+            }
+
+            const chars = currentCard.hanzi.split('');
+            chars.forEach((ch, idx) => {
+                const div = document.createElement('div');
+                div.id = `hw-char-${idx}`;
+                div.className = 'inline-block bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-1 shadow-xs';
+                target.appendChild(div);
+
+                const writer = HanziWriter.create(`hw-char-${idx}`, ch, {
+                    width: 84,
+                    height: 84,
+                    padding: 5,
+                    strokeColor: appState.theme === 'dark' ? '#f8fafc' : '#1e293b',
+                    radicalColor: '#e11d48',
+                    showOutline: true,
+                    strokeAnimationSpeed: 1.2,
+                    delayBetweenStrokes: 180
+                });
+                writer.loopCharacterAnimation();
+                hanziWriters.push(writer);
+            });
+        }
+
+        // ============================================================================
+        // 6. CẬP NHẬT THỐNG KÊ, THƯ VIỆN TỪ VỰNG & ĐIỀU HƯỚNG TAB
+        // ============================================================================
+        function switchTab(tabName) {
+            ['study', 'roadmap', 'library'].forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                const btn = document.getElementById(`tab-${t}`);
+                if (view) view.classList.toggle('hidden', t !== tabName);
+                if (btn) {
+                    if (t === tabName) {
+                        btn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow-sm transition-all cursor-pointer";
+                    } else {
+                        btn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer";
+                    }
+                }
+            });
+
+            if (tabName === 'library') renderLibraryTable();
+            if (tabName === 'roadmap') updateRoadmapStats();
+        }
+
+        function updateHeaderStats() {
+            const streakEl = document.getElementById('stat-streak');
+            if (streakEl) streakEl.textContent = `${appState.stats.streak || 0} ngày`;
+
+            const queueEl = document.getElementById('stat-queue-count');
+            if (queueEl) queueEl.textContent = `${studyQueue.length} thẻ`;
+
+            const masteredCount = Object.values(appState.srsProgress).filter(p => p.status === 'mastered').length;
+            const learningCount = Object.values(appState.srsProgress).filter(p => p.status === 'learning').length;
+            const masteredEl = document.getElementById('stat-mastered');
+            if (masteredEl) masteredEl.textContent = `${masteredCount + learningCount} / ${appState.vocab.length}`;
+        }
+
+        function updateRoadmapStats() {
+            const totalLearned = Object.keys(appState.srsProgress).length;
+            const targetTotal = 4500;
+            const pct = Math.min(100, ((totalLearned / targetTotal) * 100)).toFixed(1);
+
+            const bar = document.getElementById('roadmap-progress-bar');
+            if (bar) bar.style.width = `${Math.max(2, pct)}%`;
+
+            const text = document.getElementById('roadmap-progress-text');
+            if (text) text.textContent = `${totalLearned} / ${targetTotal} từ (${pct}%)`;
+        }
+
+        function populateDeckSelector() {
+            const select = document.getElementById('deck-selector');
+            if (!select) return;
+            const lessons = [...new Set(appState.vocab.map(v => v.lesson))];
+            select.innerHTML = `<option value="all">Tất cả bài học (${appState.vocab.length} từ)</option>` +
+                lessons.map(l => `<option value="${l}" ${appState.selectedDeck === l ? 'selected' : ''}>${l}</option>`).join('');
+        }
+
+        function changeDeck(deckValue) {
+            appState.selectedDeck = deckValue;
+            saveAppState(false);
+            buildStudyQueue();
+            renderCurrentCard();
+        }
+
+        function startExtraPractice() {
+            const shuffled = [...appState.vocab].sort(() => Math.random() - 0.5).slice(0, 8);
+            studyQueue = shuffled.map(c => ({ ...c, queueType: 'due' }));
+            updateHeaderStats();
+            renderCurrentCard();
+            showToast("Đã nạp thêm 8 thẻ ôn tập mở rộng!");
+        }
+
+        function renderLibraryTable() {
+            const tbody = document.getElementById('library-table-body');
+            const searchInput = document.getElementById('library-search');
+            const levelFilter = document.getElementById('library-level-filter');
+            if (!tbody) return;
+
+            const q = (searchInput ? searchInput.value : '').toLowerCase().trim();
+            const lvl = levelFilter ? levelFilter.value : 'all';
+
+            const filtered = appState.vocab.filter(item => {
+                const matchLvl = lvl === 'all' || item.level === lvl;
+                const matchQ = !q ||
+                    item.hanzi.includes(q) ||
+                    item.pinyin.toLowerCase().includes(q) ||
+                    item.hanviet.toLowerCase().includes(q) ||
+                    item.meaning.toLowerCase().includes(q);
+                return matchLvl && matchQ;
+            });
+
+            tbody.innerHTML = filtered.map(item => {
+                const prog = appState.srsProgress[item.id];
+                let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">Chưa học</span>`;
+                if (prog) {
+                    statusBadge = prog.status === 'mastered'
+                        ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">Thành thạo</span>`
+                        : `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">Đang nhớ</span>`;
+                }
+                return `
+                    <tr class="border-b border-slate-100 dark:border-slate-800/80 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+                        <td class="py-3 px-3 font-bold text-lg text-slate-900 dark:text-white">
+                            <button onclick="speakText('${item.hanzi}')" class="hover:text-rose-600 cursor-pointer" title="Nghe phát âm">${item.hanzi}</button>
+                        </td>
+                        <td class="py-3 px-3 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">${item.pinyin}</td>
+                        <td class="py-3 px-3 text-xs font-bold text-rose-600 dark:text-rose-400">${item.hanviet}</td>
+                        <td class="py-3 px-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200">${item.meaning}</td>
+                        <td class="py-3 px-3 text-xs"><span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-semibold">${item.level}</span></td>
+                        <td class="py-3 px-3">${statusBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ============================================================================
+        // 7. MODALS (THÊM THẺ MỚI, CẤU HÌNH ĐỒNG BỘ, XUẤT/NHẬP JSON) & PHÍM TẮT
+        // ============================================================================
+        function openAddCardModal() {
+            const modal = document.getElementById('add-card-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeAddCardModal() {
+            const modal = document.getElementById('add-card-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleAddCardSubmit(e) {
+            e.preventDefault();
+            const hanzi = document.getElementById('new-hanzi').value.trim();
+            const pinyin = document.getElementById('new-pinyin').value.trim();
+            const hanviet = document.getElementById('new-hanviet').value.trim().toUpperCase();
+            const meaning = document.getElementById('new-meaning').value.trim();
+            const level = document.getElementById('new-level').value;
+            const etymology = document.getElementById('new-etymology').value.trim() || `Từ vựng tự thêm (${hanviet}).`;
+            const exZh = document.getElementById('new-ex-zh').value.trim() || hanzi;
+            const exPy = document.getElementById('new-ex-py').value.trim() || pinyin;
+            const exVi = document.getElementById('new-ex-vi').value.trim() || meaning;
+
+            if (!hanzi || !pinyin || !meaning) return;
+
+            const newCard = {
+                id: 'custom_' + Date.now(),
+                lesson: `Từ tự thêm (${level})`,
+                level,
+                hanzi,
+                pinyin,
+                tones: [],
+                hanviet: hanviet || 'TỰ THÊM',
+                meaning,
+                hint: `Âm Hán Việt: ${hanviet}`,
+                etymology,
+                exZh,
+                exPy,
+                exVi
+            };
+
+            appState.vocab.unshift(newCard);
+            saveAppState(true);
+            populateDeckSelector();
+            buildStudyQueue();
+            renderLibraryTable();
+            closeAddCardModal();
+            e.target.reset();
+            showToast(`✅ Đã thêm thẻ "${hanzi}" và đồng bộ!`);
+        }
+
+        function openSyncModal() {
+            const modal = document.getElementById('sync-modal');
+            if (!modal) return;
+            selectSyncProvider(syncConfig.provider || 'firebase');
+            document.getElementById('sync-firebase-url').value = syncConfig.firebaseUrl || '';
+            document.getElementById('sync-firebase-key').value = syncConfig.firebaseKey || 'hanngu_loc_2y';
+            document.getElementById('sync-github-token').value = syncConfig.githubToken || '';
+            document.getElementById('sync-github-gist-id').value = syncConfig.gistId || '';
+            document.getElementById('setting-daily-new').value = appState.dailyNewLimit || 8;
+            modal.classList.remove('hidden');
+        }
+
+        function closeSyncModal() {
+            const modal = document.getElementById('sync-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function selectSyncProvider(provider) {
+            syncConfig.provider = provider;
+            const pFb = document.getElementById('sync-panel-firebase');
+            const pGist = document.getElementById('sync-panel-gist');
+            const bFb = document.getElementById('btn-provider-firebase');
+            const bGist = document.getElementById('btn-provider-gist');
+
+            if (provider === 'firebase') {
+                pFb.classList.remove('hidden');
+                pGist.classList.add('hidden');
+                bFb.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer";
+                bGist.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer";
+            } else {
+                pFb.classList.add('hidden');
+                pGist.classList.remove('hidden');
+                bGist.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer";
+                bFb.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer";
+            }
+        }
+
+        async function saveSyncSettings() {
+            const newLimit = parseInt(document.getElementById('setting-daily-new').value, 10);
+            if (!isNaN(newLimit) && newLimit >= 1 && newLimit <= 50) {
+                appState.dailyNewLimit = newLimit;
+            }
+
+            if (syncConfig.provider === 'firebase') {
+                const url = document.getElementById('sync-firebase-url').value.trim();
+                const key = document.getElementById('sync-firebase-key').value.trim() || 'hanngu_loc_2y';
+                if (!url) {
+                    showToast("⚠️ Vui lòng nhập Firebase Realtime Database URL!");
+                    return;
+                }
+                syncConfig.firebaseUrl = url;
+                syncConfig.firebaseKey = key;
+                syncConfig.enabled = true;
+            } else {
+                const token = document.getElementById('sync-github-token').value.trim();
+                const gistId = document.getElementById('sync-github-gist-id').value.trim();
+                if (!token) {
+                    showToast("⚠️ Vui lòng nhập GitHub Personal Access Token!");
+                    return;
+                }
+                syncConfig.githubToken = token;
+                syncConfig.gistId = gistId;
+                syncConfig.enabled = true;
+            }
+
+            saveSyncConfigToLocal();
+            saveAppState(false);
+            closeSyncModal();
+            await pullFromCloud(false);
+        }
+
+        function disconnectSync() {
+            syncConfig.enabled = false;
+            saveSyncConfigToLocal();
+            updateSyncStatusUI();
+            closeSyncModal();
+            showToast("Đã ngắt kết nối đồng bộ đám mây.");
+        }
+
+        async function manualSyncNow() {
+            if (!syncConfig.enabled) {
+                showToast("⚠️ Bạn chưa cấu hình đồng bộ đám mây.");
+                return;
+            }
+            await pullFromCloud(false);
+        }
+
+        function exportData() {
+            const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `HanNguPro2Y_Backup_${getTodayStr()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("📦 Đã xuất file sao lưu JSON!");
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && Array.isArray(imported.vocab)) {
+                        appState = { ...appState, ...imported };
+                        saveAppState(true);
+                        refreshAllUI();
+                        showToast("✅ Đã khôi phục dữ liệu thành công!");
+                    } else {
+                        showToast("⚠️ File JSON không hợp lệ.");
+                    }
+                } catch (err) {
+                    showToast("⚠️ Lỗi đọc file JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('toast-banner');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-banner';
+                toast.className = 'fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs sm:text-sm font-semibold shadow-xl transition-opacity duration-300';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        function startSessionTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                sessionSeconds += 1;
+                const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+                const secs = String(sessionSeconds % 60).padStart(2, '0');
+                const timerEl = document.getElementById('session-timer');
+                if (timerEl) timerEl.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function refreshAllUI() {
+            populateDeckSelector();
+            buildStudyQueue();
+            renderCurrentCard();
+            updateRoadmapStats();
+            renderLibraryTable();
+        }
+
+        // Phím tắt tối ưu cho máy tính
+        document.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (!isCardRevealed) revealCard();
+            } else if (e.key.toLowerCase() === 'r') {
+                if (currentCard) speakText(currentCard.hanzi, 1.0);
+            } else if (['1', '2', '3', '4'].includes(e.key) && isCardRevealed) {
+                rateCard(parseInt(e.key, 10));
+            }
+        });
+
+        // Tự động kéo dữ liệu mới khi chuyển thiết bị hoặc quay lại tab
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && syncConfig.enabled) {
+                pullFromCloud(false);
+            }
+        });
+
+        window.addEventListener('focus', () => {
+            if (syncConfig.enabled) {
+                pullFromCloud(false);
+            }
+        });
+
+        // Khởi chạy ứng dụng
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAppState();
+            loadSyncConfig();
+            refreshAllUI();
+            startSessionTimer();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            if (syncConfig.enabled) {
+                pullFromCloud(false);
+            }
+        });
+    </script>
+</body>
+</html>
