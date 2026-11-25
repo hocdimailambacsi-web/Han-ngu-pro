@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="vi" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HánNgữPro 2Y - Lộ Trình Tiếng Trung HSK 5-6 Trong 2 Năm</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        chinese: ['"Noto Sans SC"', '"PingFang SC"', '"Microsoft YaHei"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Inter & Noto Sans SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Hanzi Writer (Mô phỏng thứ tự nét viết) -->
+    <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 font-sans min-h-screen flex flex-col transition-colors duration-200 selection:bg-rose-500 selection:text-white">
+
+    <!-- ==================== HEADER ==================== -->
+    <header class="sticky top-0 z-30 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-rose-600 to-amber-600 flex items-center justify-center text-white font-chinese font-bold text-xl shadow-sm">
+                    汉
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-sm sm:text-base tracking-tight leading-none">
+                        HánNgữPro <span class="text-rose-600 dark:text-rose-400">2Y</span>
+                    </h1>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:block mt-0.5">
+                        Lộ trình 0 → HSK 5-6 (IELTS 7.0) • 15 phút/ngày
+                    </p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex items-center gap-1 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl">
+                <button onclick="switchTab('study')" id="tab-study" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow-sm transition-all cursor-pointer">
+                    Học hôm nay
+                </button>
+                <button onclick="switchTab('roadmap')" id="tab-roadmap" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer">
+                    Lộ trình 2 năm
+                </button>
+                <button onclick="switchTab('library')" id="tab-library" class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer">
+                    Kho từ vựng
+                </button>
+            </nav>
+
+            <!-- Right Controls: Sync Status, Timer & Theme -->
+            <div class="flex items-center gap-2 sm:gap-2.5">
+                <button onclick="openSyncModal()" id="sync-status-btn" class="px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/80 dark:border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer" title="Thiết lập tự động đồng bộ giữa máy tính và điện thoại">
+                    <span id="sync-indicator-dot" class="w-2 h-2 rounded-full bg-slate-400"></span>
+                    <span id="sync-status-text" class="truncate max-w-[110px] sm:max-w-[170px]">⚙️ Thiết lập đồng bộ</span>
+                </button>
+
+                <div class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-semibold" title="Thời gian học phiên hôm nay">
+                    <i data-lucide="timer" class="w-3.5 h-3.5"></i>
+                    <span id="session-timer">00:00</span> / 15:00
+                </div>
+
+                <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" title="Đổi giao diện Sáng/Tối">
+                    <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
+                    <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6 sm:py-8">
+
+        <!-- ==================== VIEW 1: STUDY SESSION (FLASHCARDS + SRS) ==================== -->
+        <section id="view-study" class="space-y-5">
+            <!-- Top Stats & Deck Filter Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-orange-100 dark:bg-orange-950/50 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                        <i data-lucide="flame" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Chuỗi ngày</p>
+                        <p id="stat-streak" class="text-sm sm:text-base font-extrabold">1 ngày</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+                        <i data-lucide="layers" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Cần học hôm nay</p>
+                        <p id="stat-queue-count" class="text-sm sm:text-base font-extrabold">0 thẻ</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-3.5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                        <i data-lucide="brain-circuit" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Đã nạp trí nhớ</p>
+                        <p id="stat-mastered" class="text-sm sm:text-base font-extrabold">0 / 45</p>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col justify-center">
+                    <label for="deck-selector" class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mb-1">Chủ đề học</label>
+                    <select id="deck-selector" onchange="changeDeck(this.value)" class="w-full bg-slate-100 dark:bg-slate-800 rounded-lg px-2 py-1 text-xs font-semibold border border-slate-200 dark:border-slate-700 focus:outline-none">
+                        <option value="all">Tất cả bài học</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Main Flashcard Box -->
+            <div id="flashcard-container" class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-lg overflow-hidden transition-all">
+                <!-- Card Top Metadata -->
+                <div class="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/60 dark:bg-slate-900/60">
+                    <div class="flex items-center gap-2">
+                        <span id="card-type-badge" class="px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300">Từ mới</span>
+                        <span id="card-level-badge" class="text-xs font-semibold text-slate-500 dark:text-slate-400">HSK 1</span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="speakText(currentCard?.hanzi, 1.0)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer" title="Nghe phát âm chuẩn (Phím R)">
+                            <i data-lucide="volume-2" class="w-3.5 h-3.5 text-rose-600"></i> 1.0x
+                        </button>
+                        <button onclick="speakText(currentCard?.hanzi, 0.65)" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer" title="Nghe chậm để phân biệt thanh điệu">
+                            <i data-lucide="snail" class="w-3.5 h-3.5 text-amber-600"></i> 0.7x
+                        </button>
+                        <button onclick="toggleStrokeOrder()" class="px-2.5 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer" title="Xem thứ tự nét viết & bộ thủ">
+                            <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-indigo-600"></i> Nét viết
+                        </button>
+                    </div>
+                </div>
+
+                <!-- HanziWriter Stroke Order Box (Collapsible) -->
+                <div id="stroke-order-box" class="hidden px-5 py-4 bg-slate-50 dark:bg-slate-950/60 border-b border-slate-100 dark:border-slate-800 text-center space-y-2">
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Mô phỏng thứ tự nét (màu đỏ là bộ thủ gốc giúp nhận diện mặt chữ):</p>
+                    <div id="hanzi-writer-target" class="flex flex-wrap items-center justify-center gap-3"></div>
+                </div>
+
+                <!-- FRONT OF CARD -->
+                <div id="card-front" class="p-8 sm:p-12 text-center space-y-6">
+                    <div class="py-4">
+                        <div id="card-hanzi-front" class="font-chinese text-6xl sm:text-7xl font-bold tracking-wider text-slate-900 dark:text-white select-all">
+                            你好
+                        </div>
+                        <p id="card-hint-text" class="mt-4 text-xs sm:text-sm text-slate-400 dark:text-slate-500 italic">
+                            Gợi ý: Lời chào cơ bản nhất
+                        </p>
+                    </div>
+
+                    <div class="pt-4">
+                        <button onclick="revealCard()" class="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-slate-900 dark:bg-rose-600 hover:bg-slate-800 dark:hover:bg-rose-500 text-white font-bold text-sm sm:text-base shadow-md transition-all cursor-pointer">
+                            Hiển thị Pinyin, Hán Việt & Nghĩa (Space)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BACK OF CARD -->
+                <div id="card-back" class="hidden p-6 sm:p-8 space-y-6">
+                    <!-- Top Word Summary -->
+                    <div class="text-center space-y-1.5 pb-4 border-b border-slate-100 dark:border-slate-800">
+                        <div id="card-hanzi-back" class="font-chinese text-5xl sm:text-6xl font-bold text-slate-900 dark:text-white">
+                            你好
+                        </div>
+                        <div id="card-pinyin-back" class="text-xl sm:text-2xl tracking-wide pt-1">
+                            nǐ hǎo
+                        </div>
+                        <div class="pt-1">
+                            <span class="inline-block px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/50 border border-rose-200/70 dark:border-rose-800/50 text-rose-700 dark:text-rose-300 text-xs sm:text-sm font-extrabold tracking-wide">
+                                HÁN VIỆT: <span id="card-hanviet-back">NHĨ HẢO</span>
+                            </span>
+                        </div>
+                        <p id="card-meaning-back" class="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100 pt-2">
+                            Xin chào
+                        </p>
+                    </div>
+
+                    <!-- Etymology & Han-Viet Logic -->
+                    <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/25 border border-amber-200/70 dark:border-amber-800/40 space-y-1">
+                        <h4 class="text-xs font-extrabold uppercase tracking-wider text-amber-800 dark:text-amber-300 flex items-center gap-1.5">
+                            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Chiết tự & Tư duy Hán Việt
+                        </h4>
+                        <p id="card-etymology-back" class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                            Phân tích cấu tạo chữ...
+                        </p>
+                    </div>
+
+                    <!-- Real-world Example Sentence -->
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/70 dark:border-slate-700/60 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Ví dụ ngữ cảnh thực tế</span>
+                            <button onclick="speakText(currentCard?.exZh, 0.95)" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 hover:bg-slate-100 text-xs font-semibold flex items-center gap-1 shadow-2xs cursor-pointer">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-rose-600"></i> Nghe câu
+                            </button>
+                        </div>
+                        <p id="card-example-zh" class="font-chinese text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                            你好，很高兴认识你。
+                        </p>
+                        <p id="card-example-py" class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                            Nǐ hǎo, hěn gāoxìng rènshi nǐ.
+                        </p>
+                        <p id="card-example-vi" class="text-xs sm:text-sm font-medium text-slate-700 dark:text-slate-200">
+                            Xin chào, rất vui được làm quen với bạn.
+                        </p>
+                    </div>
+
+                    <!-- SRS 4 Rating Buttons -->
+                    <div class="pt-2">
+                        <p class="text-center text-xs text-slate-400 mb-2.5">Đánh giá mức độ ghi nhớ của bạn (Phím tắt 1 - 4):</p>
+                        <div class="grid grid-cols-4 gap-2 sm:gap-3">
+                            <button onclick="rateCard(1)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-red-50 hover:bg-red-100 active:scale-95 dark:bg-red-950/40 dark:hover:bg-red-900/60 border border-red-200 dark:border-red-800/60 text-red-700 dark:text-red-300 transition-all cursor-pointer">
+                                <span class="font-bold text-xs sm:text-sm">1. Quên</span>
+                                <span id="interval-1" class="text-[11px] opacity-80 mt-0.5">1 phút</span>
+                            </button>
+                            <button onclick="rateCard(2)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-amber-50 hover:bg-amber-100 active:scale-95 dark:bg-amber-950/40 dark:hover:bg-amber-900/60 border border-amber-200 dark:border-amber-800/60 text-amber-700 dark:text-amber-300 transition-all cursor-pointer">
+                                <span class="font-bold text-xs sm:text-sm">2. Khó</span>
+                                <span id="interval-2" class="text-[11px] opacity-80 mt-0.5">12 giờ</span>
+                            </button>
+                            <button onclick="rateCard(3)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 active:scale-95 dark:bg-emerald-950/40 dark:hover:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-800/60 text-emerald-700 dark:text-emerald-300 transition-all cursor-pointer">
+                                <span class="font-bold text-xs sm:text-sm">3. Tốt</span>
+                                <span id="interval-3" class="text-[11px] opacity-80 mt-0.5">1 ngày</span>
+                            </button>
+                            <button onclick="rateCard(4)" class="flex flex-col items-center justify-center py-3.5 px-2 sm:p-3 rounded-xl bg-blue-50 hover:bg-blue-100 active:scale-95 dark:bg-blue-950/40 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800/60 text-blue-700 dark:text-blue-300 transition-all cursor-pointer">
+                                <span class="font-bold text-xs sm:text-sm">4. Dễ</span>
+                                <span id="interval-4" class="text-[11px] opacity-80 mt-0.5">4 ngày</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Session Complete State -->
+            <div id="session-complete-state" class="hidden bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-8 sm:p-12 text-center space-y-4 shadow-md">
+                <div class="w-16 h-16 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto">
+                    <i data-lucide="trophy" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-extrabold">Hoàn thành mục tiêu hôm nay!</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+                    Não bộ cần thời gian củng cố liên kết thần kinh. Bạn đã hoàn tất phiên học 15 phút chuẩn khoa học. Hẹn gặp lại vào ngày mai!
+                </p>
+                <div class="pt-2">
+                    <button onclick="startExtraPractice()" class="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs sm:text-sm font-bold cursor-pointer">
+                        Ôn tập thêm 8 thẻ ngẫu nhiên
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 2: 2-YEAR ROADMAP TO HSK 5-6 ==================== -->
+        <section id="view-roadmap" class="hidden space-y-6">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-extrabold">Lộ trình 730 Ngày: Từ số 0 đến HSK 5–6</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400">Tận dụng lợi thế 65% từ vựng Hán Việt để rút ngắn một nửa thời gian học đọc hiểu.</p>
+                    </div>
+                    <span id="roadmap-progress-text" class="px-3 py-1 rounded-full bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 text-xs font-bold">
+                        0 / 4500 từ (0%)
+                    </span>
+                </div>
+                <div class="w-full h-3 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                    <div id="roadmap-progress-bar" class="h-full bg-gradient-to-r from-rose-600 to-amber-500 rounded-full transition-all duration-500" style="width: 2%"></div>
+                </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-3">
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 space-y-3">
+                    <span class="px-2.5 py-1 rounded-lg bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-xs font-bold">Giai đoạn 1 • Tháng 1–6</span>
+                    <h3 class="font-bold text-base">Nền tảng Ngữ âm & HSK 1–2</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Làm chủ 4 thanh điệu, quy tắc biến điệu và 600 từ vựng cốt lõi. Hình thành phản xạ nhận diện mặt chữ Giản thể qua bộ thủ cơ bản.
+                    </p>
+                    <div class="text-xs font-semibold text-slate-700 dark:text-slate-300 pt-1">Mục tiêu: ~1.200 từ • 8 từ mới/ngày</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 space-y-3">
+                    <span class="px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 text-xs font-bold">Giai đoạn 2 • Tháng 7–14</span>
+                    <h3 class="font-bold text-base">Bứt tốc Hán Việt & HSK 3–4</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Kích hoạt kho từ ghép song âm tiết Hán Việt. Đọc hiểu báo chí phổ thông, giao tiếp công việc và nắm vững 80 cấu trúc ngữ pháp trọng tâm.
+                    </p>
+                    <div class="text-xs font-semibold text-slate-700 dark:text-slate-300 pt-1">Mục tiêu: ~2.800 từ • Đọc hiểu trôi chảy</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 space-y-3">
+                    <span class="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-xs font-bold">Giai đoạn 3 • Tháng 15–24</span>
+                    <h3 class="font-bold text-base">Tư duy Học thuật HSK 5–6</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        Chinh phục từ vựng trừu tượng, thành ngữ 4 chữ (成语) và văn phong học thuật tương đương IELTS 7.0 để đọc tài liệu chuyên ngành.
+                    </p>
+                    <div class="text-xs font-semibold text-slate-700 dark:text-slate-300 pt-1">Mục tiêu: 4.500+ từ • Tương đương IELTS 7.0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 3: VOCABULARY LIBRARY ==================== -->
+        <section id="view-library" class="hidden space-y-4">
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200 dark:border-slate-800 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex flex-wrap items-center gap-2 flex-1">
+                        <input type="text" id="library-search" oninput="renderLibraryTable()" placeholder="Tìm chữ Hán, Pinyin, Hán Việt..." class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm w-full sm:w-64 focus:outline-none">
+                        <select id="library-level-filter" onchange="renderLibraryTable()" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-semibold">
+                            <option value="all">Mọi cấp độ</option>
+                            <option value="HSK 1">HSK 1</option>
+                            <option value="HSK 2">HSK 2</option>
+                            <option value="HSK 3">HSK 3</option>
+                            <option value="HSK 4">HSK 4</option>
+                            <option value="HSK 5">HSK 5</option>
+                            <option value="HSK 6">HSK 6</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="openAddCardModal()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm cursor-pointer">
+                            <i data-lucide="plus" class="w-4 h-4"></i> Thêm thẻ mới
+                        </button>
+                        <button onclick="exportData()" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs sm:text-sm font-medium flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="download" class="w-4 h-4"></i> Xuất JSON
+                        </button>
+                        <label class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs sm:text-sm font-medium flex items-center gap-1.5 cursor-pointer">
+                            <i data-lucide="upload" class="w-4 h-4"></i> Nhập JSON
+                            <input type="file" accept=".json" onchange="importData(event)" class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-slate-400">
+                                <th class="py-2.5 px-3">Chữ Hán</th>
+                                <th class="py-2.5 px-3">Pinyin</th>
+                                <th class="py-2.5 px-3">Hán Việt</th>
+                                <th class="py-2.5 px-3">Nghĩa tiếng Việt</th>
+                                <th class="py-2.5 px-3">Cấp độ</th>
+                                <th class="py-2.5 px-3">Trạng thái</th>
+                            </tr>
+                        </thead>
+                        <tbody id="library-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== MODAL: ADD NEW CARD ==================== -->
+    <div id="add-card-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-lg">Thêm thẻ từ vựng mới</h3>
+                <button onclick="closeAddCardModal()" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <form onsubmit="handleAddCardSubmit(event)" class="space-y-3 text-sm">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Chữ Hán (Giản thể) *</label>
+                        <input type="text" id="new-hanzi" required placeholder="例如：效率" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-chinese text-base">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Pinyin *</label>
+                        <input type="text" id="new-pinyin" required placeholder="xiào lǜ" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Âm Hán Việt</label>
+                        <input type="text" id="new-hanviet" placeholder="HIỆU SUẤT" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 uppercase">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Cấp độ</label>
+                        <select id="new-level" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-semibold">
+                            <option value="HSK 1">HSK 1</option>
+                            <option value="HSK 2">HSK 2</option>
+                            <option value="HSK 3">HSK 3</option>
+                            <option value="HSK 4" selected>HSK 4</option>
+                            <option value="HSK 5">HSK 5</option>
+                            <option value="HSK 6">HSK 6</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Nghĩa tiếng Việt *</label>
+                    <input type="text" id="new-meaning" required placeholder="Hiệu suất, năng suất" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Chiết tự & Ghi chú Hán Việt</label>
+                    <input type="text" id="new-etymology" placeholder="Phân tích bộ thủ hoặc mẹo nhớ..." class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Câu ví dụ tiếng Trung</label>
+                    <input type="text" id="new-ex-zh" placeholder="提高工作效率。" class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 font-chinese">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Pinyin ví dụ</label>
+                        <input type="text" id="new-ex-py" placeholder="Tígāo gōngzuò xiàolǜ." class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">Dịch ví dụ</label>
+                        <input type="text" id="new-ex-vi" placeholder="Nâng cao hiệu suất công việc." class="w-full px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                    </div>
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAddCardModal()" class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-bold cursor-pointer">Hủy</button>
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold cursor-pointer">Lưu thẻ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL: CLOUD SYNC SETTINGS ==================== -->
+    <div id="sync-modal" class="fixed inset-0 z-50 hidden bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-lg w-full p-6 border border-slate-200 dark:border-slate-800 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="font-bold text-lg flex items-center gap-2">
+                        <i data-lucide="cloud" class="w-5 h-5 text-emerald-500"></i>
+                        Tự động Đồng bộ Đám mây (2 Thiết bị)
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">Tự động lưu sau mỗi thao tác (300ms) và tải dữ liệu mới nhất khi mở web.</p>
+                </div>
+                <button onclick="closeSyncModal()" class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Sync Provider Selector -->
+            <div class="grid grid-cols-2 gap-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-800">
+                <button type="button" onclick="selectSyncProvider('firebase')" id="btn-provider-firebase" class="py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer">
+                    1. Firebase URL (Khuyên dùng)
+                </button>
+                <button type="button" onclick="selectSyncProvider('gist')" id="btn-provider-gist" class="py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer">
+                    2. GitHub Token (Gist)
+                </button>
+            </div>
+
+            <!-- Option 1: Firebase Realtime Database -->
+            <div id="sync-panel-firebase" class="space-y-3 text-sm">
+                <div class="p-3 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/20 border border-emerald-200/70 dark:border-emerald-800/40 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                    <p class="font-bold text-emerald-800 dark:text-emerald-300">Thiết lập 1 lần dùng vĩnh viễn (Miễn phí):</p>
+                    <p>1. Vào <strong>console.firebase.google.com</strong> → Tạo dự án → Chọn <strong>Realtime Database</strong> (chế độ Test Mode).</p>
+                    <p>2. Dán đường link Database URL vào ô bên dưới trên cả Máy tính và Điện thoại.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Firebase Realtime Database URL *</label>
+                    <input type="url" id="sync-firebase-url" placeholder="https://ten-du-an-default-rtdb.asia-southeast1.firebasedatabase.app" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Mã định danh cá nhân (Sync Key)</label>
+                    <input type="text" id="sync-firebase-key" value="hanngu_loc_2y" placeholder="hanngu_loc_2y" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+            </div>
+
+            <!-- Option 2: GitHub Personal Access Token (Gist) -->
+            <div id="sync-panel-gist" class="hidden space-y-3 text-sm">
+                <div class="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/20 border border-blue-200/70 dark:border-blue-800/40 text-xs text-slate-600 dark:text-slate-300 space-y-1">
+                    <p class="font-bold text-blue-800 dark:text-blue-300">Dùng chính tài khoản GitHub của bạn:</p>
+                    <p>Tạo <strong>Personal Access Token (Classic)</strong> với duy nhất quyền tích chọn là <code class="px-1 py-0.5 bg-white dark:bg-slate-800 rounded">gist</code>. Ứng dụng sẽ tự tạo một Secret Gist ẩn tên <code>hanngu_pro_2y_data.json</code> để đồng bộ.</p>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">GitHub Personal Access Token *</label>
+                    <input type="password" id="sync-github-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold mb-1">Gist ID (Tự động điền sau lần đầu đồng bộ)</label>
+                    <input type="text" id="sync-github-gist-id" placeholder="Để trống để tự động tìm/tạo mới" class="w-full px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm font-mono">
+                </div>
+            </div>
+
+            <!-- Daily Goal Quick Setting -->
+            <div class="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-bold block">Mục tiêu thẻ mới mỗi ngày</span>
+                    <span class="text-[11px] text-slate-400">Mặc định 8 từ/ngày (~12-15 phút)</span>
+                </div>
+                <input type="number" id="setting-daily-new" min="3" max="30" value="8" class="w-20 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm font-bold text-center">
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
+                <button type="button" onclick="manualSyncNow()" class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold flex items-center gap-1.5 cursor-pointer">
+                    <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Đồng bộ ngay
+                </button>
+                <div class="flex gap-2">
+                    <button type="button" onclick="disconnectSync()" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 cursor-pointer">Ngắt kết nối</button>
+                    <button type="button" onclick="saveSyncSettings()" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold shadow-sm cursor-pointer">Lưu & Kết nối</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================================
+        // 1. KHO DỮ LIỆU TỪ VỰNG KHỞI ĐẦU (45 THẺ CHUẨN HÁN VIỆT & CHIẾT TỰ LOGIC)
+        // ============================================================================
+        const INITIAL_VOCABULARY = [
+            // BÀI 1: NỀN TẢNG GIAO TIẾP & ĐẠI TỪ (HSK 1)
+            {
+                id: "v01", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "你好", pinyin: "nǐ hǎo", tones: [3, 3], hanviet: "NHĨ HẢO", meaning: "Xin chào",
+                hint: "Hai thanh 3 đi liền nhau: nǐ đọc thành ní",
+                etymology: "你 (Nhĩ - bạn, bộ Nhân 亻) + 好 (Hảo - tốt đẹp, gồm Nữ 女 và Tử 子: có con gái và con trai là điều tốt lành).",
+                exZh: "你好，很高兴认识你！", exPy: "Nǐ hǎo, hěn gāoxìng rènshi nǐ!", exVi: "Xin chào, rất vui được làm quen với bạn!"
+            },
+            {
+                id: "v02", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "谢谢", pinyin: "xiè xie", tones: [4, 5], hanviet: "TẠ TẠ", meaning: "Cảm ơn",
+                hint: "Âm tiết thứ 2 đọc thanh nhẹ",
+                etymology: "谢 (Tạ - cảm tạ, đa tạ) gồm bộ Ngôn 讠 (lời nói) + 射 (Xạ - bắn tên, chỉ âm đọc). Dùng lời nói bày tỏ lòng biết ơn.",
+                exZh: "谢谢你的帮助。", exPy: "Xièxie nǐ de bāngzhù.", exVi: "Cảm ơn sự giúp đỡ của bạn."
+            },
+            {
+                id: "v03", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "学习", pinyin: "xué xí", tones: [2, 2], hanviet: "HỌC TẬP", meaning: "Học tập, nghiên cứu",
+                hint: "Âm Hán Việt trùng khớp 100% nghĩa tiếng Việt",
+                etymology: "学 (Học - tiếp thu kiến thức, bên dưới có bộ Tử 子: đứa trẻ) + 习 (Tập - chim non vỗ cánh tập bay lặp đi lặp lại).",
+                exZh: "我每天学习中文十五分钟。", exPy: "Wǒ měitiān xuéxí Zhōngwén shíwǔ fēnzhōng.", exVi: "Mỗi ngày tôi học tiếng Trung 15 phút."
+            },
+            {
+                id: "v04", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "时间", pinyin: "shí jiān", tones: [2, 1], hanviet: "THỜI GIAN", meaning: "Thời gian",
+                hint: "Thời (mặt trời) + Gian (khoảng trống)",
+                etymology: "时 (Thời - có bộ Nhật 日: mặt trời đo thời gian) + 间 (Gian - ánh mặt trời 日 chiếu qua khe cửa 门).",
+                exZh: "时间就是效率。", exPy: "Shíjiān jiùshì xiàolǜ.", exVi: "Thời gian chính là hiệu suất."
+            },
+            {
+                id: "v05", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "理解", pinyin: "lǐ jiě", tones: [3, 3], hanviet: "LÝ GIẢI", meaning: "Hiểu, thông hiểu",
+                hint: "Lý (lý lẽ) + Giải (tháo gỡ)",
+                etymology: "理 (Lý - vân ngọc, quy luật, bộ Vương 王) + 解 (Giải - dùng dao 刀 tách sừng trâu 角 → phân tích, tháo gỡ vấn đề).",
+                exZh: "我完全理解你的意思。", exPy: "Wǒ wánquán lǐjiě nǐ de yìsi.", exVi: "Tôi hoàn toàn hiểu ý của bạn."
+            },
+            {
+                id: "v06", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "问题", pinyin: "wèn tí", tones: [4, 2], hanviet: "VẤN ĐỀ", meaning: "Câu hỏi, vấn đề",
+                hint: "Vấn (hỏi) + Đề (đầu đề, chủ đề)",
+                etymology: "问 (Vấn - cái miệng 口 đặt ở cửa 门 để hỏi thăm) + 题 (Đề - trán, đầu mục của một sự việc).",
+                exZh: "这个方法能解决很多问题。", exPy: "Zhège fāngfǎ néng jiějué hěn duō wèntí.", exVi: "Phương pháp này có thể giải quyết rất nhiều vấn đề."
+            },
+            {
+                id: "v07", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "开始", pinyin: "kāi shǐ", tones: [1, 3], hanviet: "KHAI THỦY", meaning: "Bắt đầu",
+                hint: "Khai (mở ra) + Thủy (ban đầu)",
+                etymology: "开 (Khai - hai tay mở then cửa) + 始 (Thủy - khởi đầu, có bộ Nữ 女).",
+                exZh: "我们现在开始吧！", exPy: "Wǒmen xiànzài kāishǐ ba!", exVi: "Chúng ta bắt đầu ngay bây giờ nhé!"
+            },
+            {
+                id: "v08", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                hanzi: "准备", pinyin: "zhǔn bèi", tones: [3, 4], hanviet: "CHUẨN BỊ", meaning: "Chuẩn bị",
+                hint: "Âm Hán Việt chuẩn xác",
+                etymology: "准 (Chuẩn - tiêu chuẩn, chính xác) + 备 (Bị - trang bị đầy đủ từ trước).",
+                exZh: "我已经做好准备了。", exPy: "Wǒ yǐjīng zuò hǎo zhǔnbèi le.", exVi: "Tôi đã chuẩn bị sẵn sàng rồi."
+            },
+
+            // BÀI 2: TƯ DUY & CÔNG VIỆC (HSK 2)
+            {
+                id: "v09", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "习惯", pinyin: "xí guàn", tones: [2, 4], hanviet: "TẬP QUÁN", meaning: "Thói quen, quen với",
+                hint: "Tập (lặp lại) + Quán (quen thuộc)",
+                etymology: "习 (Tập - luyện tập) + 贯 (Quán - xâu chuỗi tiền xu, bộ Tâm 忄: điều khắc sâu trong tâm trí thành thói quen).",
+                exZh: "每天学习是一个好习惯。", exPy: "Měitiān xuéxí shì yí gè hǎo xíguàn.", exVi: "Học tập mỗi ngày là một thói quen tốt."
+            },
+            {
+                id: "v10", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "方法", pinyin: "fāng fǎ", tones: [1, 3], hanviet: "PHƯƠNG PHÁP", meaning: "Phương pháp, cách thức",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "方 (Phương - phương hướng) + 法 (Pháp - quy tắc, có bộ Thủy 氵: nước chảy phẳng lặng làm chuẩn mực).",
+                exZh: "科学的方法能提高记忆力。", exPy: "Kēxué de fāngfǎ néng tígāo jìyìlì.", exVi: "Phương pháp khoa học có thể nâng cao trí nhớ."
+            },
+            {
+                id: "v11", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "重要", pinyin: "zhòng yào", tones: [4, 4], hanviet: "TRỌNG YẾU", meaning: "Quan trọng",
+                hint: "Trọng (nặng, coi trọng) + Yếu (cốt yếu)",
+                etymology: "重 (Trọng - sức nặng, giá trị lớn) + 要 (Yếu - điểm cốt lõi cần thiết).",
+                exZh: "坚持比速度更重要。", exPy: "Jiānchí bǐ sùdù gèng zhòngyào.", exVi: "Sự kiên trì quan trọng hơn tốc độ."
+            },
+            {
+                id: "v12", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "决定", pinyin: "jué dìng", tones: [2, 4], hanviet: "QUYẾT ĐỊNH", meaning: "Quyết định",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "决 (Quyết - khơi thông dòng nước 氵, dứt khoát) + 定 (Định - mái nhà 宀 che chở cho sự ổn định).",
+                exZh: "我决定两年内掌握中文。", exPy: "Wǒ juédìng liǎng nián nèi zhǎngwò Zhōngwén.", exVi: "Tôi quyết định làm chủ tiếng Trung trong vòng 2 năm."
+            },
+            {
+                id: "v13", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "经验", pinyin: "jīng yàn", tones: [1, 4], hanviet: "KINH NGHIỆM", meaning: "Kinh nghiệm",
+                hint: "Kinh (trải qua) + Nghiệm (kiểm chứng)",
+                etymology: "经 (Kinh - sợi dọc khung cửi, trải qua) + 验 (Nghiệm - bộ Mã 马: kiểm tra, nghiệm chứng thực tế).",
+                exZh: "他有丰富的临床经验。", exPy: "Tā yǒu fēngfù de línchuáng jīngyàn.", exVi: "Anh ấy có kinh nghiệm lâm sàng phong phú."
+            },
+            {
+                id: "v14", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "环境", pinyin: "huán jìng", tones: [2, 4], hanviet: "HOÀN CẢNH", meaning: "Môi trường, hoàn cảnh",
+                hint: "Hoàn (vòng quanh) + Cảnh (biên giới, vùng đất)",
+                etymology: "环 (Hoàn - vòng ngọc bao quanh, bộ Vương 王) + 境 (Cảnh - vùng đất, bộ Thổ 土).",
+                exZh: "语言环境对学习很有帮助。", exPy: "Yǔyán huánjìng duì xuéxí hěn yǒu bāngzhù.", exVi: "Môi trường ngôn ngữ rất có ích cho việc học."
+            },
+            {
+                id: "v15", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "变化", pinyin: "biàn huà", tones: [4, 4], hanviet: "BIẾN HÓA", meaning: "Thay đổi, biến đổi",
+                hint: "Biến (biến đổi) + Hóa (chuyển hóa)",
+                etymology: "变 (Biến - thay đổi trạng thái) + 化 (Hóa - chuyển từ dạng này sang dạng khác).",
+                exZh: "科技带来了巨大的变化。", exPy: "Kējì dàiláile jùdà de biànhuà.", exVi: "Công nghệ đã mang lại những thay đổi to lớn."
+            },
+            {
+                id: "v16", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
+                hanzi: "解决", pinyin: "jiě jué", tones: [3, 2], hanviet: "GIẢI QUYẾT", meaning: "Giải quyết",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "解 (Giải - tháo gỡ nút thắt) + 决 (Quyết - xử lý dứt điểm).",
+                exZh: "我们要找到解决问题的办法。", exPy: "Wǒmen yào zhǎodào jiějué wèntí de bànfǎ.", exVi: "Chúng ta cần tìm ra cách giải quyết vấn đề."
+            },
+
+            // BÀI 3: HỆ THỐNG & PHÂN TÍCH (HSK 3)
+            {
+                id: "v17", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
+                hanzi: "影响", pinyin: "yǐng xiǎng", tones: [3, 3], hanviet: "ẢNH HƯỞNG", meaning: "Ảnh hưởng, tác động",
+                hint: "Ảnh (bóng hình) + Hưởng (tiếng vang)",
+                etymology: "影 (Ảnh - bóng của cảnh vật dưới ánh mặt trời 日) + 响 (Hưởng - âm thanh vang vọng, bộ Khẩu 口).",
+                exZh: "睡眠质量会直接影响注意力。", exPy: "Shuìmián zhìliàng huì zhíjiē yǐngxiǎng zhùyìlì.", exVi: "Chất lượng giấc ngủ sẽ ảnh hưởng trực tiếp đến sự tập trung."
+            },
+            {
+                id: "v18", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
+                hanzi: "注意", pinyin: "zhù yì", tones: [4, 4], hanviet: "CHÚ Ý", meaning: "Chú ý, lưu tâm",
+                hint: "Chú (rót vào) + Ý (ý nghĩ)",
+                etymology: "注 (Chú - dòng nước 氵 đổ dồn vào một điểm) + 意 (Ý - âm thanh trong tâm 心). Dồn tâm trí vào một điểm.",
+                exZh: "请注意细节的变化。", exPy: "Qǐng zhùyì xìjié de biànhuà.", exVi: "Xin hãy chú ý đến sự thay đổi của các chi tiết."
+            },
+            {
+                id: "v19", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
+                hanzi: "比较", pinyin: "bǐ jiào", tones: [3, 4], hanviet: "TỶ GIẢO", meaning: "So sánh; tương đối, khá",
+                hint: "Tỷ (so bì) + Giảo (đối chiếu)",
+                etymology: "比 (Tỷ - hai người đứng cạnh nhau so cao thấp) + 较 (Giảo - bộ Xa 车: đối chiếu hai cỗ xe).",
+                exZh: "这个概念比较抽象。", exPy: "Zhège gàiniàn bǐjiào chōuxiàng.", exVi: "Khái niệm này tương đối trừu tượng."
+            },
+            {
+                id: "v20", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
+                hanzi: "选择", pinyin: "xuǎn zé", tones: [3, 2], hanviet: "TUYỂN TRẠCH", meaning: "Lựa chọn",
+                hint: "Tuyển (chọn lọc) + Trạch (lựa ra)",
+                etymology: "选 (Tuyển - sàng lọc, bộ Sước 辶) + 择 (Trạch - dùng tay 扌 chọn lấy thứ tốt nhất).",
+                exZh: "这是最合理的选择。", exPy: "Zhè shì zuì hélǐ de xuǎnzé.", exVi: "Đây là sự lựa chọn hợp lý nhất."
+            },
+            {
+                id: "v21", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
+                hanzi: "结构", pinyin: "jié gòu", tones: [2, 4], hanviet: "KẾT CẤU", meaning: "Cấu trúc, kết cấu",
+                hint: "Từ khóa quan trọng trong giải phẫu và ngôn ngữ",
+                etymology: "结 (Kết - buộc các sợi tơ 纟 lại) + 构 (Cấu - dựng khung gỗ 木). Sự liên kết tạo thành chỉnh thể.",
+                exZh: "汉字的结构很有逻辑性。", exPy: "Hànzì de jiégòu hěn yǒu luójixìng.", exVi: "Cấu trúc của chữ Hán rất có tính logic."
+            },
+            {
+                id: "v22", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
+                hanzi: "目的", pinyin: "mù dì", tones: [4, 4], hanviet: "MỤC ĐÍCH", meaning: "Mục đích",
+                hint: "Mục (con mắt) + Đích (tâm bia)",
+                etymology: "目 (Mục - con mắt nhìn thẳng) + 的 (Đích - điểm trắng giữa bia bắn). Điểm mà mắt nhắm tới.",
+                exZh: "明确的目标能提高学习动力。", exPy: "Míngquè de mùbiāo néng tígāo xuéxí dònglì.", exVi: "Mục tiêu rõ ràng có thể nâng cao động lực học tập."
+            },
+
+            // BÀI 4: LẬP LUẬN & QUAN ĐIỂM (HSK 4)
+            {
+                id: "v23", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
+                hanzi: "效率", pinyin: "xiào lǜ", tones: [4, 4], hanviet: "HIỆU SUẤT", meaning: "Hiệu suất, năng suất",
+                hint: "Hiệu (hiệu quả) + Suất (tỷ lệ)",
+                etymology: "效 (Hiệu - tạo ra kết quả thực tế) + 率 (Suất - tỷ lệ đo lường). Kết quả đạt được trên một đơn vị thời gian.",
+                exZh: "间隔重复法能显著提升记忆效率。", exPy: "Jiàngé chóngfù fǎ néng xiǎnzhù tíshēng jìyì xiàolǜ.", exVi: "Phương pháp lặp lại ngắt quãng nâng cao rõ rệt hiệu suất ghi nhớ."
+            },
+            {
+                id: "v24", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
+                hanzi: "观点", pinyin: "guān diǎn", tones: [1, 3], hanviet: "QUAN ĐIỂM", meaning: "Quan điểm, góc nhìn",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "观 (Quan - nhìn nhận, quan sát, bộ Kiến 见) + 点 (Điểm - vị trí đứng). Góc độ nhìn nhận sự vật.",
+                exZh: "我非常赞同你的观点。", exPy: "Wǒ fēicháng zàntóng nǐ de guāndiǎn.", exVi: "Tôi vô cùng tán đồng quan điểm của bạn."
+            },
+            {
+                id: "v25", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
+                hanzi: "分析", pinyin: "fēn xī", tones: [1, 1], hanviet: "PHÂN TÍCH", meaning: "Phân tích",
+                hint: "Phân (chia nhỏ) + Tích (chẻ gỗ)",
+                etymology: "分 (Phân - dùng dao 刀 chia đôi) + 析 (Tích - dùng rìu 斤 bổ gỗ 木). Tách nhỏ vấn đề để xem xét bản chất.",
+                exZh: "我们需要客观地分析数据。", exPy: "Wǒmen xūyào kèguān de fēnxī shùjù.", exVi: "Chúng ta cần phân tích dữ liệu một cách khách quan."
+            },
+            {
+                id: "v26", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
+                hanzi: "证据", pinyin: "zhèng jù", tones: [4, 4], hanviet: "CHỨNG CỨ", meaning: "Bằng chứng, chứng cứ",
+                hint: "Chứng (chứng minh) + Cứ (căn cứ)",
+                etymology: "证 (Chứng - lời nói 讠 xác thực) + 据 (Cứ - nắm giữ căn cứ, bộ Thủ 扌).",
+                exZh: "科学研究必须依靠可靠的证据。", exPy: "Kēxué yánjiū bìxū yīkào kěkào de zhèngjù.", exVi: "Nghiên cứu khoa học bắt buộc phải dựa vào bằng chứng đáng tin cậy."
+            },
+            {
+                id: "v27", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
+                hanzi: "适应", pinyin: "shì yìng", tones: [4, 4], hanviet: "THÍCH ỨNG", meaning: "Thích nghi, thích ứng",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "适 (Thích - phù hợp, vừa vặn) + 应 (Ứng - đáp lại, phản ứng). Điều chỉnh để phù hợp với hoàn cảnh mới.",
+                exZh: "大脑很快就能适应新的语言系统。", exPy: "Dànǎo hěn kuài jiù néng shìyìng xīn de yǔyán xìtǒng.", exVi: "Não bộ sẽ nhanh chóng thích nghi với hệ thống ngôn ngữ mới."
+            },
+            {
+                id: "v28", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
+                hanzi: "积累", pinyin: "jī lěi", tones: [1, 3], hanviet: "TÍCH LŨY", meaning: "Tích lũy",
+                hint: "Tích (chất chứa) + Lũy (chồng chất)",
+                etymology: "积 (Tích - gom góp lúa gạo, bộ Hòa 禾) + 累 (Lũy - xếp chồng lên nhau). Gom góp từng chút mỗi ngày.",
+                exZh: "词汇量是靠每天一点一滴积累起来的。", exPy: "Cíhuìliàng shì kào měitiān yìdiǎn-yìdī jīlěi qǐlái de.", exVi: "Vốn từ vựng là dựa vào việc tích lũy từng chút một mỗi ngày."
+            },
+
+            // BÀI 5: CHUYÊN SÂU & Y KHOA - KHOA HỌC (HSK 5)
+            {
+                id: "v29", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
+                hanzi: "精准", pinyin: "jīng zhǔn", tones: [1, 3], hanviet: "TINH CHUẨN", meaning: "Chính xác tuyệt đối, tinh chuẩn",
+                hint: "Tinh (tinh vi) + Chuẩn (chuẩn xác)",
+                etymology: "精 (Tinh - gạo đã giã trắng tinh, tinh túy) + 准 (Chuẩn - chuẩn mực). Độ chính xác cao đến từng chi tiết.",
+                exZh: "现代手术要求操作高度精准。", exPy: "Xiàndài shǒushù yāoqiú cāozuò gāodù jīngzhǔn.", exVi: "Phẫu thuật hiện đại đòi hỏi thao tác có độ chính xác cao."
+            },
+            {
+                id: "v30", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
+                hanzi: "评估", pinyin: "píng gū", tones: [2, 1], hanviet: "BÌNH CỔ", meaning: "Đánh giá, thẩm định",
+                hint: "Bình (bình xét) + Cổ (ước lượng giá trị)",
+                etymology: "评 (Bình - lời nói 讠 công bằng 平) + 估 (Cổ - ước tính giá trị). Xem xét toàn diện để đưa ra nhận định.",
+                exZh: "术前需要全面评估患者的状况。", exPy: "Shùqián xūyào quánmiàn pínggū huànzhě de zhuàngkuàng.", exVi: "Trước phẫu thuật cần đánh giá toàn diện tình trạng của bệnh nhân."
+            },
+            {
+                id: "v31", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
+                hanzi: "恢复", pinyin: "huī fù", tones: [1, 4], hanviet: "KHÔI PHỤC", meaning: "Hồi phục, khôi phục",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "恢 (Khôi - mở rộng trở lại, bộ Tâm 忄) + 复 (Phục - quay trở về trạng thái ban đầu).",
+                exZh: "术后恢复期需要保持良好的作息。", exPy: "Shùhòu huīfùqī xūyào bǎochí liánghǎo de zuòxī.", exVi: "Giai đoạn hồi phục sau mổ cần duy trì sinh hoạt điều độ."
+            },
+            {
+                id: "v32", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
+                hanzi: "机制", pinyin: "jī zhì", tones: [1, 4], hanviet: "CƠ CHẾ", meaning: "Cơ chế (sinh học, vận hành)",
+                hint: "Từ vựng chuẩn IELTS 7.0 ('mechanism')",
+                etymology: "机 (Cơ - bộ máy, điểm mấu chốt) + 制 (Chế - quy định, điều tiết). Nguyên lý vận hành bên trong một hệ thống.",
+                exZh: "科学家正在研究这一疾病的发病机制。", exPy: "Kēxuéjiā zhèngzài yánjiū zhè yī jíbìng de fābìng jīzhì.", exVi: "Các nhà khoa học đang nghiên cứu cơ chế bệnh sinh của căn bệnh này."
+            },
+            {
+                id: "v33", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
+                hanzi: "原则", pinyin: "yuán zé", tones: [2, 2], hanviet: "NGUYÊN TẮC", meaning: "Nguyên tắc",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "原 (Nguyên - nguồn suối) + 则 (Tắc - quy tắc, chuẩn mực). Quy chuẩn gốc không thể vi phạm.",
+                exZh: "安全永远是第一原则。", exPy: "Ānquán yǒngyuǎn shì dì-yī yuánzé.", exVi: "An toàn luôn là nguyên tắc hàng đầu."
+            },
+            {
+                id: "v34", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
+                hanzi: "认知", pinyin: "rèn zhī", tones: [4, 1], hanviet: "NHẬN TRI", meaning: "Nhận thức (cognition)",
+                hint: "Nhận (nhận biết) + Tri (tri thức)",
+                etymology: "认 (Nhận - nhận diện, bộ Ngôn 讠) + 知 (Tri - dùng mũi tên 矢 bắn trúng đích bằng lời nói 口 → hiểu biết).",
+                exZh: "认知负荷理论有助于优化学习设计。", exPy: "Rènzhī fùhè lǐlùn yǒuzhùyú yōuhuà xuéxí shèjì.", exVi: "Lý thuyết tải nhận thức giúp tối ưu hóa thiết kế học tập."
+            },
+
+            // BÀI 6: TƯ DUY HỌC THUẬT & THÀNH NGỮ HSK 5-6 (TƯƠNG ĐƯƠNG IELTS 7.0)
+            {
+                id: "v35", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "循序渐进", pinyin: "xún xù jiàn jìn", tones: [2, 4, 4, 4], hanviet: "TUẦN TỰ TIỆM TIẾN", meaning: "Tuân theo trình tự và tiến bộ từng bước vững chắc",
+                hint: "Thành ngữ 4 chữ chuẩn văn phong học thuật HSK 6",
+                etymology: "循 (Tuần - noi theo) + 序 (Tự - thứ tự) + 渐 (Tiệm - dần dần) + 进 (Tiến - tiến lên). Đi từng bước một theo đúng quy luật.",
+                exZh: "学习外语必须循序渐进，切忌急于求成。", exPy: "Xuéxí wàiyǔ bìxū xúnxù-jiànjìn, qièjì jíyú-qiúchéng.", exVi: "Học ngoại ngữ phải tuần tự tiệm tiến, tuyệt đối tránh nóng vội muốn thành ngay."
+            },
+            {
+                id: "v36", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "举一反三", pinyin: "jǔ yī fǎn sān", tones: [3, 1, 3, 1], hanviet: "CỬ NHẤT PHẢN TAM", meaning: "Học một biết ba, suy luận rộng ra từ một nguyên lý",
+                hint: "Thành ngữ mô tả tư duy hệ thống bậc cao",
+                etymology: "举 (Cử - nêu lên) + 一 (Nhất - một ví dụ) + 反 (Phản - suy ra) + 三 (Tam - ba trường hợp tương tự).",
+                exZh: "掌握了汉字偏旁，就能做到举一反三。", exPy: "Zhǎngwòle Hànzì piānpáng, jiù néng zuòdào jǔyī-fǎnsān.", exVi: "Nắm vững bộ thủ chữ Hán thì có thể đạt được trình độ học một biết ba."
+            },
+            {
+                id: "v37", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "客观", pinyin: "kè guān", tones: [4, 1], hanviet: "KHÁCH QUAN", meaning: "Khách quan",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "客 (Khách - bên ngoài) + 观 (Quan - nhìn nhận). Nhìn nhận sự vật đúng như bản chất bên ngoài của nó.",
+                exZh: "他总能保持冷静和客观的态度。", exPy: "Tā zǒng néng bǎochí lěngjìng hé kèguān de tàidù.", exVi: "Anh ấy luôn giữ được thái độ bình tĩnh và khách quan."
+            },
+            {
+                id: "v38", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "逻辑", pinyin: "luó ji", tones: [2, 5], hanviet: "LA TẬP", meaning: "Logic, tính hợp lý chặt chẽ",
+                hint: "Từ phiên âm kết hợp Hán Việt ('logic')",
+                etymology: "逻 (La - tuần tra, xâu chuỗi) + 辑 (Tập - gom lại thành hệ thống). Sự liên kết chặt chẽ giữa các luận điểm.",
+                exZh: "这篇文章的逻辑非常严密。", exPy: "Zhè piān wénzhāng de luóji fēicháng yánmì.", exVi: "Tính logic của bài viết này vô cùng chặt chẽ."
+            },
+            {
+                id: "v39", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "洞察", pinyin: "dòng chá", tones: [4, 2], hanviet: "ĐỘNG SÁT", meaning: "Nhìn thấu bản chất, thấu hiểu sâu sắc (insight)",
+                hint: "Động từ học thuật tương đương 'insight' trong IELTS 7.0",
+                etymology: "洞 (Động - xuyên thấu) + 察 (Sát - quan sát kỹ lưỡng). Nhìn xuyên qua bề ngoài để thấy cốt lõi bên trong.",
+                exZh: "优秀的学者具备敏锐的洞察力。", exPy: "Yōuxiù de xuézhě jùbèi mǐnruì de dòngchálì.", exVi: "Học giả xuất sắc sở hữu khả năng nhìn thấu bản chất nhạy bén."
+            },
+            {
+                id: "v40", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "潜移默化", pinyin: "qián yí mò huà", tones: [2, 2, 4, 4], hanviet: "TIỀM DI MẶC HÓA", meaning: "Thay đổi một cách âm thầm, tự nhiên mà sâu sắc",
+                hint: "Thành ngữ HSK 6 mô tả sự thẩm thấu ngôn ngữ",
+                etymology: "潜 (Tiềm - ngầm, sâu) + 移 (Di - dịch chuyển) + 默 (Mặc - im lặng) + 化 (Hóa - chuyển hóa). Sự biến đổi âm thầm qua tích lũy hằng ngày.",
+                exZh: "每天的阅读对思维有潜移默化的影响。", exPy: "Měitiān de yuèdú duì sīwéi yǒu qiányí-mòhuà de yǐngxiǎng.", exVi: "Việc đọc mỗi ngày có ảnh hưởng thẩm thấu âm thầm đến tư duy."
+            },
+            {
+                id: "v41", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "综合", pinyin: "zōng hé", tones: [1, 2], hanviet: "TỔNG HỢP", meaning: "Tổng hợp, toàn diện",
+                hint: "Từ vựng học thuật dùng trong đánh giá, phân tích",
+                etymology: "综 (Tổng - gom các sợi tơ lại, có bộ Mịch 纟) + 合 (Hợp - gộp chung lại). Gom nhiều yếu tố lại để đánh giá toàn diện.",
+                exZh: "我们需要综合考虑各方面的因素。", exPy: "Wǒmen xūyào zōnghé kǎolǜ gè fāngmiàn de yīnsù.", exVi: "Chúng ta cần xem xét tổng hợp các yếu tố từ mọi khía cạnh."
+            },
+            {
+                id: "v42", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "趋势", pinyin: "qū shì", tones: [1, 4], hanviet: "XU THẾ", meaning: "Xu thế, xu hướng phát triển",
+                hint: "Xu (hướng tới) + Thế (thế lực, tình hình)",
+                etymology: "趋 (Xu - chạy nhanh về một hướng, có bộ Tẩu 走) + 势 (Thế - tình thế, sức mạnh). Chiều hướng vận động tất yếu.",
+                exZh: "人工智能是未来发展的重要趋势。", exPy: "Réngōng zhìnéng shì wèilái fāzhǎn de zhòngyào qūshì.", exVi: "Trí tuệ nhân tạo là xu thế quan trọng của sự phát triển tương lai."
+            },
+            {
+                id: "v43", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
+                hanzi: "显著", pinyin: "xiǎn zhù", tones: [3, 4], hanviet: "HIỂN TRỨ", meaning: "Rõ rệt, đáng kể, nổi bật",
+                hint: "Tính từ học thuật tương đương 'significant' trong IELTS 7.0",
+                etymology: "显 (Hiển - hiện rõ ra ngoài) + 著 (Trứ - nổi bật, rõ ràng). Hiệu quả thể hiện rõ rệt, dễ nhận thấy.",
+                exZh: "坚持两年后，他的中文水平有了显著提高。", exPy: "Jiānchí liǎng nián hòu, tā de Zhōngwén shuǐpíng yǒule xiǎnzhù tígāo.", exVi: "Sau 2 năm kiên trì, trình độ tiếng Trung của anh ấy đã nâng cao rõ rệt."
+            },
+            {
+                id: "v44", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "权衡", pinyin: "quán héng", tones: [2, 2], hanviet: "QUYỀN HÀNH", meaning: "Cân nhắc, đong đếm thiệt hơn",
+                hint: "Động từ cấp cao trong ra quyết định",
+                etymology: "权 (Quyền - quả cân) + 衡 (Hành - đòn cân). Dùng cân để đo lường nặng nhẹ → cân nhắc lợi hại trước khi quyết định.",
+                exZh: "在做决定之前，必须权衡利弊。", exPy: "Zài zuò juédìng zhīqián, bìxū quánhéng lìbì.", exVi: "Trước khi đưa ra quyết định, bắt buộc phải cân nhắc lợi hại."
+            },
+            {
+                id: "v45", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
+                hanzi: "融会贯通", pinyin: "róng huì guàn tōng", tones: [2, 4, 4, 1], hanviet: "DUNG HỘI QUÁN THÔNG", meaning: "Hiểu thấu đáo và vận dụng linh hoạt mọi kiến thức",
+                hint: "Thành ngữ đỉnh cao của việc học tập",
+                etymology: "融 (Dung - hòa tan) + 会 (Hội - hội tụ) + 贯 (Quán - xuyên suốt) + 通 (Thông - thông suốt). Hòa quyện và thông suốt toàn bộ hệ thống kiến thức.",
+                exZh: "把新旧知识融会贯通，才能真正掌握一门语言。", exPy: "Bǎ xīn-jiù zhīshi rónghuì-guàntōng, cáinéng zhēnzhèng zhǎngwò yì mén yǔyán.", exVi: "Hòa quyện thông suốt kiến thức mới và cũ mới có thể thực sự làm chủ một ngôn ngữ."
+            }
+        ];
+
+        // ============================================================================
+        // 2. STATE MANAGEMENT, LOCALSTORAGE & AUTO CLOUD SYNC ENGINE
+        // ============================================================================
+        const STORAGE_KEY = 'hanngu_pro_2y_data_v1';
+        const SYNC_CONFIG_KEY = 'hanngu_pro_2y_sync_cfg_v1';
+
+        let appState = {
+            vocab: [],
+            srsProgress: {},
+            stats: {
+                streak: 1,
+                lastStudyDate: null,
+                dailyHistory: {},
+                totalReviews: 0,
+                correctReviews: 0
+            },
+            dailyNewLimit: 8,
+            selectedDeck: 'all',
+            theme: 'light',
+            lastUpdated: 0
+        };
+
+        let syncConfig = {
+            enabled: false,
+            provider: 'firebase',
+            firebaseUrl: '',
+            firebaseKey: 'hanngu_loc_2y',
+            githubToken: '',
+            gistId: ''
+        };
+
+        let syncDebounceTimer = null;
+        let isSyncing = false;
+        let studyQueue = [];
+        let currentCard = null;
+        let isCardRevealed = false;
+        let sessionSeconds = 0;
+        let timerInterval = null;
+        let hanziWriters = [];
+
+        function getTodayStr() {
+            const d = new Date();
+            return d.toISOString().split('T')[0];
+        }
+
+        function applyTheme(theme) {
+            const htmlEl = document.documentElement;
+            if (theme === 'dark') {
+                htmlEl.classList.add('dark');
+            } else {
+                htmlEl.classList.remove('dark');
+            }
+        }
+
+        function toggleTheme() {
+            appState.theme = appState.theme === 'dark' ? 'light' : 'dark';
+            applyTheme(appState.theme);
+            saveAppState(true);
+        }
+
+        function checkStreak() {
+            const today = getTodayStr();
+            const last = appState.stats.lastStudyDate;
+            if (!last) {
+                appState.stats.streak = 1;
+                return;
+            }
+            const lastDate = new Date(last);
+            const todayDate = new Date(today);
+            const diffDays = Math.floor((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+            if (diffDays > 1) {
+                appState.stats.streak = 0;
+            }
+        }
+
+        function loadAppState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    appState = { ...appState, ...parsed };
+                    const existingIds = new Set(appState.vocab.map(v => v.id));
+                    INITIAL_VOCABULARY.forEach(item => {
+                        if (!existingIds.has(item.id)) {
+                            appState.vocab.push(item);
+                        }
+                    });
+                } else {
+                    appState.vocab = [...INITIAL_VOCABULARY];
+                    appState.lastUpdated = Date.now();
+                }
+            } catch (e) {
+                console.error("Lỗi đọc dữ liệu cục bộ:", e);
+                appState.vocab = [...INITIAL_VOCABULARY];
+            }
+            applyTheme(appState.theme);
+            checkStreak();
+        }
+
+        function saveAppState(triggerCloud = true) {
+            try {
+                appState.lastUpdated = Date.now();
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+                if (triggerCloud && syncConfig.enabled) {
+                    scheduleCloudPush();
+                }
+            } catch (e) {
+                console.error("Lỗi lưu dữ liệu cục bộ:", e);
+            }
+        }
+
+        // ============================================================================
+        // 3. AUTO CLOUD SYNC ENGINE (FIREBASE & GITHUB GIST)
+        // ============================================================================
+        function loadSyncConfig() {
+            try {
+                const raw = localStorage.getItem(SYNC_CONFIG_KEY);
+                if (raw) {
+                    syncConfig = { ...syncConfig, ...JSON.parse(raw) };
+                }
+            } catch (e) {
+                console.error("Lỗi đọc cấu hình đồng bộ:", e);
+            }
+            updateSyncStatusUI();
+        }
+
+        function saveSyncConfigToLocal() {
+            localStorage.setItem(SYNC_CONFIG_KEY, JSON.stringify(syncConfig));
+        }
+
+        function updateSyncStatusUI(customText = null, state = 'idle') {
+            const dot = document.getElementById('sync-indicator-dot');
+            const text = document.getElementById('sync-status-text');
+            if (!dot || !text) return;
+
+            if (!syncConfig.enabled) {
+                dot.className = "w-2 h-2 rounded-full bg-slate-400";
+                text.textContent = "⚙️ Thiết lập đồng bộ";
+                return;
+            }
+
+            if (state === 'syncing') {
+                dot.className = "w-2 h-2 rounded-full bg-amber-400 animate-ping";
+                text.textContent = customText || "🔄 Đang đồng bộ...";
+            } else if (state === 'error') {
+                dot.className = "w-2 h-2 rounded-full bg-red-500";
+                text.textContent = customText || "⚠️ Lỗi đồng bộ";
+            } else {
+                dot.className = "w-2 h-2 rounded-full bg-emerald-500";
+                const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                text.textContent = customText || `☁️ Đã lưu ${timeStr}`;
+            }
+        }
+
+        function scheduleCloudPush() {
+            if (!syncConfig.enabled) return;
+            updateSyncStatusUI("🔄 Đang đồng bộ...", "syncing");
+            clearTimeout(syncDebounceTimer);
+            syncDebounceTimer = setTimeout(() => {
+                pushToCloud();
+            }, 300);
+        }
+
+        async function pushToCloud() {
+            if (!syncConfig.enabled || isSyncing) return;
+            isSyncing = true;
+            try {
+                if (syncConfig.provider === 'firebase' && syncConfig.firebaseUrl) {
+                    const baseUrl = syncConfig.firebaseUrl.replace(/\/$/, '');
+                    const key = (syncConfig.firebaseKey || 'hanngu_loc_2y').replace(/[^a-zA-Z0-9_-]/g, '');
+                    const res = await fetch(`${baseUrl}/users/${key}.json`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(appState)
+                    });
+                    if (!res.ok) throw new Error("Firebase PUT thất bại");
+                } else if (syncConfig.provider === 'gist' && syncConfig.githubToken) {
+                    const headers = {
+                        'Authorization': `token ${syncConfig.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    };
+                    const payload = {
+                        description: "HánNgữPro 2Y - Dữ liệu học tập đồng bộ tự động",
+                        public: false,
+                        files: {
+                            "hanngu_pro_2y_data.json": {
+                                content: JSON.stringify(appState, null, 2)
+                            }
+                        }
+                    };
+                    if (syncConfig.gistId) {
+                        const res = await fetch(`https://api.github.com/gists/${syncConfig.gistId}`, {
+                            method: 'PATCH',
+                            headers,
+                            body: JSON.stringify(payload)
+                        });
+                        if (!res.ok) throw new Error("Cập nhật Gist thất bại");
+                    } else {
+                        const res = await fetch(`https://api.github.com/gists`, {
+                            method: 'POST',
+                            headers,
+                            body: JSON.stringify(payload)
+                        });
+                        if (!res.ok) throw new Error("Tạo Gist mới thất bại");
+                        const data = await res.json();
+                        syncConfig.gistId = data.id;
+                        saveSyncConfigToLocal();
+                    }
+                }
+                updateSyncStatusUI(null, "success");
+            } catch (err) {
+                console.error("Cloud push error:", err);
+                updateSyncStatusUI("⚠️ Lỗi đồng bộ", "error");
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        async function pullFromCloud(forceOverwrite = false) {
+            if (!syncConfig.enabled || isSyncing) return;
+            isSyncing = true;
+            updateSyncStatusUI("🔄 Đang kiểm tra...", "syncing");
+            try {
+                let cloudData = null;
+                if (syncConfig.provider === 'firebase' && syncConfig.firebaseUrl) {
+                    const baseUrl = syncConfig.firebaseUrl.replace(/\/$/, '');
+                    const key = (syncConfig.firebaseKey || 'hanngu_loc_2y').replace(/[^a-zA-Z0-9_-]/g, '');
+                    const res = await fetch(`${baseUrl}/users/${key}.json`);
+                    if (res.ok) cloudData = await res.json();
+                } else if (syncConfig.provider === 'gist' && syncConfig.githubToken) {
+                    const headers = {
+                        'Authorization': `token ${syncConfig.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    };
+                    if (!syncConfig.gistId) {
+                        const listRes = await fetch(`https://api.github.com/gists`, { headers });
+                        if (listRes.ok) {
+                            const gists = await listRes.json();
+                            const found = gists.find(g => g.files && g.files["hanngu_pro_2y_data.json"]);
+                            if (found) {
+                                syncConfig.gistId = found.id;
+                                saveSyncConfigToLocal();
+                            }
+                        }
+                    }
+                    if (syncConfig.gistId) {
+                        const res = await fetch(`https://api.github.com/gists/${syncConfig.gistId}`, { headers });
+                        if (res.ok) {
+                            const gistObj = await res.json();
+                            const fileObj = gistObj.files["hanngu_pro_2y_data.json"];
+                            if (fileObj && fileObj.content) {
+                                cloudData = JSON.parse(fileObj.content);
+                            }
+                        }
+                    }
+                }
+
+                if (cloudData && cloudData.lastUpdated) {
+                    if (forceOverwrite || cloudData.lastUpdated > (appState.lastUpdated || 0)) {
+                        appState = { ...appState, ...cloudData };
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+                        applyTheme(appState.theme);
+                        refreshAllUI();
+                        showToast("☁️ Đã tải dữ liệu mới nhất từ đám mây!");
+                    } else if ((appState.lastUpdated || 0) > cloudData.lastUpdated) {
+                        isSyncing = false;
+                        await pushToCloud();
+                        return;
+                    }
+                } else if (appState.vocab.length > 0) {
+                    isSyncing = false;
+                    await pushToCloud();
+                    return;
+                }
+                updateSyncStatusUI(null, "success");
+            } catch (err) {
+                console.error("Cloud pull error:", err);
+                updateSyncStatusUI("⚠️ Lỗi tải dữ liệu", "error");
+            } finally {
+                isSyncing = false;
+            }
+        }
+
+        // ============================================================================
+        // 4. THUẬT TOÁN SRS (SM-2) & XÂY DỰNG HÀNG ĐỢI HỌC TẬP
+        // ============================================================================
+        function calculateNextSRS(cardId, quality) {
+            const now = Date.now();
+            const current = appState.srsProgress[cardId] || {
+                reps: 0,
+                interval: 0,
+                easeFactor: 2.5,
+                dueDate: now,
+                status: 'new'
+            };
+
+            let { reps, interval, easeFactor } = current;
+            let status = 'learning';
+
+            if (quality === 1) {
+                reps = 0;
+                interval = 1 / (24 * 60);
+                easeFactor = Math.max(1.3, easeFactor - 0.2);
+                status = 'learning';
+            } else if (quality === 2) {
+                if (reps === 0) interval = 0.5;
+                else interval = Math.max(1, interval * 1.2);
+                easeFactor = Math.max(1.3, easeFactor - 0.15);
+                reps += 1;
+                status = interval >= 21 ? 'mastered' : 'learning';
+            } else if (quality === 3) {
+                if (reps === 0) interval = 1;
+                else if (reps === 1) interval = 3;
+                else interval = Math.round(interval * easeFactor);
+                reps += 1;
+                status = interval >= 21 ? 'mastered' : 'learning';
+            } else if (quality === 4) {
+                if (reps === 0) interval = 4;
+                else if (reps === 1) interval = 7;
+                else interval = Math.round(interval * easeFactor * 1.3);
+                easeFactor += 0.15;
+                reps += 1;
+                status = interval >= 21 ? 'mastered' : 'learning';
+            }
+
+            const dueDate = now + interval * 24 * 60 * 60 * 1000;
+            return { reps, interval, easeFactor, dueDate, status };
+        }
+
+        function formatIntervalLabel(days) {
+            if (days < 1 / 24) return `${Math.max(1, Math.round(days * 24 * 60))} phút`;
+            if (days < 1) return `${Math.round(days * 24)} giờ`;
+            if (days < 30) return `${Math.round(days)} ngày`;
+            return `${(days / 30).toFixed(1)} tháng`;
+        }
+
+        function buildStudyQueue() {
+            const now = Date.now();
+            const deckFilter = appState.selectedDeck;
+            const filteredVocab = deckFilter === 'all'
+                ? appState.vocab
+                : appState.vocab.filter(v => v.lesson === deckFilter);
+
+            const dueCards = [];
+            const newCards = [];
+
+            filteredVocab.forEach(card => {
+                const prog = appState.srsProgress[card.id];
+                if (!prog) {
+                    newCards.push({ ...card, queueType: 'new' });
+                } else if (prog.dueDate <= now) {
+                    dueCards.push({ ...card, queueType: 'due' });
+                }
+            });
+
+            const todayStr = getTodayStr();
+            const reviewedToday = appState.stats.dailyHistory[todayStr] || 0;
+            const remainingNewQuota = Math.max(0, (appState.dailyNewLimit || 8) - Math.min(reviewedToday, appState.dailyNewLimit || 8));
+            const selectedNew = newCards.slice(0, remainingNewQuota || Math.min(newCards.length, appState.dailyNewLimit || 8));
+
+            studyQueue = [...dueCards, ...selectedNew];
+            updateHeaderStats();
+        }
+
+        // ============================================================================
+        // 5. HIỂN THỊ THẺ FLASHCARD, ÂM THANH & MÔ PHỎNG NÉT VIẾT
+        // ============================================================================
+        function renderCurrentCard() {
+            const cardContainer = document.getElementById('flashcard-container');
+            const emptyState = document.getElementById('session-complete-state');
+            const frontPanel = document.getElementById('card-front');
+            const backPanel = document.getElementById('card-back');
+            const strokeBox = document.getElementById('stroke-order-box');
+
+            if (strokeBox) strokeBox.classList.add('hidden');
+            isCardRevealed = false;
+
+            if (studyQueue.length === 0) {
+                if (cardContainer) cardContainer.classList.add('hidden');
+                if (emptyState) emptyState.classList.remove('hidden');
+                return;
+            }
+
+            if (cardContainer) cardContainer.classList.remove('hidden');
+            if (emptyState) emptyState.classList.add('hidden');
+            if (frontPanel) frontPanel.classList.remove('hidden');
+            if (backPanel) backPanel.classList.add('hidden');
+
+            currentCard = studyQueue[0];
+
+            const badgeEl = document.getElementById('card-type-badge');
+            if (badgeEl) {
+                badgeEl.textContent = currentCard.queueType === 'new' ? 'Từ mới' : 'Cần ôn tập';
+                badgeEl.className = currentCard.queueType === 'new'
+                    ? 'px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300'
+                    : 'px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300';
+            }
+
+            const levelEl = document.getElementById('card-level-badge');
+            if (levelEl) levelEl.textContent = `${currentCard.level} • ${currentCard.lesson.split(':')[0]}`;
+
+            const hanziFront = document.getElementById('card-hanzi-front');
+            if (hanziFront) hanziFront.textContent = currentCard.hanzi;
+
+            const hintEl = document.getElementById('card-hint-text');
+            if (hintEl) hintEl.textContent = currentCard.hint || '';
+
+            const hanziBack = document.getElementById('card-hanzi-back');
+            if (hanziBack) hanziBack.textContent = currentCard.hanzi;
+
+            const pinyinBack = document.getElementById('card-pinyin-back');
+            if (pinyinBack) pinyinBack.innerHTML = renderToneColoredPinyin(currentCard.pinyin, currentCard.tones);
+
+            const hanvietBack = document.getElementById('card-hanviet-back');
+            if (hanvietBack) hanvietBack.textContent = currentCard.hanviet;
+
+            const meaningBack = document.getElementById('card-meaning-back');
+            if (meaningBack) meaningBack.textContent = currentCard.meaning;
+
+            const etymologyBack = document.getElementById('card-etymology-back');
+            if (etymologyBack) etymologyBack.textContent = currentCard.etymology;
+
+            const exZh = document.getElementById('card-example-zh');
+            if (exZh) exZh.textContent = currentCard.exZh;
+
+            const exPy = document.getElementById('card-example-py');
+            if (exPy) exPy.textContent = currentCard.exPy;
+
+            const exVi = document.getElementById('card-example-vi');
+            if (exVi) exVi.textContent = currentCard.exVi;
+
+            [1, 2, 3, 4].forEach(q => {
+                const sim = calculateNextSRS(currentCard.id, q);
+                const lbl = document.getElementById(`interval-${q}`);
+                if (lbl) lbl.textContent = formatIntervalLabel(sim.interval);
+            });
+
+            speakText(currentCard.hanzi, 1.0);
+        }
+
+        function renderToneColoredPinyin(pinyinStr, tones = []) {
+            const syllables = pinyinStr.trim().split(/\s+/);
+            const toneClasses = {
+                1: 'text-rose-600 dark:text-rose-400',
+                2: 'text-emerald-600 dark:text-emerald-400',
+                3: 'text-blue-600 dark:text-blue-400',
+                4: 'text-purple-600 dark:text-purple-400',
+                5: 'text-slate-500 dark:text-slate-400'
+            };
+            return syllables.map((syl, idx) => {
+                const t = tones[idx] || 5;
+                return `<span class="${toneClasses[t] || toneClasses[5]} font-bold">${syl}</span>`;
+            }).join(' ');
+        }
+
+        function revealCard() {
+            if (!currentCard || isCardRevealed) return;
+            isCardRevealed = true;
+            const frontPanel = document.getElementById('card-front');
+            const backPanel = document.getElementById('card-back');
+            if (frontPanel) frontPanel.classList.add('hidden');
+            if (backPanel) backPanel.classList.remove('hidden');
+        }
+
+        function rateCard(quality) {
+            if (!currentCard || !isCardRevealed) return;
+
+            const nextSRS = calculateNextSRS(currentCard.id, quality);
+            appState.srsProgress[currentCard.id] = nextSRS;
+
+            const today = getTodayStr();
+            appState.stats.dailyHistory[today] = (appState.stats.dailyHistory[today] || 0) + 1;
+            appState.stats.totalReviews += 1;
+            if (quality >= 3) appState.stats.correctReviews += 1;
+
+            if (appState.stats.lastStudyDate !== today) {
+                const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+                if (appState.stats.lastStudyDate === yesterday) {
+                    appState.stats.streak += 1;
+                } else {
+                    appState.stats.streak = 1;
+                }
+                appState.stats.lastStudyDate = today;
+            }
+
+            const finishedCard = studyQueue.shift();
+            if (quality === 1) {
+                studyQueue.splice(Math.min(2, studyQueue.length), 0, { ...finishedCard, queueType: 'due' });
+            }
+
+            saveAppState(true);
+            updateHeaderStats();
+            renderCurrentCard();
+        }
+
+        function speakText(text, rate = 1.0) {
+            if (!text || !('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const utter = new SpeechSynthesisUtterance(text);
+                utter.lang = 'zh-CN';
+                utter.rate = rate;
+                window.speechSynthesis.speak(utter);
+            } catch (e) {
+                console.warn("Trình duyệt không hỗ trợ đọc giọng nói:", e);
+            }
+        }
+
+        function toggleStrokeOrder() {
+            const box = document.getElementById('stroke-order-box');
+            const target = document.getElementById('hanzi-writer-target');
+            if (!box || !target || !currentCard) return;
+
+            if (!box.classList.contains('hidden')) {
+                box.classList.add('hidden');
+                return;
+            }
+
+            box.classList.remove('hidden');
+            target.innerHTML = '';
+            hanziWriters = [];
+
+            if (typeof HanziWriter === 'undefined') {
+                target.innerHTML = '<p class="text-xs text-slate-400">Đang tải thư viện mô phỏng nét viết...</p>';
+                return;
+            }
+
+            const chars = currentCard.hanzi.split('');
+            chars.forEach((ch, idx) => {
+                const div = document.createElement('div');
+                div.id = `hw-char-${idx}`;
+                div.className = 'inline-block bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-1 shadow-xs';
+                target.appendChild(div);
+
+                const writer = HanziWriter.create(`hw-char-${idx}`, ch, {
+                    width: 84,
+                    height: 84,
+                    padding: 5,
+                    strokeColor: appState.theme === 'dark' ? '#f8fafc' : '#1e293b',
+                    radicalColor: '#e11d48',
+                    showOutline: true,
+                    strokeAnimationSpeed: 1.2,
+                    delayBetweenStrokes: 180
+                });
+                writer.loopCharacterAnimation();
+                hanziWriters.push(writer);
+            });
+        }
+
+        // ============================================================================
+        // 6. CẬP NHẬT THỐNG KÊ, THƯ VIỆN TỪ VỰNG & ĐIỀU HƯỚNG TAB
+        // ============================================================================
+        function switchTab(tabName) {
+            ['study', 'roadmap', 'library'].forEach(t => {
+                const view = document.getElementById(`view-${t}`);
+                const btn = document.getElementById(`tab-${t}`);
+                if (view) view.classList.toggle('hidden', t !== tabName);
+                if (btn) {
+                    if (t === tabName) {
+                        btn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow-sm transition-all cursor-pointer";
+                    } else {
+                        btn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer";
+                    }
+                }
+            });
+
+            if (tabName === 'library') renderLibraryTable();
+            if (tabName === 'roadmap') updateRoadmapStats();
+        }
+
+        function updateHeaderStats() {
+            const streakEl = document.getElementById('stat-streak');
+            if (streakEl) streakEl.textContent = `${appState.stats.streak || 0} ngày`;
+
+            const queueEl = document.getElementById('stat-queue-count');
+            if (queueEl) queueEl.textContent = `${studyQueue.length} thẻ`;
+
+            const masteredCount = Object.values(appState.srsProgress).filter(p => p.status === 'mastered').length;
+            const learningCount = Object.values(appState.srsProgress).filter(p => p.status === 'learning').length;
+            const masteredEl = document.getElementById('stat-mastered');
+            if (masteredEl) masteredEl.textContent = `${masteredCount + learningCount} / ${appState.vocab.length}`;
+        }
+
+        function updateRoadmapStats() {
+            const totalLearned = Object.keys(appState.srsProgress).length;
+            const targetTotal = 4500;
+            const pct = Math.min(100, ((totalLearned / targetTotal) * 100)).toFixed(1);
+
+            const bar = document.getElementById('roadmap-progress-bar');
+            if (bar) bar.style.width = `${Math.max(2, pct)}%`;
+
+            const text = document.getElementById('roadmap-progress-text');
+            if (text) text.textContent = `${totalLearned} / ${targetTotal} từ (${pct}%)`;
+        }
+
+        function populateDeckSelector() {
+            const select = document.getElementById('deck-selector');
+            if (!select) return;
+            const lessons = [...new Set(appState.vocab.map(v => v.lesson))];
+            select.innerHTML = `<option value="all">Tất cả bài học (${appState.vocab.length} từ)</option>` +
+                lessons.map(l => `<option value="${l}" ${appState.selectedDeck === l ? 'selected' : ''}>${l}</option>`).join('');
+        }
+
+        function changeDeck(deckValue) {
+            appState.selectedDeck = deckValue;
+            saveAppState(false);
+            buildStudyQueue();
+            renderCurrentCard();
+        }
+
+        function startExtraPractice() {
+            const shuffled = [...appState.vocab].sort(() => Math.random() - 0.5).slice(0, 8);
+            studyQueue = shuffled.map(c => ({ ...c, queueType: 'due' }));
+            updateHeaderStats();
+            renderCurrentCard();
+            showToast("Đã nạp thêm 8 thẻ ôn tập mở rộng!");
+        }
+
+        function renderLibraryTable() {
+            const tbody = document.getElementById('library-table-body');
+            const searchInput = document.getElementById('library-search');
+            const levelFilter = document.getElementById('library-level-filter');
+            if (!tbody) return;
+
+            const q = (searchInput ? searchInput.value : '').toLowerCase().trim();
+            const lvl = levelFilter ? levelFilter.value : 'all';
+
+            const filtered = appState.vocab.filter(item => {
+                const matchLvl = lvl === 'all' || item.level === lvl;
+                const matchQ = !q ||
+                    item.hanzi.includes(q) ||
+                    item.pinyin.toLowerCase().includes(q) ||
+                    item.hanviet.toLowerCase().includes(q) ||
+                    item.meaning.toLowerCase().includes(q);
+                return matchLvl && matchQ;
+            });
+
+            tbody.innerHTML = filtered.map(item => {
+                const prog = appState.srsProgress[item.id];
+                let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">Chưa học</span>`;
+                if (prog) {
+                    statusBadge = prog.status === 'mastered'
+                        ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">Thành thạo</span>`
+                        : `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">Đang nhớ</span>`;
+                }
+                return `
+                    <tr class="border-b border-slate-100 dark:border-slate-800/80 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
+                        <td class="py-3 px-3 font-bold text-lg text-slate-900 dark:text-white">
+                            <button onclick="speakText('${item.hanzi}')" class="hover:text-rose-600 cursor-pointer" title="Nghe phát âm">${item.hanzi}</button>
+                        </td>
+                        <td class="py-3 px-3 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">${item.pinyin}</td>
+                        <td class="py-3 px-3 text-xs font-bold text-rose-600 dark:text-rose-400">${item.hanviet}</td>
+                        <td class="py-3 px-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200">${item.meaning}</td>
+                        <td class="py-3 px-3 text-xs"><span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-semibold">${item.level}</span></td>
+                        <td class="py-3 px-3">${statusBadge}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ============================================================================
+        // 7. MODALS (THÊM THẺ MỚI, CẤU HÌNH ĐỒNG BỘ, XUẤT/NHẬP JSON) & PHÍM TẮT
+        // ============================================================================
+        function openAddCardModal() {
+            const modal = document.getElementById('add-card-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeAddCardModal() {
+            const modal = document.getElementById('add-card-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function handleAddCardSubmit(e) {
+            e.preventDefault();
+            const hanzi = document.getElementById('new-hanzi').value.trim();
+            const pinyin = document.getElementById('new-pinyin').value.trim();
+            const hanviet = document.getElementById('new-hanviet').value.trim().toUpperCase();
+            const meaning = document.getElementById('new-meaning').value.trim();
+            const level = document.getElementById('new-level').value;
+            const etymology = document.getElementById('new-etymology').value.trim() || `Từ vựng tự thêm (${hanviet}).`;
+            const exZh = document.getElementById('new-ex-zh').value.trim() || hanzi;
+            const exPy = document.getElementById('new-ex-py').value.trim() || pinyin;
+            const exVi = document.getElementById('new-ex-vi').value.trim() || meaning;
+
+            if (!hanzi || !pinyin || !meaning) return;
+
+            const newCard = {
+                id: 'custom_' + Date.now(),
+                lesson: `Từ tự thêm (${level})`,
+                level,
+                hanzi,
+                pinyin,
+                tones: [],
+                hanviet: hanviet || 'TỰ THÊM',
+                meaning,
+                hint: `Âm Hán Việt: ${hanviet}`,
+                etymology,
+                exZh,
+                exPy,
+                exVi
+            };
+
+            appState.vocab.unshift(newCard);
+            saveAppState(true);
+            populateDeckSelector();
+            buildStudyQueue();
+            renderLibraryTable();
+            closeAddCardModal();
+            e.target.reset();
+            showToast(`✅ Đã thêm thẻ "${hanzi}" và đồng bộ!`);
+        }
+
+        function openSyncModal() {
+            const modal = document.getElementById('sync-modal');
+            if (!modal) return;
+            selectSyncProvider(syncConfig.provider || 'firebase');
+            document.getElementById('sync-firebase-url').value = syncConfig.firebaseUrl || '';
+            document.getElementById('sync-firebase-key').value = syncConfig.firebaseKey || 'hanngu_loc_2y';
+            document.getElementById('sync-github-token').value = syncConfig.githubToken || '';
+            document.getElementById('sync-github-gist-id').value = syncConfig.gistId || '';
+            document.getElementById('setting-daily-new').value = appState.dailyNewLimit || 8;
+            modal.classList.remove('hidden');
+        }
+
+        function closeSyncModal() {
+            const modal = document.getElementById('sync-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function selectSyncProvider(provider) {
+            syncConfig.provider = provider;
+            const pFb = document.getElementById('sync-panel-firebase');
+            const pGist = document.getElementById('sync-panel-gist');
+            const bFb = document.getElementById('btn-provider-firebase');
+            const bGist = document.getElementById('btn-provider-gist');
+
+            if (provider === 'firebase') {
+                pFb.classList.remove('hidden');
+                pGist.classList.add('hidden');
+                bFb.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer";
+                bGist.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer";
+            } else {
+                pFb.classList.add('hidden');
+                pGist.classList.remove('hidden');
+                bGist.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer";
+                bFb.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer";
+            }
+        }
+
+        async function saveSyncSettings() {
+            const newLimit = parseInt(document.getElementById('setting-daily-new').value, 10);
+            if (!isNaN(newLimit) && newLimit >= 1 && newLimit <= 50) {
+                appState.dailyNewLimit = newLimit;
+            }
+
+            if (syncConfig.provider === 'firebase') {
+                const url = document.getElementById('sync-firebase-url').value.trim();
+                const key = document.getElementById('sync-firebase-key').value.trim() || 'hanngu_loc_2y';
+                if (!url) {
+                    showToast("⚠️ Vui lòng nhập Firebase Realtime Database URL!");
+                    return;
+                }
+                syncConfig.firebaseUrl = url;
+                syncConfig.firebaseKey = key;
+                syncConfig.enabled = true;
+            } else {
+                const token = document.getElementById('sync-github-token').value.trim();
+                const gistId = document.getElementById('sync-github-gist-id').value.trim();
+                if (!token) {
+                    showToast("⚠️ Vui lòng nhập GitHub Personal Access Token!");
+                    return;
+                }
+                syncConfig.githubToken = token;
+                syncConfig.gistId = gistId;
+                syncConfig.enabled = true;
+            }
+
+            saveSyncConfigToLocal();
+            saveAppState(false);
+            closeSyncModal();
+            await pullFromCloud(false);
+        }
+
+        function disconnectSync() {
+            syncConfig.enabled = false;
+            saveSyncConfigToLocal();
+            updateSyncStatusUI();
+            closeSyncModal();
+            showToast("Đã ngắt kết nối đồng bộ đám mây.");
+        }
+
+        async function manualSyncNow() {
+            if (!syncConfig.enabled) {
+                showToast("⚠️ Bạn chưa cấu hình đồng bộ đám mây.");
+                return;
+            }
+            await pullFromCloud(false);
+        }
+
+        function exportData() {
+            const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `HanNguPro2Y_Backup_${getTodayStr()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast("📦 Đã xuất file sao lưu JSON!");
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && Array.isArray(imported.vocab)) {
+                        appState = { ...appState, ...imported };
+                        saveAppState(true);
+                        refreshAllUI();
+                        showToast("✅ Đã khôi phục dữ liệu thành công!");
+                    } else {
+                        showToast("⚠️ File JSON không hợp lệ.");
+                    }
+                } catch (err) {
+                    showToast("⚠️ Lỗi đọc file JSON.");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('toast-banner');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-banner';
+                toast.className = 'fixed bottom-5 right-5 z-50 px-4 py-2.5 rounded-2xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 text-xs sm:text-sm font-semibold shadow-xl transition-opacity duration-300';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.style.opacity = '1';
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => {
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        function startSessionTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                sessionSeconds += 1;
+                const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+                const secs = String(sessionSeconds % 60).padStart(2, '0');
+                const timerEl = document.getElementById('session-timer');
+                if (timerEl) timerEl.textContent = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function refreshAllUI() {
+            populateDeckSelector();
+            buildStudyQueue();
+            renderCurrentCard();
+            updateRoadmapStats();
+            renderLibraryTable();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (!isCardRevealed) revealCard();
+            } else if (e.key.toLowerCase() === 'r') {
+                if (currentCard) speakText(currentCard.hanzi, 1.0);
+            } else if (['1', '2', '3', '4'].includes(e.key) && isCardRevealed) {
+                rateCard(parseInt(e.key, 10));
+            }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible' && syncConfig.enabled) {
+                pullFromCloud(false);
+            }
+        });
+
+        window.addEventListener('focus', () => {
+            if (syncConfig.enabled) {
+                pullFromCloud(false);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadAppState();
+            loadSyncConfig();
+            refreshAllUI();
+            startSessionTimer();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            if (syncConfig.enabled) {
+                pullFromCloud(false);
+            }
+        });
+    </script>
+</body>
+</html>
