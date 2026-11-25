@@ -71,11 +71,6 @@
                     <span id="sync-status-text" class="truncate max-w-[110px] sm:max-w-[170px]">⚙️ Thiết lập đồng bộ</span>
                 </button>
 
-                <div class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200/60 dark:border-amber-800/40 text-amber-700 dark:text-amber-300 text-xs font-semibold" title="Thời gian học phiên hôm nay">
-                    <i data-lucide="timer" class="w-3.5 h-3.5"></i>
-                    <span id="session-timer">00:00</span> / 15:00
-                </div>
-
                 <button onclick="toggleTheme()" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer" title="Đổi giao diện Sáng/Tối">
                     <i data-lucide="moon" class="w-4 h-4 hidden dark:block"></i>
                     <i data-lucide="sun" class="w-4 h-4 block dark:hidden"></i>
@@ -349,12 +344,16 @@
 
         <!-- ==================== VIEW 1.5: PINYIN & 4 TONES LAB (FOR COMPLETE BEGINNERS) ==================== -->
         <section id="view-pinyin" class="hidden space-y-6">
+            <!-- BƯỚC 0: 4 THANH ĐIỆU -->
             <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
-                <div>
-                    <h2 class="text-lg sm:text-xl font-extrabold">Bước đệm 0: Làm chủ 4 Thanh điệu Tiếng Trung</h2>
-                    <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-                        Tiếng Trung khác tiếng Việt ở chỗ cao độ quyết định nghĩa. Bấm vào từng thẻ bên dưới để nghe sự khác biệt giữa 4 thanh với cùng một âm <strong>"ma"</strong>:
-                    </p>
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div>
+                        <span class="px-2.5 py-0.5 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 text-[11px] font-extrabold uppercase tracking-wider">Bước đệm 0 / 2</span>
+                        <h2 class="text-lg sm:text-xl font-extrabold mt-1">Làm chủ 4 Thanh điệu Tiếng Trung</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+                            Tiếng Trung khác tiếng Việt ở chỗ cao độ quyết định nghĩa. Bấm vào từng thẻ bên dưới để nghe sự khác biệt giữa 4 thanh với cùng một âm <strong>"ma"</strong>:
+                        </p>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -396,14 +395,71 @@
                 </div>
             </div>
 
-            <!-- Tricky Initials for Vietnamese Learners -->
+            <!-- BƯỚC 1: BẢNG PHỤ ÂM & NGUYÊN ÂM CỐT LÕI -->
             <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-4">
                 <div>
-                    <h3 class="text-base sm:text-lg font-extrabold">Nhóm phụ âm dễ nhầm nhất với người Việt (Bấm để nghe)</h3>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Chỉ cần nắm vững 6 cặp âm bật hơi / uốn lưỡi này, bạn sẽ đọc chuẩn 95% bảng Pinyin.</p>
+                    <span class="px-2.5 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 text-[11px] font-extrabold uppercase tracking-wider">Bước đệm 1 / 2</span>
+                    <h3 class="text-base sm:text-lg font-extrabold mt-1">Bảng Phụ âm & Vận mẫu (Nguyên âm) cốt lõi</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Bấm vào từng âm để nghe cách phát âm chuẩn bản xứ và mẹo đối chiếu tiếng Việt.</p>
                 </div>
-                <div id="pinyin-tricky-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
-                    <!-- Populated via JS -->
+
+                <div class="space-y-2">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400">1A. Nhóm phụ âm dễ nhầm nhất với người Việt</p>
+                    <div id="pinyin-tricky-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5"></div>
+                </div>
+
+                <div class="space-y-2 pt-2">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400">1B. Các vận mẫu (vần) nền tảng thường gặp</p>
+                    <div id="pinyin-finals-grid" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-2.5"></div>
+                </div>
+            </div>
+
+            <!-- BƯỚC 2: QUY TẮC BIẾN ĐIỆU & BỘ THỦ CƠ BẢN -->
+            <div class="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-xs space-y-5">
+                <div>
+                    <span class="px-2.5 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 text-[11px] font-extrabold uppercase tracking-wider">Bước đệm 2 / 2</span>
+                    <h3 class="text-base sm:text-lg font-extrabold mt-1">Quy tắc Biến điệu & 8 Bộ thủ "Gốc" của chữ Hán</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Nắm 2 quy tắc đọc thực tế và 8 bộ thủ cấu tạo nên 70% từ vựng HSK 1–3 trước khi bước vào thẻ học.</p>
+                </div>
+
+                <!-- Quy tắc biến điệu -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-extrabold text-rose-600 dark:text-rose-400">QUY TẮC 1: HAI THANH 3 ĐI LIỀN NHAU</span>
+                            <button onclick="speakText('你好', 0.85)" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 text-xs font-semibold flex items-center gap-1 shadow-2xs cursor-pointer">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-rose-600"></i> Nghe "nǐ hǎo"
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Khi 2 chữ thanh 3 đứng cạnh nhau, chữ thứ nhất tự động biến thành <strong>Thanh 2</strong> cho dễ đọc. Ví dụ: <strong>nǐ hǎo</strong> (你好) đọc thành <strong>ní hǎo</strong>.
+                        </p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-extrabold text-indigo-600 dark:text-indigo-400">QUY TẮC 2: BIẾN ĐIỆU CỦA "BẤT" (不 - bù)</span>
+                            <button onclick="speakText('不是', 0.85)" class="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-700 text-xs font-semibold flex items-center gap-1 shadow-2xs cursor-pointer">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5 text-indigo-600"></i> Nghe "bú shì"
+                            </button>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Chữ <strong>不 (bù - không)</strong> khi đứng trước một chữ Thanh 4 sẽ đổi thành Thanh 2 (<strong>bú</strong>). Ví dụ: <strong>bù + shì</strong> đọc là <strong>bú shì</strong> (Không phải).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 8 Bộ thủ cơ bản -->
+                <div class="space-y-2">
+                    <p class="text-xs font-bold uppercase tracking-wider text-slate-400">8 Bộ thủ nhận diện nghĩa chữ Hán (Bấm để nghe)</p>
+                    <div id="pinyin-radicals-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5"></div>
+                </div>
+
+                <div class="pt-2 flex justify-end">
+                    <button onclick="switchTab('study')" class="px-6 py-3 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white text-xs sm:text-sm font-bold shadow-sm flex items-center gap-2 cursor-pointer">
+                        Đã nắm vững nền tảng → Vào học từ vựng Bài 1
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -1096,6 +1152,26 @@
             { py: "xué", hanzi: "学", tip: "Tròn môi 'ü': 'xuyế'" }
         ];
 
+        const PINYIN_FINALS_SAMPLES = [
+            { py: "ā", hanzi: "啊", tip: "Đọc mở rộng: 'a'" },
+            { py: "ō", hanzi: "喔", tip: "Tròn môi: 'ô'" },
+            { py: "ē", hanzi: "鹅", tip: "Nửa 'ơ' nửa 'ưa'" },
+            { py: "yī", hanzi: "一", tip: "Đọc như 'i' Việt" },
+            { py: "wū", hanzi: "五", tip: "Tròn môi: 'u'" },
+            { py: "yú", hanzi: "鱼", tip: "Môi tròn 'u' đọc 'i'" }
+        ];
+
+        const CORE_RADICALS_SAMPLES = [
+            { radical: "亻", name: "Nhân đứng", hanzi: "你", meaning: "Liên quan đến con người (你, 他, 们)" },
+            { radical: "讠", name: "Ngôn (lời nói)", hanzi: "谢", meaning: "Liên quan đến ngôn ngữ, nói năng (谢, 语, 认)" },
+            { radical: "氵", name: "Thủy (nước)", hanzi: "法", meaning: "Liên quan đến chất lỏng, dòng chảy (法, 决, 注)" },
+            { radical: "忄", name: "Tâm đứng", hanzi: "惯", meaning: "Liên quan đến tâm lý, tình cảm (惯, 恢, 忙)" },
+            { radical: "口", name: "Khẩu (miệng)", hanzi: "问", meaning: "Liên quan đến miệng, ăn uống, hỏi (问, 吃, 响)" },
+            { radical: "日", name: "Nhật (mặt trời)", hanzi: "时", meaning: "Liên quan đến thời gian, ánh sáng (时, 间, 明)" },
+            { radical: "木", name: "Mộc (cây gỗ)", hanzi: "构", meaning: "Liên quan đến cây cối, cấu trúc (构, 机, 树)" },
+            { radical: "扌", name: "Thủ (bàn tay)", hanzi: "择", meaning: "Liên quan đến hành động tay (择, 据, 打)" }
+        ];
+
         let syncConfig = {
             enabled: false,
             provider: 'firebase',
@@ -1109,8 +1185,6 @@
         let currentCard = null;
         let isCardRevealed = false;
         let hanziWriters = [];
-        let sessionSeconds = 0;
-        let timerInterval = null;
         let cloudSyncTimer = null;
         let isSyncingNow = false;
 
@@ -1749,15 +1823,68 @@
 
         function renderPinyinLab() {
             const grid = document.getElementById('pinyin-tricky-grid');
-            if (!grid) return;
-            grid.innerHTML = PINYIN_TRICKY_SAMPLES.map(item => `
-                <button type="button" onclick="speakText('${item.hanzi}', 0.8)"
-                    class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-slate-200 dark:border-slate-700 text-center transition-all cursor-pointer space-y-1">
-                    <div class="text-lg font-extrabold text-rose-600 dark:text-rose-400">${item.py}</div>
-                    <div class="font-chinese text-xl font-bold">${item.hanzi}</div>
-                    <div class="text-[11px] text-slate-500 dark:text-slate-400">${item.tip}</div>
-                </button>
-            `).join('');
+            if (grid) {
+                grid.innerHTML = PINYIN_TRICKY_SAMPLES.map(item => `
+                    <button type="button" onclick="speakText('${item.hanzi}', 0.8)"
+                        class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-rose-50 dark:hover:bg-rose-950/30 border border-slate-200 dark:border-slate-700 text-center transition-all cursor-pointer space-y-1">
+                        <div class="text-lg font-extrabold text-rose-600 dark:text-rose-400">${item.py}</div>
+                        <div class="font-chinese text-xl font-bold">${item.hanzi}</div>
+                        <div class="text-[11px] text-slate-500 dark:text-slate-400">${item.tip}</div>
+                    </button>
+                `).join('');
+            }
+
+            const finalsGrid = document.getElementById('pinyin-finals-grid');
+            if (finalsGrid) {
+                finalsGrid.innerHTML = PINYIN_FINALS_SAMPLES.map(item => `
+                    <button type="button" onclick="speakText('${item.hanzi}', 0.8)"
+                        class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-amber-50 dark:hover:bg-amber-950/30 border border-slate-200 dark:border-slate-700 text-center transition-all cursor-pointer space-y-1">
+                        <div class="text-lg font-extrabold text-amber-600 dark:text-amber-400">${item.py}</div>
+                        <div class="font-chinese text-xl font-bold">${item.hanzi}</div>
+                        <div class="text-[11px] text-slate-500 dark:text-slate-400">${item.tip}</div>
+                    </button>
+                `).join('');
+            }
+
+            const radicalsGrid = document.getElementById('pinyin-radicals-grid');
+            if (radicalsGrid) {
+                radicalsGrid.innerHTML = CORE_RADICALS_SAMPLES.map(item => `
+                    <button type="button" onclick="speakText('${item.hanzi}', 0.85)"
+                        class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 hover:bg-emerald-50 dark:hover:bg-emerald-950/30 border border-slate-200 dark:border-slate-700 text-left transition-all cursor-pointer space-y-1">
+                        <div class="flex items-center justify-between">
+                            <span class="font-chinese text-2xl font-bold text-rose-600 dark:text-rose-400">${item.radical}</span>
+                            <span class="text-xs font-bold text-slate-700 dark:text-slate-200">${item.name}</span>
+                        </div>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 leading-snug">${item.meaning}</p>
+                    </button>
+                `).join('');
+            }
+        }
+
+        // ============================================================================
+        // 6. ĐIỀU HƯỚNG TAB, MÔ PHỎNG NÉT VIẾT, THƯ VIỆN & CÁC CỬA SỔ CÀI ĐẶT
+        // ============================================================================
+        function switchTab(tabName) {
+            const tabs = ['study', 'pinyin', 'roadmap', 'library'];
+            tabs.forEach(t => {
+                const viewEl = document.getElementById(`view-${t}`);
+                const btnEl = document.getElementById(`tab-${t}`);
+                if (viewEl) {
+                    if (t === tabName) viewEl.classList.remove('hidden');
+                    else viewEl.classList.add('hidden');
+                }
+                if (btnEl) {
+                    if (t === tabName) {
+                        btnEl.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow-sm transition-all cursor-pointer whitespace-nowrap';
+                    } else {
+                        btnEl.className = 'px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer whitespace-nowrap';
+                    }
+                }
+            });
+
+            if (tabName === 'roadmap') updateRoadmapStats();
+            if (tabName === 'library') renderLibraryTable();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
         function toggleStrokeOrder() {
@@ -1775,84 +1902,43 @@
             hanziWriters = [];
 
             if (typeof HanziWriter === 'undefined') {
-                target.innerHTML = '<p class="text-xs text-slate-400">Đang tải thư viện mô phỏng nét viết...</p>';
+                target.innerHTML = '<p class="text-xs text-slate-400">Không tải được thư viện nét viết (cần kết nối mạng).</p>';
                 return;
             }
 
             const chars = currentCard.hanzi.split('');
             chars.forEach((ch, idx) => {
-                const div = document.createElement('div');
-                div.id = `hw-char-${idx}`;
-                div.className = 'inline-block bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 p-1 shadow-xs';
-                target.appendChild(div);
+                const cell = document.createElement('div');
+                cell.id = `hw-char-${idx}`;
+                cell.className = 'bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 p-1 shadow-2xs cursor-pointer';
+                cell.title = 'Bấm để chạy lại nét viết';
+                target.appendChild(cell);
 
-                const writer = HanziWriter.create(`hw-char-${idx}`, ch, {
-                    width: 84,
-                    height: 84,
-                    padding: 5,
-                    strokeColor: appState.theme === 'dark' ? '#f8fafc' : '#1e293b',
-                    radicalColor: '#e11d48',
-                    showOutline: true,
-                    strokeAnimationSpeed: 1.2,
-                    delayBetweenStrokes: 180
-                });
-                writer.loopCharacterAnimation();
-                hanziWriters.push(writer);
-            });
-        }
-
-        // ============================================================================
-        // 6. CẬP NHẬT THỐNG KÊ, THƯ VIỆN TỪ VỰNG & ĐIỀU HƯỚNG TAB
-        // ============================================================================
-        function switchTab(tabName) {
-            ['study', 'pinyin', 'roadmap', 'library'].forEach(t => {
-                const view = document.getElementById(`view-${t}`);
-                const btn = document.getElementById(`tab-${t}`);
-                if (view) view.classList.toggle('hidden', t !== tabName);
-                if (btn) {
-                    if (t === tabName) {
-                        btn.className = "px-3 py-2 rounded-xl text-xs sm:text-sm font-bold bg-rose-600 text-white shadow-sm transition-all cursor-pointer whitespace-nowrap";
-                    } else {
-                        btn.className = "px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer whitespace-nowrap";
-                    }
+                try {
+                    const writer = HanziWriter.create(cell.id, ch, {
+                        width: 82,
+                        height: 82,
+                        padding: 6,
+                        strokeColor: appState.theme === 'dark' ? '#f8fafc' : '#1e293b',
+                        radicalColor: '#e11d48',
+                        outlineColor: appState.theme === 'dark' ? '#334155' : '#e2e8f0',
+                        strokeAnimationSpeed: 1.2,
+                        delayBetweenStrokes: 180
+                    });
+                    writer.animateCharacter();
+                    cell.addEventListener('click', () => writer.animateCharacter());
+                    hanziWriters.push(writer);
+                } catch (e) {
+                    cell.innerHTML = `<span class="font-chinese text-4xl font-bold px-3 py-2 inline-block">${ch}</span>`;
                 }
             });
-
-            if (tabName === 'pinyin') renderPinyinLab();
-            if (tabName === 'library') renderLibraryTable();
-            if (tabName === 'roadmap') updateRoadmapStats();
-        }
-
-        function updateHeaderStats() {
-            const streakEl = document.getElementById('stat-streak');
-            if (streakEl) streakEl.textContent = `${appState.stats.streak || 0} ngày`;
-
-            const queueEl = document.getElementById('stat-queue-count');
-            if (queueEl) queueEl.textContent = `${studyQueue.length} thẻ`;
-
-            const masteredCount = Object.values(appState.srsProgress).filter(p => p.status === 'mastered').length;
-            const learningCount = Object.values(appState.srsProgress).filter(p => p.status === 'learning').length;
-            const masteredEl = document.getElementById('stat-mastered');
-            if (masteredEl) masteredEl.textContent = `${masteredCount + learningCount} / ${appState.vocab.length}`;
-        }
-
-        function updateRoadmapStats() {
-            const totalLearned = Object.keys(appState.srsProgress).length;
-            const targetTotal = 4500;
-            const pct = Math.min(100, ((totalLearned / targetTotal) * 100)).toFixed(1);
-
-            const bar = document.getElementById('roadmap-progress-bar');
-            if (bar) bar.style.width = `${Math.max(2, pct)}%`;
-
-            const text = document.getElementById('roadmap-progress-text');
-            if (text) text.textContent = `${totalLearned} / ${targetTotal} từ (${pct}%)`;
         }
 
         function populateDeckSelector() {
-            const select = document.getElementById('deck-selector');
-            if (!select) return;
+            const selector = document.getElementById('deck-selector');
+            if (!selector) return;
             const lessons = [...new Set(appState.vocab.map(v => v.lesson))];
-            select.innerHTML = `<option value="all">Tất cả bài học (${appState.vocab.length} từ)</option>` +
+            selector.innerHTML = `<option value="all">Tất cả bài học (${appState.vocab.length} từ)</option>` +
                 lessons.map(l => `<option value="${l}" ${appState.selectedDeck === l ? 'selected' : ''}>${l}</option>`).join('');
         }
 
@@ -1863,91 +1949,115 @@
             renderCurrentCard();
         }
 
-        function startExtraPractice() {
-            const shuffled = [...appState.vocab].sort(() => Math.random() - 0.5).slice(0, 8);
-            studyQueue = shuffled.map(c => ({ ...c, queueType: 'due' }));
-            updateHeaderStats();
-            renderCurrentCard();
-            showToast("Đã nạp thêm 8 thẻ ôn tập mở rộng!");
+        function updateHeaderStats() {
+            const streakEl = document.getElementById('stat-streak');
+            const queueEl = document.getElementById('stat-queue-count');
+            const masteredEl = document.getElementById('stat-mastered');
+
+            if (streakEl) streakEl.textContent = `${appState.stats.streak || 1} ngày`;
+            if (queueEl) queueEl.textContent = `${studyQueue.length} thẻ`;
+
+            const learnedCount = Object.keys(appState.srsProgress).length;
+            if (masteredEl) masteredEl.textContent = `${learnedCount} / ${appState.vocab.length}`;
+        }
+
+        function updateRoadmapStats() {
+            const learnedCount = Object.keys(appState.srsProgress).length;
+            const targetTotal = 4500;
+            const pct = Math.min(100, Math.max(1, Math.round((learnedCount / targetTotal) * 100)));
+            const textEl = document.getElementById('roadmap-progress-text');
+            const barEl = document.getElementById('roadmap-progress-bar');
+
+            if (textEl) textEl.textContent = `${learnedCount} / ${targetTotal} từ (${((learnedCount / targetTotal) * 100).toFixed(1)}%)`;
+            if (barEl) barEl.style.width = `${pct}%`;
         }
 
         function renderLibraryTable() {
             const tbody = document.getElementById('library-table-body');
-            const searchInput = document.getElementById('library-search');
-            const levelFilter = document.getElementById('library-level-filter');
             if (!tbody) return;
+            const query = (document.getElementById('library-search')?.value || '').toLowerCase().trim();
+            const levelFilter = document.getElementById('library-level-filter')?.value || 'all';
 
-            const q = (searchInput ? searchInput.value : '').toLowerCase().trim();
-            const lvl = levelFilter ? levelFilter.value : 'all';
-
-            const filtered = appState.vocab.filter(item => {
-                const matchLvl = lvl === 'all' || item.level === lvl;
-                const matchQ = !q ||
-                    item.hanzi.includes(q) ||
-                    item.pinyin.toLowerCase().includes(q) ||
-                    item.hanviet.toLowerCase().includes(q) ||
-                    item.meaning.toLowerCase().includes(q);
-                return matchLvl && matchQ;
+            const filtered = appState.vocab.filter(v => {
+                const matchLevel = levelFilter === 'all' || v.level === levelFilter;
+                const matchQuery = !query ||
+                    v.hanzi.includes(query) ||
+                    v.pinyin.toLowerCase().includes(query) ||
+                    v.hanviet.toLowerCase().includes(query) ||
+                    v.meaning.toLowerCase().includes(query);
+                return matchLevel && matchQuery;
             });
 
-            tbody.innerHTML = filtered.map(item => {
-                const prog = appState.srsProgress[item.id];
-                let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">Chưa học</span>`;
+            tbody.innerHTML = filtered.map(v => {
+                const prog = appState.srsProgress[v.id];
+                let statusBadge = '<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500">Chưa học</span>';
                 if (prog) {
                     statusBadge = prog.status === 'mastered'
-                        ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300">Thành thạo</span>`
-                        : `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300">Đang nhớ</span>`;
+                        ? '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300">Thành thạo</span>'
+                        : '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300">Đang ôn</span>';
                 }
+
                 return `
-                    <tr class="border-b border-slate-100 dark:border-slate-800/80 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors">
-                        <td class="py-3 px-3 font-bold text-lg text-slate-900 dark:text-white">
-                            <button onclick="speakText('${item.hanzi}')" class="hover:text-rose-600 cursor-pointer" title="Nghe phát âm">${item.hanzi}</button>
+                    <tr class="border-b border-slate-100 dark:border-slate-800/80 hover:bg-slate-50/80 dark:hover:bg-slate-800/40 text-xs sm:text-sm">
+                        <td class="py-3 px-3 font-chinese text-lg font-bold flex items-center gap-2">
+                            <span>${v.hanzi}</span>
+                            <button type="button" onclick="speakText('${v.hanzi}', 0.9)" class="p-1 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 text-rose-600 cursor-pointer" title="Nghe phát âm">
+                                <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                            </button>
                         </td>
-                        <td class="py-3 px-3 text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300">${item.pinyin}</td>
-                        <td class="py-3 px-3 text-xs font-bold text-rose-600 dark:text-rose-400">${item.hanviet}</td>
-                        <td class="py-3 px-3 text-xs sm:text-sm text-slate-700 dark:text-slate-200">${item.meaning}</td>
-                        <td class="py-3 px-3 text-xs"><span class="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 font-semibold">${item.level}</span></td>
+                        <td class="py-3 px-3 text-slate-600 dark:text-slate-300">${v.pinyin}</td>
+                        <td class="py-3 px-3 font-bold text-rose-700 dark:text-rose-300">${v.hanviet}</td>
+                        <td class="py-3 px-3 font-medium">${v.meaning}</td>
+                        <td class="py-3 px-3 text-xs font-semibold text-slate-500">${v.level}</td>
                         <td class="py-3 px-3">${statusBadge}</td>
                     </tr>
                 `;
             }).join('');
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
         }
 
-        // ============================================================================
-        // 7. MODALS (THÊM THẺ MỚI, CẤU HÌNH ĐỒNG BỘ, XUẤT/NHẬP JSON) & PHÍM TẮT
-        // ============================================================================
+        function startExtraPractice() {
+            const deckFilter = appState.selectedDeck || 'all';
+            const pool = deckFilter === 'all'
+                ? appState.vocab
+                : appState.vocab.filter(v => v.lesson === deckFilter);
+
+            const sample = [...pool].sort(() => Math.random() - 0.5).slice(0, 8);
+            studyQueue = sample.map(c => ({ ...c, queueType: 'due' }));
+            updateHeaderStats();
+            renderCurrentCard();
+            showToast("🔄 Đã nạp thêm 8 thẻ ôn tập ngẫu nhiên!");
+        }
+
         function openAddCardModal() {
-            const modal = document.getElementById('add-card-modal');
-            if (modal) modal.classList.remove('hidden');
+            document.getElementById('add-card-modal')?.classList.remove('hidden');
         }
 
         function closeAddCardModal() {
-            const modal = document.getElementById('add-card-modal');
-            if (modal) modal.classList.add('hidden');
+            document.getElementById('add-card-modal')?.classList.add('hidden');
         }
 
-        function handleAddCardSubmit(e) {
-            e.preventDefault();
+        function handleAddCardSubmit(event) {
+            event.preventDefault();
             const hanzi = document.getElementById('new-hanzi').value.trim();
             const pinyin = document.getElementById('new-pinyin').value.trim();
-            const hanviet = document.getElementById('new-hanviet').value.trim().toUpperCase();
-            const meaning = document.getElementById('new-meaning').value.trim();
+            const hanviet = (document.getElementById('new-hanviet').value.trim() || 'TỪ MỚI').toUpperCase();
             const level = document.getElementById('new-level').value;
-            const etymology = document.getElementById('new-etymology').value.trim() || `Từ vựng tự thêm (${hanviet}).`;
+            const meaning = document.getElementById('new-meaning').value.trim();
+            const etymology = document.getElementById('new-etymology').value.trim() || 'Thẻ từ vựng tự thêm theo nhu cầu cá nhân.';
             const exZh = document.getElementById('new-ex-zh').value.trim() || hanzi;
             const exPy = document.getElementById('new-ex-py').value.trim() || pinyin;
             const exVi = document.getElementById('new-ex-vi').value.trim() || meaning;
 
-            if (!hanzi || !pinyin || !meaning) return;
-
             const newCard = {
                 id: 'custom_' + Date.now(),
-                lesson: `Từ tự thêm (${level})`,
+                lesson: `Bài tự thêm (${level})`,
                 level,
                 hanzi,
                 pinyin,
                 tones: [],
-                hanviet: hanviet || 'TỰ THÊM',
+                hanviet,
                 meaning,
                 hint: `Âm Hán Việt: ${hanviet}`,
                 etymology,
@@ -1958,48 +2068,44 @@
 
             appState.vocab.unshift(newCard);
             saveAppState(true);
-            populateDeckSelector();
-            buildStudyQueue();
-            renderLibraryTable();
             closeAddCardModal();
-            e.target.reset();
-            showToast(`✅ Đã thêm thẻ "${hanzi}" và đồng bộ!`);
+            event.target.reset();
+            refreshAllUI();
+            showToast(`✅ Đã thêm thẻ "${hanzi}" (${hanviet})!`);
         }
 
         function openSyncModal() {
-            const modal = document.getElementById('sync-modal');
-            if (!modal) return;
-            selectSyncProvider(syncConfig.provider || 'firebase');
+            document.getElementById('setting-daily-new').value = appState.dailyNewLimit || 8;
             document.getElementById('sync-firebase-url').value = syncConfig.firebaseUrl || '';
             document.getElementById('sync-firebase-key').value = syncConfig.firebaseKey || 'hanngu_loc_2y';
             document.getElementById('sync-github-token').value = syncConfig.githubToken || '';
             document.getElementById('sync-github-gist-id').value = syncConfig.gistId || '';
-            document.getElementById('setting-daily-new').value = appState.dailyNewLimit || 8;
-            modal.classList.remove('hidden');
+            selectSyncProvider(syncConfig.provider || 'firebase');
+            populateVoiceSelector();
+            document.getElementById('sync-modal')?.classList.remove('hidden');
         }
 
         function closeSyncModal() {
-            const modal = document.getElementById('sync-modal');
-            if (modal) modal.classList.add('hidden');
+            document.getElementById('sync-modal')?.classList.add('hidden');
         }
 
         function selectSyncProvider(provider) {
             syncConfig.provider = provider;
-            const pFb = document.getElementById('sync-panel-firebase');
-            const pGist = document.getElementById('sync-panel-gist');
-            const bFb = document.getElementById('btn-provider-firebase');
-            const bGist = document.getElementById('btn-provider-gist');
+            const fbPanel = document.getElementById('sync-panel-firebase');
+            const gistPanel = document.getElementById('sync-panel-gist');
+            const fbBtn = document.getElementById('btn-provider-firebase');
+            const gistBtn = document.getElementById('btn-provider-gist');
 
             if (provider === 'firebase') {
-                pFb.classList.remove('hidden');
-                pGist.classList.add('hidden');
-                bFb.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer";
-                bGist.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer";
+                fbPanel?.classList.remove('hidden');
+                gistPanel?.classList.add('hidden');
+                if (fbBtn) fbBtn.className = 'py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer';
+                if (gistBtn) gistBtn.className = 'py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer';
             } else {
-                pFb.classList.add('hidden');
-                pGist.classList.remove('hidden');
-                bGist.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer";
-                bFb.className = "py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer";
+                fbPanel?.classList.add('hidden');
+                gistPanel?.classList.remove('hidden');
+                if (gistBtn) gistBtn.className = 'py-2 px-3 rounded-lg text-xs font-bold transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm cursor-pointer';
+                if (fbBtn) fbBtn.className = 'py-2 px-3 rounded-lg text-xs font-bold transition-all text-slate-500 dark:text-slate-400 cursor-pointer';
             }
         }
 
@@ -2102,17 +2208,6 @@
             }, 3000);
         }
 
-        function startSessionTimer() {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                sessionSeconds += 1;
-                const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
-                const secs = String(sessionSeconds % 60).padStart(2, '0');
-                const timerEl = document.getElementById('session-timer');
-                if (timerEl) timerEl.textContent = `${mins}:${secs}`;
-            }, 1000);
-        }
-
         function refreshAllUI() {
             populateDeckSelector();
             populateVoiceSelector();
@@ -2155,7 +2250,6 @@
             loadAppState();
             loadSyncConfig();
             refreshAllUI();
-            startSessionTimer();
             if (typeof lucide !== 'undefined') lucide.createIcons();
             if (syncConfig.enabled) {
                 pullFromCloud(false);
