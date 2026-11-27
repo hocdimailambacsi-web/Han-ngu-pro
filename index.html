@@ -112,7 +112,7 @@
                     </div>
                     <div>
                         <p class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Đã nạp trí nhớ</p>
-                        <p id="stat-mastered" class="text-sm sm:text-base font-extrabold">0 / 45</p>
+                        <p id="stat-mastered" class="text-sm sm:text-base font-extrabold">0 / 60</p>
                     </div>
                 </div>
 
@@ -823,334 +823,439 @@
 
     <script>
         // ============================================================================
-        // 1. KHO DỮ LIỆU TỪ VỰNG KHỞI ĐẦU (45 THẺ CHUẨN HÁN VIỆT & CHIẾT TỰ LOGIC)
+        // 1. KHO DỮ LIỆU KHỞI ĐỘNG CHUẨN HSK 1 TUYẾN TÍNH (60 TỪ CỐT LÕI - 6 BÀI HỌC)
         // ============================================================================
         const INITIAL_VOCABULARY = [
-            // BÀI 1: NỀN TẢNG GIAO TIẾP & ĐẠI TỪ (HSK 1)
+            // BÀI 1: CHÀO HỎI & ĐẠI TỪ NHÂN XƯNG CƠ BẢN (HSK 1)
             {
-                id: "v01", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
-                hanzi: "你好", pinyin: "nǐ hǎo", tones: [3, 3], hanviet: "NHĨ HẢO", meaning: "Xin chào",
-                hint: "Hai thanh 3 đi liền nhau: nǐ đọc thành ní",
-                etymology: "你 (Nhĩ - bạn, bộ Nhân 亻) + 好 (Hảo - tốt đẹp, gồm Nữ 女 và Tử 子: có con gái và con trai là điều tốt lành).",
-                exZh: "你好，很高兴认识你！", exPy: "Nǐ hǎo, hěn gāoxìng rènshi nǐ!", exVi: "Xin chào, rất vui được làm quen với bạn!"
+                id: "h1_01", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "我", pinyin: "wǒ", tones: [3], hanviet: "NGÃ", meaning: "Tôi, tớ, mình",
+                hint: "Thanh 3 trầm sâu: ngã (bản ngã)",
+                etymology: "我 (Ngã - cái tôi) gồm bộ Thủ 扌 (bàn tay) cầm binh khí 戈 (Qua) bảo vệ bản thân → chỉ chính mình.",
+                exZh: "我是越南人。", exPy: "Wǒ shì Yuènán rén.", exVi: "Tôi là người Việt Nam."
             },
             {
-                id: "v02", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                id: "h1_02", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "你", pinyin: "nǐ", tones: [3], hanviet: "NHĨ", meaning: "Bạn, anh, chị (ngôi thứ 2)",
+                hint: "Bộ Nhân đứng 亻 chỉ người đối diện",
+                etymology: "你 (Nhĩ - bạn) gồm bộ Nhân đứng 亻 (con người) + 尔 (Nhĩ - chỉ âm đọc). Dùng để gọi người đang giao tiếp trực tiếp.",
+                exZh: "你叫什么名字？", exPy: "Nǐ jiào shénme míngzi?", exVi: "Bạn tên là gì?"
+            },
+            {
+                id: "h1_03", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "他", pinyin: "tā", tones: [1], hanviet: "THA", meaning: "Anh ấy, ông ấy (ngôi thứ 3 nam)",
+                hint: "Thanh 1 ngang cao: tha (tha nhân)",
+                etymology: "他 (Tha - người khác) gồm bộ Nhân đứng 亻 + 也 (Dã). Phân biệt với 她 (cô ấy - dùng bộ Nữ 女).",
+                exZh: "他是我的朋友。", exPy: "Tā shì wǒ de péngyou.", exVi: "Anh ấy là bạn của tôi."
+            },
+            {
+                id: "h1_04", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "她", pinyin: "tā", tones: [1], hanviet: "THA", meaning: "Cô ấy, chị ấy (ngôi thứ 3 nữ)",
+                hint: "Phát âm giống hệt 他 (tā) nhưng dùng bộ Nữ 女",
+                etymology: "她 (Tha) thay bộ Nhân 亻 bằng bộ Nữ 女 (phụ nữ) để chỉ ngôi thứ 3 giống cái.",
+                exZh: "她很喜欢学习中文。", exPy: "Tā hěn xǐhuan xuéxí Zhōngwén.", exVi: "Cô ấy rất thích học tiếng Trung."
+            },
+            {
+                id: "h1_05", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "们", pinyin: "men", tones: [5], hanviet: "MÔN", meaning: "Các, chúng, bọn (hậu tố số nhiều)",
+                hint: "Thanh nhẹ: ghép sau đại từ tạo số nhiều",
+                etymology: "们 (Môn) gồm bộ Nhân 亻 + 门 (Môn - cánh cửa). Ghép sau đại từ: 我们 (chúng tôi), 你们 (các bạn), 他们 (họ).",
+                exZh: "我们一起去吧！", exPy: "Wǒmen yìqǐ qù ba!", exVi: "Chúng ta cùng đi nhé!"
+            },
+            {
+                id: "h1_06", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "好", pinyin: "hǎo", tones: [3], hanviet: "HẢO", meaning: "Tốt, khỏe, được",
+                hint: "Nữ 女 + Tử 子 = Hảo (tốt lành)",
+                etymology: "好 (Hảo - tốt đẹp) ghép từ 女 (Nữ - người mẹ/con gái) và 子 (Tử - đứa con). Có nếp có tẻ là điều tốt lành.",
+                exZh: "你好，今天你好吗？", exPy: "Nǐ hǎo, jīntiān nǐ hǎo ma?", exVi: "Xin chào, hôm nay bạn khỏe không?"
+            },
+            {
+                id: "h1_07", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
                 hanzi: "谢谢", pinyin: "xiè xie", tones: [4, 5], hanviet: "TẠ TẠ", meaning: "Cảm ơn",
-                hint: "Âm tiết thứ 2 đọc thanh nhẹ",
-                etymology: "谢 (Tạ - cảm tạ, đa tạ) gồm bộ Ngôn 讠 (lời nói) + 射 (Xạ - bắn tên, chỉ âm đọc). Dùng lời nói bày tỏ lòng biết ơn.",
+                hint: "Chữ thứ 2 đọc thanh nhẹ, ngắn",
+                etymology: "谢 (Tạ - cảm tạ, đa tạ) gồm bộ Ngôn 讠 (lời nói) + 射 (Xạ). Dùng lời nói chân thành để cảm ơn.",
                 exZh: "谢谢你的帮助。", exPy: "Xièxie nǐ de bāngzhù.", exVi: "Cảm ơn sự giúp đỡ của bạn."
             },
             {
-                id: "v03", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
-                hanzi: "学习", pinyin: "xué xí", tones: [2, 2], hanviet: "HỌC TẬP", meaning: "Học tập, nghiên cứu",
-                hint: "Âm Hán Việt trùng khớp 100% nghĩa tiếng Việt",
-                etymology: "学 (Học - tiếp thu kiến thức, bên dưới có bộ Tử 子: đứa trẻ) + 习 (Tập - chim non vỗ cánh tập bay lặp đi lặp lại).",
-                exZh: "我每天学习中文十五分钟。", exPy: "Wǒ měitiān xuéxí Zhōngwén shíwǔ fēnzhōng.", exVi: "Mỗi ngày tôi học tiếng Trung 15 phút."
+                id: "h1_08", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "不客气", pinyin: "bú kè qi", tones: [2, 4, 5], hanviet: "BẤT KHÁCH KHÍ", meaning: "Đừng khách sáo, không có gì",
+                hint: "不 đứng trước thanh 4 (kè) đổi thành bú (thanh 2)",
+                etymology: "不 (Bất - không) + 客 (Khách - khách khứa) + 气 (Khí - khí chất). Đừng giữ lễ nghi khách sáo với nhau.",
+                exZh: "不客气，这是我应该做的。", exPy: "Bú kèqi, zhè shì wǒ yīnggāi zuò de.", exVi: "Đừng khách sáo, đây là việc tôi nên làm."
             },
             {
-                id: "v04", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
+                id: "h1_09", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "对不起", pinyin: "duì bu qǐ", tones: [4, 5, 3], hanviet: "ĐỐI BẤT KHỞI", meaning: "Xin lỗi",
+                hint: "Đọc lướt nhẹ âm 'bu' ở giữa",
+                etymology: "对 (Đối - đối diện) + 不 (Bất - không) + 起 (Khởi - ngẩng lên). Cảm thấy có lỗi nên không dám ngẩng mặt nhìn.",
+                exZh: "对不起，我来晚了。", exPy: "Duìbuqǐ, wǒ lái wǎn le.", exVi: "Xin lỗi, tôi đến muộn rồi."
+            },
+            {
+                id: "h1_10", lesson: "Bài 1: Chào hỏi & Đại từ cơ bản", level: "HSK 1",
+                hanzi: "再见", pinyin: "zài jiàn", tones: [4, 4], hanviet: "TÁI KIẾN", meaning: "Tạm biệt, hẹn gặp lại",
+                hint: "Tái (lần nữa) + Kiến (gặp mặt)",
+                etymology: "再 (Tái - lặp lại lần nữa) + 见 (Kiến - nhìn thấy, gặp gỡ). Hẹn sẽ gặp lại nhau lần sau.",
+                exZh: "明天见，再见！", exPy: "Míngtiān jiàn, zàijiàn!", exVi: "Ngày mai gặp nhé, tạm biệt!"
+            },
+
+            // BÀI 2: TỪ CHỨC NĂNG CỐT LÕI (KEO DÍNH TẠO CÂU - HSK 1)
+            {
+                id: "h1_11", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "是", pinyin: "shì", tones: [4], hanviet: "THỊ", meaning: "Là, đúng, vâng",
+                hint: "Thanh 4 rơi dứt khoát: shì",
+                etymology: "是 (Thị - đúng đắn, là) gồm bộ Nhật 日 (mặt trời sáng tỏ) bên trên. Khẳng định sự thật rõ như ban ngày.",
+                exZh: "我是医生。", exPy: "Wǒ shì yīshēng.", exVi: "Tôi là bác sĩ."
+            },
+            {
+                id: "h1_12", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "不", pinyin: "bù", tones: [4], hanviet: "BẤT", meaning: "Không (phủ định)",
+                hint: "Đứng trước thanh 4 đọc thành bú",
+                etymology: "不 (Bất - phủ định, như trong 'bất đồng', 'bất khả'). Dùng trước động từ hoặc tính từ để phủ định.",
+                exZh: "我不喝咖啡。", exPy: "Wǒ bù hē kāfēi.", exVi: "Tôi không uống cà phê."
+            },
+            {
+                id: "h1_13", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "的", pinyin: "de", tones: [5], hanviet: "ĐÍCH", meaning: "Của (trợ từ sở hữu)",
+                hint: "Thanh nhẹ: A 的 B = B của A",
+                etymology: "的 (Đích) gồm bộ Bạch 白 + 勺 (Thược). Khi đọc thanh nhẹ 'de', nó nối định ngữ với danh từ (我的书: sách của tôi).",
+                exZh: "这是我的电脑。", exPy: "Zhè shì wǒ de diànnǎo.", exVi: "Đây là máy tính của tôi."
+            },
+            {
+                id: "h1_14", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "有", pinyin: "yǒu", tones: [3], hanviet: "HỮU", meaning: "Có (sở hữu / tồn tại)",
+                hint: "Phủ định của 有 luôn dùng 没 (没有)",
+                etymology: "有 (Hữu - sở hữu, như trong 'hữu ích', 'sở hữu') gồm bàn tay cầm miếng thịt 月 → có của cải trong tay.",
+                exZh: "今天我有时间。", exPy: "Jīntiān wǒ yǒu shíjiān.", exVi: "Hôm nay tôi có thời gian."
+            },
+            {
+                id: "h1_15", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "没有", pinyin: "méi yǒu", tones: [2, 3], hanviet: "MỘT HỮU", meaning: "Không có, chưa",
+                hint: "Tuyệt đối không nói 'bù yǒu', phải dùng 'méi yǒu'",
+                etymology: "没 (Một - chìm mất, bộ Thủy 氵) + 有 (Hữu - có). Nghĩa gốc là chìm xuống nước không còn gì → không có.",
+                exZh: "我没有问题。", exPy: "Wǒ méiyǒu wèntí.", exVi: "Tôi không có vấn đề gì."
+            },
+            {
+                id: "h1_16", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "在", pinyin: "zài", tones: [4], hanviet: "TẠI", meaning: "Ở, tại; đang (làm gì)",
+                hint: "Tại (hiện tại, tồn tại)",
+                etymology: "在 (Tại - ở tại) gồm bộ Thổ 土 (đất đai). Chỉ vị trí tồn tại hoặc hành động đang diễn ra.",
+                exZh: "我在医院工作。", exPy: "Wǒ zài yīyuàn gōngzuò.", exVi: "Tôi làm việc ở bệnh viện."
+            },
+            {
+                id: "h1_17", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "很", pinyin: "hěn", tones: [3], hanviet: "NGẬN", meaning: "Rất",
+                hint: "Thường đứng trước tính từ để câu cân bằng nhịp điệu",
+                etymology: "很 (Ngận) gồm bộ Xích 彳 (bước chân). Trong tiếng Trung, tính từ làm vị ngữ thường đi kèm 很 (我很好).",
+                exZh: "这个办法很好。", exPy: "Zhège bànfǎ hěn hǎo.", exVi: "Cách này rất hay."
+            },
+            {
+                id: "h1_18", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "和", pinyin: "hé", tones: [2], hanviet: "HÒA", meaning: "Và, với",
+                hint: "Hòa (hòa hợp, cùng nhau)",
+                etymology: "和 (Hòa) gồm bộ Hòa 禾 (cây lúa) + 口 (cái miệng). Mọi người cùng có lúa ăn là hòa thuận → nối 2 danh từ.",
+                exZh: "我和你一起学习。", exPy: "Wǒ hé nǐ yìqǐ xuéxí.", exVi: "Tôi và bạn cùng nhau học tập."
+            },
+            {
+                id: "h1_19", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "吗", pinyin: "ma", tones: [5], hanviet: "MA", meaning: "Không? (trợ từ nghi vấn cuối câu)",
+                hint: "Đặt cuối câu trần thuật để biến thành câu hỏi Có/Không",
+                etymology: "吗 (Ma) gồm bộ Khẩu 口 (miệng hỏi) + 马 (Mã - chỉ âm đọc). Ví dụ: 你好吗？(Bạn khỏe không?).",
+                exZh: "你喜欢吃中国菜吗？", exPy: "Nǐ xǐhuan chī Zhōngguó cài ma?", exVi: "Bạn có thích ăn món Trung Quốc không?"
+            },
+            {
+                id: "h1_20", lesson: "Bài 2: Từ nối & Động từ cốt lõi", level: "HSK 1",
+                hanzi: "了", pinyin: "le", tones: [5], hanviet: "LIỄU", meaning: "Rồi (trợ từ biểu thị hoàn thành)",
+                hint: "Thanh nhẹ: đặt sau động từ hoặc cuối câu",
+                etymology: "了 (Liễu - kết thúc, xong xuôi). Biểu thị hành động đã xảy ra hoặc trạng thái đã thay đổi.",
+                exZh: "我明白了。", exPy: "Wǒ míngbai le.", exVi: "Tôi hiểu rồi."
+            },
+
+            // BÀI 3: TỪ ĐỂ HỎI & ĐẠI TỪ CHỈ ĐỊNH (HSK 1)
+            {
+                id: "h1_21", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "什么", pinyin: "shén me", tones: [2, 5], hanviet: "THẬP MA", meaning: "Cái gì, gì",
+                hint: "Vị trí từ để hỏi tiếng Trung giữ nguyên như câu trần thuật",
+                etymology: "什 (Thập) + 么 (Ma). Tiếng Trung không đảo từ để hỏi lên đầu câu: 你吃什么？(Bạn ăn cái gì?).",
+                exZh: "这是什么？", exPy: "Zhè shì shénme?", exVi: "Đây là cái gì?"
+            },
+            {
+                id: "h1_22", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "谁", pinyin: "shéi", tones: [2], hanviet: "THÙY", meaning: "Ai",
+                hint: "Bộ Ngôn 讠 (lời nói) + 隹 (chim)",
+                etymology: "谁 (Thùy - ai) gồm bộ Ngôn 讠 (dùng lời nói để hỏi xem người đó là ai).",
+                exZh: "他是谁？", exPy: "Tā shì shéi?", exVi: "Anh ấy là ai?"
+            },
+            {
+                id: "h1_23", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "哪", pinyin: "nǎ", tones: [3], hanviet: "NA", meaning: "Nào (để hỏi)",
+                hint: "Có bộ Khẩu 口 ở bên trái (mở miệng hỏi)",
+                etymology: "哪 (Na) gồm bộ Khẩu 口 + 那 (Na - kia). Thêm bộ Khẩu để biến từ chỉ định thành từ nghi vấn.",
+                exZh: "你是哪国人？", exPy: "Nǐ shì nǎ guó rén?", exVi: "Bạn là người nước nào?"
+            },
+            {
+                id: "h1_24", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "哪儿", pinyin: "nǎr", tones: [3], hanviet: "NA NHI", meaning: "Ở đâu, chỗ nào",
+                hint: "Uốn lưỡi nhẹ âm 'r' ở cuối",
+                etymology: "哪 (Na - nào) + 儿 (Nhi - âm uốn lưỡi phổ biến ở Bắc Kinh). Tương đương với 哪里 (nǎlǐ).",
+                exZh: "你去哪儿？", exPy: "Nǐ qù nǎr?", exVi: "Bạn đi đâu đấy?"
+            },
+            {
+                id: "h1_25", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "这", pinyin: "zhè", tones: [4], hanviet: "GIÁ", meaning: "Đây, này (chỉ vật ở gần)",
+                hint: "Bộ Sước 辶 (bước đi) bên dưới",
+                etymology: "这 (Giá - này) gồm chữ 文 (Văn) và bộ Sước 辶 (bước chân đi tới gần).",
+                exZh: "这是我的书。", exPy: "Zhè shì wǒ de shū.", exVi: "Đây là sách của tôi."
+            },
+            {
+                id: "h1_26", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "那", pinyin: "nà", tones: [4], hanviet: "NA", meaning: "Kia, đó (chỉ vật ở xa)",
+                hint: "Không có bộ Khẩu 口 ở bên trái (khác với 哪)",
+                etymology: "那 (Na - kia) gồm bộ Ấp 阝 bên phải. Dùng để chỉ sự vật hoặc người ở khoảng cách xa.",
+                exZh: "那个人是我老师。", exPy: "Nàge rén shì wǒ lǎoshī.", exVi: "Người kia là thầy giáo của tôi."
+            },
+            {
+                id: "h1_27", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "多少", pinyin: "duō shao", tones: [1, 5], hanviet: "ĐA THIỂU", meaning: "Bao nhiêu",
+                hint: "Đa (nhiều) + Thiểu (ít) = Bao nhiêu",
+                etymology: "多 (Đa - nhiều, hai chữ 夕 chồng lên nhau) + 少 (Thiểu - ít). Ghép hai mặt đối lập để hỏi số lượng.",
+                exZh: "这个多少钱？", exPy: "Zhège duōshao qián?", exVi: "Cái này bao nhiêu tiền?"
+            },
+            {
+                id: "h1_28", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "几", pinyin: "jǐ", tones: [3], hanviet: "KỶ", meaning: "Mấy (hỏi số lượng nhỏ dưới 10)",
+                hint: "Chỉ có 2 nét đơn giản",
+                etymology: "几 (Kỷ - mấy) dùng để hỏi số lượng ước chừng ít (thường dưới 10) hoặc hỏi giờ, thứ, ngày.",
+                exZh: "现在几点？", exPy: "Xiànzài jǐ diǎn?", exVi: "Bây giờ là mấy giờ?"
+            },
+            {
+                id: "h1_29", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "怎么", pinyin: "zěn me", tones: [3, 5], hanviet: "CHẨM MA", meaning: "Như thế nào, làm sao",
+                hint: "Đứng trước động từ để hỏi cách thức",
+                etymology: "怎 (Chẩm - có bộ Tâm 心 bên dưới) + 么 (Ma). Ví dụ: 怎么写？(Viết như thế nào?), 怎么走？(Đi đường nào?).",
+                exZh: "这个字怎么读？", exPy: "Zhège zì zěnme dú?", exVi: "Chữ này đọc như thế nào?"
+            },
+            {
+                id: "h1_30", lesson: "Bài 3: Từ để hỏi & Chỉ định", level: "HSK 1",
+                hanzi: "怎么样", pinyin: "zěn me yàng", tones: [3, 5, 4], hanviet: "CHẨM MA DẠNG", meaning: "Thế nào, ra sao (hỏi ý kiến/tình hình)",
+                hint: "Thường đứng cuối câu để hỏi nhận xét",
+                etymology: "怎么 (Thế nào) + 样 (Dạng - hình dáng, trạng thái, bộ Mộc 木). Hỏi chất lượng hoặc cảm nhận.",
+                exZh: "今天天气怎么样？", exPy: "Jīntiān tiānqì zěnmeyàng?", exVi: "Thời tiết hôm nay thế nào?"
+            },
+
+            // BÀI 4: ĐỘNG TỪ SINH HOẠT HẰNG NGÀY (HSK 1)
+            {
+                id: "h1_31", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "吃", pinyin: "chī", tones: [1], hanviet: "NGẬT", meaning: "Ăn",
+                hint: "Bộ Khẩu 口 bên trái + bật hơi mạnh 'chī'",
+                etymology: "吃 (Ngật - ăn) gồm bộ Khẩu 口 (cái miệng) + 乞 (Khất). Hành động đưa thức ăn vào miệng.",
+                exZh: "你想吃什么？", exPy: "Nǐ xiǎng chī shénme?", exVi: "Bạn muốn ăn gì?"
+            },
+            {
+                id: "h1_32", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "喝", pinyin: "hē", tones: [1], hanviet: "HÁT", meaning: "Uống",
+                hint: "Cũng có bộ Khẩu 口 ở bên trái",
+                etymology: "喝 (Hát - uống) gồm bộ Khẩu 口 + 曷. Dùng miệng uống nước, trà, cà phê.",
+                exZh: "我喜欢喝茶。", exPy: "Wǒ xǐhuan hē chá.", exVi: "Tôi thích uống trà."
+            },
+            {
+                id: "h1_33", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "去", pinyin: "qù", tones: [4], hanviet: "KHỨ", meaning: "Đi (rời khỏi vị trí người nói)",
+                hint: "Quá khứ = đã đi qua",
+                etymology: "去 (Khứ - rời đi, như trong 'quá khứ') gồm bộ Thổ 土 bên trên. Di chuyển tới một địa điểm khác.",
+                exZh: "明天我去北京。", exPy: "Míngtiān wǒ qù Běijīng.", exVi: "Ngày mai tôi đi Bắc Kinh."
+            },
+            {
+                id: "h1_34", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "来", pinyin: "lái", tones: [2], hanviet: "LAI", meaning: "Đến, tới (hướng về người nói)",
+                hint: "Vị lai = tương lai sắp tới",
+                etymology: "来 (Lai - đến, như trong 'tương lai', 'vãng lai'). Biểu thị sự di chuyển hướng về phía người nói.",
+                exZh: "欢迎你来我家。", exPy: "Huānyíng nǐ lái wǒ jiā.", exVi: "Hoan nghênh bạn đến nhà tôi."
+            },
+            {
+                id: "h1_35", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "看", pinyin: "kàn", tones: [4], hanviet: "KHÁN", meaning: "Nhìn, xem, đọc (sách)",
+                hint: "Bàn tay 手 che trên con mắt 目 để nhìn xa",
+                etymology: "看 (Khán - xem, như trong 'khán giả') ghép từ 手 (Thủ - tay) đặt lên 目 (Mục - mắt) để che nắng nhìn rõ.",
+                exZh: "我喜欢看书。", exPy: "Wǒ xǐhuan kàn shū.", exVi: "Tôi thích đọc sách."
+            },
+            {
+                id: "h1_36", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "听", pinyin: "tīng", tones: [1], hanviet: "THÍNH", meaning: "Nghe",
+                hint: "Thính giác = khả năng nghe",
+                etymology: "听 (Thính - nghe, như trong 'thính giả', 'thính lực') gồm bộ Khẩu 口 + 斤 (Cân).",
+                exZh: "请听我说。", exPy: "Qǐng tīng wǒ shuō.", exVi: "Xin hãy nghe tôi nói."
+            },
+            {
+                id: "h1_37", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "说", pinyin: "shuō", tones: [1], hanviet: "THUYẾT", meaning: "Nói, kể",
+                hint: "Bộ Ngôn 讠 (lời nói) + 兑 (Đoái)",
+                etymology: "说 (Thuyết - nói năng, diễn thuyết) gồm bộ Ngôn 讠. Dùng ngôn ngữ để diễn đạt suy nghĩ.",
+                exZh: "我会说一点儿汉语。", exPy: "Wǒ huì shuō yìdiǎnr Hànyǔ.", exVi: "Tôi biết nói một chút tiếng Hán."
+            },
+            {
+                id: "h1_38", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "做", pinyin: "zuò", tones: [4], hanviet: "TỐ", meaning: "Làm, chế biến",
+                hint: "Bộ Nhân đứng 亻 bên trái",
+                etymology: "做 (Tố - làm việc) gồm bộ Nhân 亻 + 故 (Cố). Con người thực hiện một công việc cụ thể.",
+                exZh: "你在做什么？", exPy: "Nǐ zài zuò shénme?", exVi: "Bạn đang làm gì thế?"
+            },
+            {
+                id: "h1_39", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "买", pinyin: "mǎi", tones: [3], hanviet: "MÃI", meaning: "Mua",
+                hint: "Phân biệt với 卖 (mài - bán, có chữ thập 十 trên đầu)",
+                etymology: "买 (Mãi - mua sắm). Khi thêm nét chữ thập 十 trên đầu thành 卖 (Mại - bán) → tạo thành từ ghép 买卖 (mua bán).",
+                exZh: "我想买一杯咖啡。", exPy: "Wǒ xiǎng mǎi yì bēi kāfēi.", exVi: "Tôi muốn mua một ly cà phê."
+            },
+            {
+                id: "h1_40", lesson: "Bài 4: Động từ sinh hoạt hằng ngày", level: "HSK 1",
+                hanzi: "学习", pinyin: "xué xí", tones: [2, 2], hanviet: "HỌC TẬP", meaning: "Học tập",
+                hint: "Âm Hán Việt trùng khớp 100%",
+                etymology: "学 (Học - tiếp thu kiến thức, bên dưới có bộ Tử 子) + 习 (Tập - chim non tập bay lặp lại nhiều lần).",
+                exZh: "我每天学习中文。", exPy: "Wǒ měitiān xuéxí Zhōngwén.", exVi: "Mỗi ngày tôi đều học tiếng Trung."
+            },
+
+            // BÀI 5: SỐ ĐẾM & THỜI GIAN CƠ BẢN (HSK 1)
+            {
+                id: "h1_41", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "一", pinyin: "yī", tones: [1], hanviet: "NHẤT", meaning: "Số 1, một",
+                hint: "1 nét ngang duy nhất",
+                etymology: "一 (Nhất - số một) là chữ tượng hình đơn giản nhất, biểu thị sự khởi đầu duy nhất.",
+                exZh: "一个人。", exPy: "Yí gè rén.", exVi: "Một người."
+            },
+            {
+                id: "h1_42", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "二", pinyin: "èr", tones: [4], hanviet: "NHỊ", meaning: "Số 2, hai (dùng khi đếm số)",
+                hint: "2 nét ngang: trên ngắn dưới dài",
+                etymology: "二 (Nhị - số hai). Lưu ý: khi đếm số thứ tự dùng 二, khi đi kèm lượng từ (hai người) dùng 两 (liǎng).",
+                exZh: "十二月。", exPy: "Shí-èr yuè.", exVi: "Tháng mười hai."
+            },
+            {
+                id: "h1_43", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "三", pinyin: "sān", tones: [1], hanviet: "TAM", meaning: "Số 3, ba",
+                hint: "3 nét ngang: tượng trưng Thiên - Địa - Nhân",
+                etymology: "三 (Tam - số ba) gồm 3 nét ngang biểu thị Trời, Đất và Con người.",
+                exZh: "三点钟。", exPy: "Sān diǎnzhōng.", exVi: "Ba giờ đúng."
+            },
+            {
+                id: "h1_44", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "十", pinyin: "shí", tones: [2], hanviet: "THẬP", meaning: "Số 10, mười",
+                hint: "Hình chữ thập (+)",
+                etymology: "十 (Thập - số mười) gồm 1 nét ngang và 1 nét sổ thẳng giao nhau.",
+                exZh: "十五分钟。", exPy: "Shíwǔ fēnzhōng.", exVi: "Mười lăm phút."
+            },
+            {
+                id: "h1_45", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "今天", pinyin: "jīn tiān", tones: [1, 1], hanviet: "KIM THIÊN", meaning: "Hôm nay",
+                hint: "Kim (hiện tại, cổ kim) + Thiên (ngày, trời)",
+                etymology: "今 (Kim - hiện tại, như trong 'cổ kim') + 天 (Thiên - bầu trời, ngày). Ngày hiện tại chính là hôm nay.",
+                exZh: "今天是星期五。", exPy: "Jīntiān shì Xīngqīwǔ.", exVi: "Hôm nay là thứ Sáu."
+            },
+            {
+                id: "h1_46", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "明天", pinyin: "míng tiān", tones: [2, 1], hanviet: "MINH THIÊN", meaning: "Ngày mai",
+                hint: "Nhật 日 (mặt trời) + Nguyệt 月 (mặt trăng) = Minh 明 (sáng)",
+                etymology: "明 (Minh - ánh sáng ban mai, ghép từ mặt trời 日 và mặt trăng 月) + 天 (Thiên - ngày). Ngày sáng tiếp theo.",
+                exZh: "明天见！", exPy: "Míngtiān jiàn!", exVi: "Ngày mai gặp lại!"
+            },
+            {
+                id: "h1_47", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "昨天", pinyin: "zuó tiān", tones: [2, 1], hanviet: "TẠC THIÊN", meaning: "Hôm qua",
+                hint: "Có bộ Nhật 日 (mặt trời/ngày) bên trái",
+                etymology: "昨 (Tạc - ngày hôm qua, gồm bộ Nhật 日) + 天 (Thiên - ngày).",
+                exZh: "昨天我休息。", exPy: "Zuótiān wǒ xiūxi.", exVi: "Hôm qua tôi nghỉ ngơi."
+            },
+            {
+                id: "h1_48", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "现在", pinyin: "xiàn zài", tones: [4, 4], hanviet: "HIỆN TẠI", meaning: "Bây giờ, hiện tại",
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "现 (Hiện - xuất hiện, bộ Vương 王) + 在 (Tại - đang ở). Khoảnh khắc đang diễn ra ngay lúc này.",
+                exZh: "现在几点了？", exPy: "Xiànzài jǐ diǎn le?", exVi: "Bây giờ là mấy giờ rồi?"
+            },
+            {
+                id: "h1_49", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
+                hanzi: "时候", pinyin: "shí hou", tones: [2, 5], hanviet: "THỜI HẬU", meaning: "Lúc, khi, thời gian",
+                hint: "Thường dùng trong cấu trúc '...的时候' (Lúc...)",
+                etymology: "时 (Thời - thời gian, bộ Nhật 日) + 候 (Hậu - mùa, thời tiết, bộ Nhân 亻).",
+                exZh: "你什么时候回家？", exPy: "Nǐ shénme shíhou huí jiā?", exVi: "Khi nào bạn về nhà?"
+            },
+            {
+                id: "h1_50", lesson: "Bài 5: Số đếm & Thời gian", level: "HSK 1",
                 hanzi: "时间", pinyin: "shí jiān", tones: [2, 1], hanviet: "THỜI GIAN", meaning: "Thời gian",
-                hint: "Thời (mặt trời) + Gian (khoảng trống)",
-                etymology: "时 (Thời - có bộ Nhật 日: mặt trời đo thời gian) + 间 (Gian - ánh mặt trời 日 chiếu qua khe cửa 门).",
-                exZh: "时间就是效率。", exPy: "Shíjiān jiùshì xiàolǜ.", exVi: "Thời gian chính là hiệu suất."
-            },
-            {
-                id: "v05", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
-                hanzi: "理解", pinyin: "lǐ jiě", tones: [3, 3], hanviet: "LÝ GIẢI", meaning: "Hiểu, thông hiểu",
-                hint: "Lý (lý lẽ) + Giải (tháo gỡ)",
-                etymology: "理 (Lý - vân ngọc, quy luật, bộ Vương 王) + 解 (Giải - dùng dao 刀 tách sừng trâu 角 → phân tích, tháo gỡ vấn đề).",
-                exZh: "我完全理解你的意思。", exPy: "Wǒ wánquán lǐjiě nǐ de yìsi.", exVi: "Tôi hoàn toàn hiểu ý của bạn."
-            },
-            {
-                id: "v06", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
-                hanzi: "问题", pinyin: "wèn tí", tones: [4, 2], hanviet: "VẤN ĐỀ", meaning: "Câu hỏi, vấn đề",
-                hint: "Vấn (hỏi) + Đề (đầu đề, chủ đề)",
-                etymology: "问 (Vấn - cái miệng 口 đặt ở cửa 门 để hỏi thăm) + 题 (Đề - trán, đầu mục của một sự việc).",
-                exZh: "这个方法能解决很多问题。", exPy: "Zhège fāngfǎ néng jiějué hěn duō wèntí.", exVi: "Phương pháp này có thể giải quyết rất nhiều vấn đề."
-            },
-            {
-                id: "v07", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
-                hanzi: "开始", pinyin: "kāi shǐ", tones: [1, 3], hanviet: "KHAI THỦY", meaning: "Bắt đầu",
-                hint: "Khai (mở ra) + Thủy (ban đầu)",
-                etymology: "开 (Khai - hai tay mở then cửa) + 始 (Thủy - khởi đầu, có bộ Nữ 女).",
-                exZh: "我们现在开始吧！", exPy: "Wǒmen xiànzài kāishǐ ba!", exVi: "Chúng ta bắt đầu ngay bây giờ nhé!"
-            },
-            {
-                id: "v08", lesson: "Bài 1: Nền tảng & Thanh điệu", level: "HSK 1",
-                hanzi: "准备", pinyin: "zhǔn bèi", tones: [3, 4], hanviet: "CHUẨN BỊ", meaning: "Chuẩn bị",
-                hint: "Âm Hán Việt chuẩn xác",
-                etymology: "准 (Chuẩn - tiêu chuẩn, chính xác) + 备 (Bị - trang bị đầy đủ từ trước).",
-                exZh: "我已经做好准备了。", exPy: "Wǒ yǐjīng zuò hǎo zhǔnbèi le.", exVi: "Tôi đã chuẩn bị sẵn sàng rồi."
+                hint: "Hán Việt trùng nghĩa 100%",
+                etymology: "时 (Thời - mặt trời 日 đo thời gian) + 间 (Gian - khoảng cách). Khoảng thời gian.",
+                exZh: "我有时间。", exPy: "Wǒ yǒu shíjiān.", exVi: "Tôi có thời gian."
             },
 
-            // BÀI 2: TƯ DUY & CÔNG VIỆC (HSK 2)
+            // BÀI 6: CON NGƯỜI, ĐỊA ĐIỂM & TÍNH TỪ CƠ BẢN (HSK 1)
             {
-                id: "v09", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "习惯", pinyin: "xí guàn", tones: [2, 4], hanviet: "TẬP QUÁN", meaning: "Thói quen, quen với",
-                hint: "Tập (lặp lại) + Quán (quen thuộc)",
-                etymology: "习 (Tập - luyện tập) + 贯 (Quán - xâu chuỗi tiền xu, bộ Tâm 忄: điều khắc sâu trong tâm trí thành thói quen).",
-                exZh: "每天学习是一个好习惯。", exPy: "Měitiān xuéxí shì yí gè hǎo xíguàn.", exVi: "Học tập mỗi ngày là một thói quen tốt."
+                id: "h1_51", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "人", pinyin: "rén", tones: [2], hanviet: "NHÂN", meaning: "Người, con người",
+                hint: "2 nét phẩy - mác như dáng người đứng dang chân",
+                etymology: "人 (Nhân - con người, như trong 'nhân loại', 'nhân viên'). Chữ tượng hình dáng người đứng nghiêng.",
+                exZh: "这里有很多人。", exPy: "Zhèlǐ yǒu hěn duō rén.", exVi: "Ở đây có rất nhiều người."
             },
             {
-                id: "v10", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "方法", pinyin: "fāng fǎ", tones: [1, 3], hanviet: "PHƯƠNG PHÁP", meaning: "Phương pháp, cách thức",
+                id: "h1_52", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "老师", pinyin: "lǎo shī", tones: [3, 1], hanviet: "LÃO SƯ", meaning: "Thầy giáo, cô giáo",
+                hint: "Lão (kính trọng) + Sư (người truyền dạy)",
+                etymology: "老 (Lão - bậc trưởng bối đáng kính) + 师 (Sư - người thầy, như trong 'giáo sư', 'y sư').",
+                exZh: "王老师教我们汉语。", exPy: "Wáng lǎoshī jiāo wǒmen Hànyǔ.", exVi: "Thầy Vương dạy chúng tôi tiếng Hán."
+            },
+            {
+                id: "h1_53", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "学生", pinyin: "xué sheng", tones: [2, 5], hanviet: "HỌC SINH", meaning: "Học sinh, sinh viên",
                 hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "方 (Phương - phương hướng) + 法 (Pháp - quy tắc, có bộ Thủy 氵: nước chảy phẳng lặng làm chuẩn mực).",
-                exZh: "科学的方法能提高记忆力。", exPy: "Kēxué de fāngfǎ néng tígāo jìyìlì.", exVi: "Phương pháp khoa học có thể nâng cao trí nhớ."
+                etymology: "学 (Học - học tập) + 生 (Sinh - người trẻ tuổi, học trò).",
+                exZh: "他是大学生。", exPy: "Tā shì dàxuéshēng.", exVi: "Anh ấy là sinh viên đại học."
             },
             {
-                id: "v11", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "重要", pinyin: "zhòng yào", tones: [4, 4], hanviet: "TRỌNG YẾU", meaning: "Quan trọng",
-                hint: "Trọng (nặng, coi trọng) + Yếu (cốt yếu)",
-                etymology: "重 (Trọng - sức nặng, giá trị lớn) + 要 (Yếu - điểm cốt lõi cần thiết).",
-                exZh: "坚持比速度更重要。", exPy: "Jiānchí bǐ sùdù gèng zhòngyào.", exVi: "Sự kiên trì quan trọng hơn tốc độ."
+                id: "h1_54", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "朋友", pinyin: "péng you", tones: [2, 5], hanviet: "BẰNG HỮU", meaning: "Bạn bè",
+                hint: "Bằng (bạn cùng học) + Hữu (bạn cùng chí hướng)",
+                etymology: "朋 (Bằng - hai vầng trăng 月 sóng đôi) + 友 (Hữu - hai bàn tay nắm lấy nhau).",
+                exZh: "他是我的好朋友。", exPy: "Tā shì wǒ de hǎo péngyou.", exVi: "Anh ấy là bạn thân của tôi."
             },
             {
-                id: "v12", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "决定", pinyin: "jué dìng", tones: [2, 4], hanviet: "QUYẾT ĐỊNH", meaning: "Quyết định",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "决 (Quyết - khơi thông dòng nước 氵, dứt khoát) + 定 (Định - mái nhà 宀 che chở cho sự ổn định).",
-                exZh: "我决定两年内掌握中文。", exPy: "Wǒ juédìng liǎng nián nèi zhǎngwò Zhōngwén.", exVi: "Tôi quyết định làm chủ tiếng Trung trong vòng 2 năm."
+                id: "h1_55", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "家", pinyin: "jiā", tones: [1], hanviet: "GIA", meaning: "Nhà, gia đình",
+                hint: "Mái nhà 宀 bên trên che chở bên dưới",
+                etymology: "家 (Gia - gia đình, như trong 'gia chủ') gồm bộ Miên 宀 (mái nhà) bên trên.",
+                exZh: "我想回家。", exPy: "Wǒ xiǎng huí jiā.", exVi: "Tôi muốn về nhà."
             },
             {
-                id: "v13", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "经验", pinyin: "jīng yàn", tones: [1, 4], hanviet: "KINH NGHIỆM", meaning: "Kinh nghiệm",
-                hint: "Kinh (trải qua) + Nghiệm (kiểm chứng)",
-                etymology: "经 (Kinh - sợi dọc khung cửi, trải qua) + 验 (Nghiệm - bộ Mã 马: kiểm tra, nghiệm chứng thực tế).",
-                exZh: "他有丰富的临床经验。", exPy: "Tā yǒu fēngfù de línchuáng jīngyàn.", exVi: "Anh ấy có kinh nghiệm lâm sàng phong phú."
+                id: "h1_56", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "医院", pinyin: "yī yuàn", tones: [1, 4], hanviet: "Y VIỆN", meaning: "Bệnh viện",
+                hint: "Y (y học) + Viện (khu nhà lớn có tường bao)",
+                etymology: "医 (Y - chữa bệnh, y học) + 院 (Viện - cơ quan, khu nhà lớn, bộ Phụ 阝).",
+                exZh: "他在医院工作。", exPy: "Tā zài yīyuàn gōngzuò.", exVi: "Anh ấy làm việc ở bệnh viện."
             },
             {
-                id: "v14", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "环境", pinyin: "huán jìng", tones: [2, 4], hanviet: "HOÀN CẢNH", meaning: "Môi trường, hoàn cảnh",
-                hint: "Hoàn (vòng quanh) + Cảnh (biên giới, vùng đất)",
-                etymology: "环 (Hoàn - vòng ngọc bao quanh, bộ Vương 王) + 境 (Cảnh - vùng đất, bộ Thổ 土).",
-                exZh: "语言环境对学习很有帮助。", exPy: "Yǔyán huánjìng duì xuéxí hěn yǒu bāngzhù.", exVi: "Môi trường ngôn ngữ rất có ích cho việc học."
+                id: "h1_57", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "工作", pinyin: "gōng zuò", tones: [1, 4], hanviet: "CÔNG TÁC", meaning: "Công việc, làm việc",
+                hint: "Vừa là danh từ (công việc) vừa là động từ (làm việc)",
+                etymology: "工 (Công - lao động, kỹ thuật) + 作 (Tác - hành động, làm ra).",
+                exZh: "你的工作忙吗？", exPy: "Nǐ de gōngzuò máng ma?", exVi: "Công việc của bạn có bận không?"
             },
             {
-                id: "v15", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "变化", pinyin: "biàn huà", tones: [4, 4], hanviet: "BIẾN HÓA", meaning: "Thay đổi, biến đổi",
-                hint: "Biến (biến đổi) + Hóa (chuyển hóa)",
-                etymology: "变 (Biến - thay đổi trạng thái) + 化 (Hóa - chuyển từ dạng này sang dạng khác).",
-                exZh: "科技带来了巨大的变化。", exPy: "Kējì dàiláile jùdà de biànhuà.", exVi: "Công nghệ đã mang lại những thay đổi to lớn."
+                id: "h1_58", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "大", pinyin: "dà", tones: [4], hanviet: "ĐẠI", meaning: "To, lớn",
+                hint: "Hình người dang rộng hai tay hai chân",
+                etymology: "大 (Đại - to lớn, như trong 'đại học', 'vĩ đại'). Tượng hình người dang rộng tay chân hết cỡ.",
+                exZh: "这个房间很大。", exPy: "Zhège fángjiān hěn dà.", exVi: "Căn phòng này rất rộng lớn."
             },
             {
-                id: "v16", lesson: "Bài 2: Tư duy & Công việc", level: "HSK 2",
-                hanzi: "解决", pinyin: "jiě jué", tones: [3, 2], hanviet: "GIẢI QUYẾT", meaning: "Giải quyết",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "解 (Giải - tháo gỡ nút thắt) + 决 (Quyết - xử lý dứt điểm).",
-                exZh: "我们要找到解决问题的办法。", exPy: "Wǒmen yào zhǎodào jiějué wèntí de bànfǎ.", exVi: "Chúng ta cần tìm ra cách giải quyết vấn đề."
-            },
-
-            // BÀI 3: HỆ THỐNG & PHÂN TÍCH (HSK 3)
-            {
-                id: "v17", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
-                hanzi: "影响", pinyin: "yǐng xiǎng", tones: [3, 3], hanviet: "ẢNH HƯỞNG", meaning: "Ảnh hưởng, tác động",
-                hint: "Ảnh (bóng hình) + Hưởng (tiếng vang)",
-                etymology: "影 (Ảnh - bóng của cảnh vật dưới ánh mặt trời 日) + 响 (Hưởng - âm thanh vang vọng, bộ Khẩu 口).",
-                exZh: "睡眠质量会直接影响注意力。", exPy: "Shuìmián zhìliàng huì zhíjiē yǐngxiǎng zhùyìlì.", exVi: "Chất lượng giấc ngủ sẽ ảnh hưởng trực tiếp đến sự tập trung."
+                id: "h1_59", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "小", pinyin: "xiǎo", tones: [3], hanviet: "TIỂU", meaning: "Nhỏ, bé",
+                hint: "Trái nghĩa với 大 (Đại)",
+                etymology: "小 (Tiểu - nhỏ bé, như trong 'tiểu học', 'tiểu tiết'). Ba chấm nhỏ li ti.",
+                exZh: "这是一只小猫。", exPy: "Zhè shì yì zhī xiǎo māo.", exVi: "Đây là một chú mèo nhỏ."
             },
             {
-                id: "v18", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
-                hanzi: "注意", pinyin: "zhù yì", tones: [4, 4], hanviet: "CHÚ Ý", meaning: "Chú ý, lưu tâm",
-                hint: "Chú (rót vào) + Ý (ý nghĩ)",
-                etymology: "注 (Chú - dòng nước 氵 đổ dồn vào một điểm) + 意 (Ý - âm thanh trong tâm 心). Dồn tâm trí vào một điểm.",
-                exZh: "请注意细节的变化。", exPy: "Qǐng zhùyì xìjié de biànhuà.", exVi: "Xin hãy chú ý đến sự thay đổi của các chi tiết."
-            },
-            {
-                id: "v19", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
-                hanzi: "比较", pinyin: "bǐ jiào", tones: [3, 4], hanviet: "TỶ GIẢO", meaning: "So sánh; tương đối, khá",
-                hint: "Tỷ (so bì) + Giảo (đối chiếu)",
-                etymology: "比 (Tỷ - hai người đứng cạnh nhau so cao thấp) + 较 (Giảo - bộ Xa 车: đối chiếu hai cỗ xe).",
-                exZh: "这个概念比较抽象。", exPy: "Zhège gàiniàn bǐjiào chōuxiàng.", exVi: "Khái niệm này tương đối trừu tượng."
-            },
-            {
-                id: "v20", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
-                hanzi: "选择", pinyin: "xuǎn zé", tones: [3, 2], hanviet: "TUYỂN TRẠCH", meaning: "Lựa chọn",
-                hint: "Tuyển (chọn lọc) + Trạch (lựa ra)",
-                etymology: "选 (Tuyển - sàng lọc, bộ Sước 辶) + 择 (Trạch - dùng tay 扌 chọn lấy thứ tốt nhất).",
-                exZh: "这是最合理的选择。", exPy: "Zhè shì zuì hélǐ de xuǎnzé.", exVi: "Đây là sự lựa chọn hợp lý nhất."
-            },
-            {
-                id: "v21", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
-                hanzi: "结构", pinyin: "jié gòu", tones: [2, 4], hanviet: "KẾT CẤU", meaning: "Cấu trúc, kết cấu",
-                hint: "Từ khóa quan trọng trong giải phẫu và ngôn ngữ",
-                etymology: "结 (Kết - buộc các sợi tơ 纟 lại) + 构 (Cấu - dựng khung gỗ 木). Sự liên kết tạo thành chỉnh thể.",
-                exZh: "汉字的结构很有逻辑性。", exPy: "Hànzì de jiégòu hěn yǒu luójixìng.", exVi: "Cấu trúc của chữ Hán rất có tính logic."
-            },
-            {
-                id: "v22", lesson: "Bài 3: Hệ thống & Phân tích", level: "HSK 3",
-                hanzi: "目的", pinyin: "mù dì", tones: [4, 4], hanviet: "MỤC ĐÍCH", meaning: "Mục đích",
-                hint: "Mục (con mắt) + Đích (tâm bia)",
-                etymology: "目 (Mục - con mắt nhìn thẳng) + 的 (Đích - điểm trắng giữa bia bắn). Điểm mà mắt nhắm tới.",
-                exZh: "明确的目标能提高学习动力。", exPy: "Míngquè de mùbiāo néng tígāo xuéxí dònglì.", exVi: "Mục tiêu rõ ràng có thể nâng cao động lực học tập."
-            },
-
-            // BÀI 4: LẬP LUẬN & QUAN ĐIỂM (HSK 4)
-            {
-                id: "v23", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
-                hanzi: "效率", pinyin: "xiào lǜ", tones: [4, 4], hanviet: "HIỆU SUẤT", meaning: "Hiệu suất, năng suất",
-                hint: "Hiệu (hiệu quả) + Suất (tỷ lệ)",
-                etymology: "效 (Hiệu - tạo ra kết quả thực tế) + 率 (Suất - tỷ lệ đo lường). Kết quả đạt được trên một đơn vị thời gian.",
-                exZh: "间隔重复法能显著提升记忆效率。", exPy: "Jiàngé chóngfù fǎ néng xiǎnzhù tíshēng jìyì xiàolǜ.", exVi: "Phương pháp lặp lại ngắt quãng nâng cao rõ rệt hiệu suất ghi nhớ."
-            },
-            {
-                id: "v24", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
-                hanzi: "观点", pinyin: "guān diǎn", tones: [1, 3], hanviet: "QUAN ĐIỂM", meaning: "Quan điểm, góc nhìn",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "观 (Quan - nhìn nhận, quan sát, bộ Kiến 见) + 点 (Điểm - vị trí đứng). Góc độ nhìn nhận sự vật.",
-                exZh: "我非常赞同你的观点。", exPy: "Wǒ fēicháng zàntóng nǐ de guāndiǎn.", exVi: "Tôi vô cùng tán đồng quan điểm của bạn."
-            },
-            {
-                id: "v25", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
-                hanzi: "分析", pinyin: "fēn xī", tones: [1, 1], hanviet: "PHÂN TÍCH", meaning: "Phân tích",
-                hint: "Phân (chia nhỏ) + Tích (chẻ gỗ)",
-                etymology: "分 (Phân - dùng dao 刀 chia đôi) + 析 (Tích - dùng rìu 斤 bổ gỗ 木). Tách nhỏ vấn đề để xem xét bản chất.",
-                exZh: "我们需要客观地分析数据。", exPy: "Wǒmen xūyào kèguān de fēnxī shùjù.", exVi: "Chúng ta cần phân tích dữ liệu một cách khách quan."
-            },
-            {
-                id: "v26", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
-                hanzi: "证据", pinyin: "zhèng jù", tones: [4, 4], hanviet: "CHỨNG CỨ", meaning: "Bằng chứng, chứng cứ",
-                hint: "Chứng (chứng minh) + Cứ (căn cứ)",
-                etymology: "证 (Chứng - lời nói 讠 xác thực) + 据 (Cứ - nắm giữ căn cứ, bộ Thủ 扌).",
-                exZh: "科学研究必须依靠可靠的证据。", exPy: "Kēxué yánjiū bìxū yīkào kěkào de zhèngjù.", exVi: "Nghiên cứu khoa học bắt buộc phải dựa vào bằng chứng đáng tin cậy."
-            },
-            {
-                id: "v27", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
-                hanzi: "适应", pinyin: "shì yìng", tones: [4, 4], hanviet: "THÍCH ỨNG", meaning: "Thích nghi, thích ứng",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "适 (Thích - phù hợp, vừa vặn) + 应 (Ứng - đáp lại, phản ứng). Điều chỉnh để phù hợp với hoàn cảnh mới.",
-                exZh: "大脑很快就能适应新的语言系统。", exPy: "Dànǎo hěn kuài jiù néng shìyìng xīn de yǔyán xìtǒng.", exVi: "Não bộ sẽ nhanh chóng thích nghi với hệ thống ngôn ngữ mới."
-            },
-            {
-                id: "v28", lesson: "Bài 4: Lập luận & Quan điểm", level: "HSK 4",
-                hanzi: "积累", pinyin: "jī lěi", tones: [1, 3], hanviet: "TÍCH LŨY", meaning: "Tích lũy",
-                hint: "Tích (chất chứa) + Lũy (chồng chất)",
-                etymology: "积 (Tích - gom góp lúa gạo, bộ Hòa 禾) + 累 (Lũy - xếp chồng lên nhau). Gom góp từng chút mỗi ngày.",
-                exZh: "词汇量是靠每天一点一滴积累起来的。", exPy: "Cíhuìliàng shì kào měitiān yìdiǎn-yìdī jīlěi qǐlái de.", exVi: "Vốn từ vựng là dựa vào việc tích lũy từng chút một mỗi ngày."
-            },
-
-            // BÀI 5: CHUYÊN SÂU & Y KHOA - KHOA HỌC (HSK 5)
-            {
-                id: "v29", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
-                hanzi: "精准", pinyin: "jīng zhǔn", tones: [1, 3], hanviet: "TINH CHUẨN", meaning: "Chính xác tuyệt đối, tinh chuẩn",
-                hint: "Tinh (tinh vi) + Chuẩn (chuẩn xác)",
-                etymology: "精 (Tinh - gạo đã giã trắng tinh, tinh túy) + 准 (Chuẩn - chuẩn mực). Độ chính xác cao đến từng chi tiết.",
-                exZh: "现代手术要求操作高度精准。", exPy: "Xiàndài shǒushù yāoqiú cāozuò gāodù jīngzhǔn.", exVi: "Phẫu thuật hiện đại đòi hỏi thao tác có độ chính xác cao."
-            },
-            {
-                id: "v30", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
-                hanzi: "评估", pinyin: "píng gū", tones: [2, 1], hanviet: "BÌNH CỔ", meaning: "Đánh giá, thẩm định",
-                hint: "Bình (bình xét) + Cổ (ước lượng giá trị)",
-                etymology: "评 (Bình - lời nói 讠 công bằng 平) + 估 (Cổ - ước tính giá trị). Xem xét toàn diện để đưa ra nhận định.",
-                exZh: "术前需要全面评估患者的状况。", exPy: "Shùqián xūyào quánmiàn pínggū huànzhě de zhuàngkuàng.", exVi: "Trước phẫu thuật cần đánh giá toàn diện tình trạng của bệnh nhân."
-            },
-            {
-                id: "v31", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
-                hanzi: "恢复", pinyin: "huī fù", tones: [1, 4], hanviet: "KHÔI PHỤC", meaning: "Hồi phục, khôi phục",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "恢 (Khôi - mở rộng trở lại, bộ Tâm 忄) + 复 (Phục - quay trở về trạng thái ban đầu).",
-                exZh: "术后恢复期需要保持良好的作息。", exPy: "Shùhòu huīfùqī xūyào bǎochí liánghǎo de zuòxī.", exVi: "Giai đoạn hồi phục sau mổ cần duy trì sinh hoạt điều độ."
-            },
-            {
-                id: "v32", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
-                hanzi: "机制", pinyin: "jī zhì", tones: [1, 4], hanviet: "CƠ CHẾ", meaning: "Cơ chế (sinh học, vận hành)",
-                hint: "Từ vựng chuẩn IELTS 7.0 ('mechanism')",
-                etymology: "机 (Cơ - bộ máy, điểm mấu chốt) + 制 (Chế - quy định, điều tiết). Nguyên lý vận hành bên trong một hệ thống.",
-                exZh: "科学家正在研究这一疾病的发病机制。", exPy: "Kēxuéjiā zhèngzài yánjiū zhè yī jíbìng de fābìng jīzhì.", exVi: "Các nhà khoa học đang nghiên cứu cơ chế bệnh sinh của căn bệnh này."
-            },
-            {
-                id: "v33", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
-                hanzi: "原则", pinyin: "yuán zé", tones: [2, 2], hanviet: "NGUYÊN TẮC", meaning: "Nguyên tắc",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "原 (Nguyên - nguồn suối) + 则 (Tắc - quy tắc, chuẩn mực). Quy chuẩn gốc không thể vi phạm.",
-                exZh: "安全永远是第一原则。", exPy: "Ānquán yǒngyuǎn shì dì-yī yuánzé.", exVi: "An toàn luôn là nguyên tắc hàng đầu."
-            },
-            {
-                id: "v34", lesson: "Bài 5: Chuyên sâu & Khoa học", level: "HSK 5",
-                hanzi: "认知", pinyin: "rèn zhī", tones: [4, 1], hanviet: "NHẬN TRI", meaning: "Nhận thức (cognition)",
-                hint: "Nhận (nhận biết) + Tri (tri thức)",
-                etymology: "认 (Nhận - nhận diện, bộ Ngôn 讠) + 知 (Tri - dùng mũi tên 矢 bắn trúng đích bằng lời nói 口 → hiểu biết).",
-                exZh: "认知负荷理论有助于优化学习设计。", exPy: "Rènzhī fùhè lǐlùn yǒuzhùyú yōuhuà xuéxí shèjì.", exVi: "Lý thuyết tải nhận thức giúp tối ưu hóa thiết kế học tập."
-            },
-
-            // BÀI 6: TƯ DUY HỌC THUẬT & THÀNH NGỮ HSK 5-6 (TƯƠNG ĐƯƠNG IELTS 7.0)
-            {
-                id: "v35", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
-                hanzi: "循序渐进", pinyin: "xún xù jiàn jìn", tones: [2, 4, 4, 4], hanviet: "TUẦN TỰ TIỆM TIẾN", meaning: "Tuân theo trình tự và tiến bộ từng bước vững chắc",
-                hint: "Thành ngữ 4 chữ chuẩn văn phong học thuật HSK 6",
-                etymology: "循 (Tuần - noi theo) + 序 (Tự - thứ tự) + 渐 (Tiệm - dần dần) + 进 (Tiến - tiến lên). Đi từng bước một theo đúng quy luật.",
-                exZh: "学习外语必须循序渐进，切忌急于求成。", exPy: "Xuéxí wàiyǔ bìxū xúnxù-jiànjìn, qièjì jíyú-qiúchéng.", exVi: "Học ngoại ngữ phải tuần tự tiệm tiến, tuyệt đối tránh nóng vội muốn thành ngay."
-            },
-            {
-                id: "v36", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
-                hanzi: "举一反三", pinyin: "jǔ yī fǎn sān", tones: [3, 1, 3, 1], hanviet: "CỬ NHẤT PHẢN TAM", meaning: "Học một biết ba, suy luận rộng ra từ một nguyên lý",
-                hint: "Thành ngữ mô tả tư duy hệ thống bậc cao",
-                etymology: "举 (Cử - nêu lên) + 一 (Nhất - một ví dụ) + 反 (Phản - suy ra) + 三 (Tam - ba trường hợp tương tự).",
-                exZh: "掌握了汉字偏旁，就能做到举一反三。", exPy: "Zhǎngwòle Hànzì piānpáng, jiù néng zuòdào jǔyī-fǎnsān.", exVi: "Nắm vững bộ thủ chữ Hán thì có thể đạt được trình độ học một biết ba."
-            },
-            {
-                id: "v37", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
-                hanzi: "客观", pinyin: "kè guān", tones: [4, 1], hanviet: "KHÁCH QUAN", meaning: "Khách quan",
-                hint: "Hán Việt trùng nghĩa 100%",
-                etymology: "客 (Khách - bên ngoài) + 观 (Quan - nhìn nhận). Nhìn nhận sự vật đúng như bản chất bên ngoài của nó.",
-                exZh: "他总能保持冷静和客观的态度。", exPy: "Tā zǒng néng bǎochí lěngjìng hé kèguān de tàidù.", exVi: "Anh ấy luôn giữ được thái độ bình tĩnh và khách quan."
-            },
-            {
-                id: "v38", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
-                hanzi: "逻辑", pinyin: "luó ji", tones: [2, 5], hanviet: "LA TẬP", meaning: "Logic, tính hợp lý chặt chẽ",
-                hint: "Từ phiên âm kết hợp Hán Việt ('logic')",
-                etymology: "逻 (La - tuần tra, xâu chuỗi) + 辑 (Tập - gom lại thành hệ thống). Sự liên kết chặt chẽ giữa các luận điểm.",
-                exZh: "这篇文章的逻辑非常严密。", exPy: "Zhè piān wénzhāng de luóji fēicháng yánmì.", exVi: "Tính logic của bài viết này vô cùng chặt chẽ."
-            },
-            {
-                id: "v39", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
-                hanzi: "洞察", pinyin: "dòng chá", tones: [4, 2], hanviet: "ĐỘNG SÁT", meaning: "Nhìn thấu bản chất, thấu hiểu sâu sắc (insight)",
-                hint: "Động từ học thuật tương đương 'insight' trong IELTS 7.0",
-                etymology: "洞 (Động - xuyên thấu) + 察 (Sát - quan sát kỹ lưỡng). Nhìn xuyên qua bề ngoài để thấy cốt lõi bên trong.",
-                exZh: "优秀的学者具备敏锐的洞察力。", exPy: "Yōuxiù de xuézhě jùbèi mǐnruì de dòngchálì.", exVi: "Học giả xuất sắc sở hữu khả năng nhìn thấu bản chất nhạy bén."
-            },
-            {
-                id: "v40", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
-                hanzi: "潜移默化", pinyin: "qián yí mò huà", tones: [2, 2, 4, 4], hanviet: "TIỀM DI MẶC HÓA", meaning: "Thay đổi một cách âm thầm, tự nhiên mà sâu sắc",
-                hint: "Thành ngữ HSK 6 mô tả sự thẩm thấu ngôn ngữ",
-                etymology: "潜 (Tiềm - ngầm, sâu) + 移 (Di - dịch chuyển) + 默 (Mặc - im lặng) + 化 (Hóa - chuyển hóa). Sự biến đổi âm thầm qua tích lũy hằng ngày.",
-                exZh: "每天的阅读对思维有潜移默化的影响。", exPy: "Měitiān de yuèdú duì sīwéi yǒu qiányí-mòhuà de yǐngxiǎng.", exVi: "Việc đọc mỗi ngày có ảnh hưởng thẩm thấu âm thầm đến tư duy."
-            },
-            {
-                id: "v41", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
-                hanzi: "综合", pinyin: "zōng hé", tones: [1, 2], hanviet: "TỔNG HỢP", meaning: "Tổng hợp, toàn diện",
-                hint: "Từ vựng học thuật dùng trong đánh giá, phân tích",
-                etymology: "综 (Tổng - gom các sợi tơ lại, có bộ Mịch 纟) + 合 (Hợp - gộp chung lại). Gom nhiều yếu tố lại để đánh giá toàn diện.",
-                exZh: "我们需要综合考虑各方面的因素。", exPy: "Wǒmen xūyào zōnghé kǎolǜ gè fāngmiàn de yīnsù.", exVi: "Chúng ta cần xem xét tổng hợp các yếu tố từ mọi khía cạnh."
-            },
-            {
-                id: "v42", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
-                hanzi: "趋势", pinyin: "qū shì", tones: [1, 4], hanviet: "XU THẾ", meaning: "Xu thế, xu hướng phát triển",
-                hint: "Xu (hướng tới) + Thế (thế lực, tình hình)",
-                etymology: "趋 (Xu - chạy nhanh về một hướng, có bộ Tẩu 走) + 势 (Thế - tình thế, sức mạnh). Chiều hướng vận động tất yếu.",
-                exZh: "人工智能是未来发展的重要趋势。", exPy: "Réngōng zhìnéng shì wèilái fāzhǎn de zhòngyào qūshì.", exVi: "Trí tuệ nhân tạo là xu thế quan trọng của sự phát triển tương lai."
-            },
-            {
-                id: "v43", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 5",
-                hanzi: "显著", pinyin: "xiǎn zhù", tones: [3, 4], hanviet: "HIỂN TRỨ", meaning: "Rõ rệt, đáng kể, nổi bật",
-                hint: "Tính từ học thuật tương đương 'significant' trong IELTS 7.0",
-                etymology: "显 (Hiển - hiện rõ ra ngoài) + 著 (Trứ - nổi bật, rõ ràng). Hiệu quả thể hiện rõ rệt, dễ nhận thấy.",
-                exZh: "坚持两年后，他的中文水平有了显著提高。", exPy: "Jiānchí liǎng nián hòu, tā de Zhōngwén shuǐpíng yǒule xiǎnzhù tígāo.", exVi: "Sau 2 năm kiên trì, trình độ tiếng Trung của anh ấy đã nâng cao rõ rệt."
-            },
-            {
-                id: "v44", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
-                hanzi: "权衡", pinyin: "quán héng", tones: [2, 2], hanviet: "QUYỀN HÀNH", meaning: "Cân nhắc, đong đếm thiệt hơn",
-                hint: "Động từ cấp cao trong ra quyết định",
-                etymology: "权 (Quyền - quả cân) + 衡 (Hành - đòn cân). Dùng cân để đo lường nặng nhẹ → cân nhắc lợi hại trước khi quyết định.",
-                exZh: "在做决定之前，必须权衡利弊。", exPy: "Zài zuò juédìng zhīqián, bìxū quánhéng lìbì.", exVi: "Trước khi đưa ra quyết định, bắt buộc phải cân nhắc lợi hại."
-            },
-            {
-                id: "v45", lesson: "Bài 6: Tư duy học thuật HSK 5-6", level: "HSK 6",
-                hanzi: "融会贯通", pinyin: "róng huì guàn tōng", tones: [2, 4, 4, 1], hanviet: "DUNG HỘI QUÁN THÔNG", meaning: "Hiểu thấu đáo và vận dụng linh hoạt mọi kiến thức",
-                hint: "Thành ngữ đỉnh cao của việc học tập",
-                etymology: "融 (Dung - hòa tan) + 会 (Hội - hội tụ) + 贯 (Quán - xuyên suốt) + 通 (Thông - thông suốt). Hòa quyện và thông suốt toàn bộ hệ thống kiến thức.",
-                exZh: "把新旧知识融会贯通，才能真正掌握一门语言。", exPy: "Bǎ xīn-jiù zhīshi rónghuì-guàntōng, cáinéng zhēnzhèng zhǎngwò yì mén yǔyán.", exVi: "Hòa quyện thông suốt kiến thức mới và cũ mới có thể thực sự làm chủ một ngôn ngữ."
+                id: "h1_60", lesson: "Bài 6: Con người & Địa điểm cơ bản", level: "HSK 1",
+                hanzi: "高兴", pinyin: "gāo xìng", tones: [1, 4], hanviet: "CAO HỨNG", meaning: "Vui vẻ, phấn khởi",
+                hint: "Cao (lên cao) + Hứng (hứng khởi)",
+                etymology: "高 (Cao - nâng cao) + 兴 (Hứng - hứng thú, phấn chấn). Tinh thần dâng cao → vui mừng.",
+                exZh: "认识你我很高兴。", exPy: "Rènshi nǐ wǒ hěn gāoxìng.", exVi: "Quen biết bạn tôi rất vui."
             }
         ];
 
@@ -1171,7 +1276,7 @@
                 correctReviews: 0
             },
             dailyNewLimit: 8,
-            selectedDeck: 'Bài 1: Nền tảng & Thanh điệu',
+            selectedDeck: 'Bài 1: Chào hỏi & Đại từ cơ bản',
             preferredVoiceURI: '',
             theme: 'light',
             lastUpdated: 0
@@ -1179,69 +1284,79 @@
 
         // Từ điển chiết tự chữ đơn giúp người mới bấm vào từng chữ để hiểu gốc Hán Việt
         const SINGLE_CHAR_DICT = {
+            "我": { hv: "NGÃ", py: "wǒ", desc: "Đại từ ngôi thứ 1: tôi, tớ, mình." },
             "你": { hv: "NHĨ", py: "nǐ", desc: "Đại từ ngôi thứ 2: bạn, anh, chị (bộ Nhân 亻)." },
+            "他": { hv: "THA", py: "tā", desc: "Ngôi thứ 3 giống đực: anh ấy, ông ấy." },
+            "她": { hv: "THA", py: "tā", desc: "Ngôi thứ 3 giống cái: cô ấy, chị ấy (bộ Nữ 女)." },
+            "们": { hv: "MÔN", py: "men", desc: "Hậu tố chỉ số nhiều cho người (chúng tôi, các bạn)." },
             "好": { hv: "HẢO", py: "hǎo", desc: "Tốt, đẹp, khỏe (ghép từ Nữ 女 + Tử 子)." },
-            "谢": { hv: "TẠ", py: "xiè", desc: "Cảm tạ, đa tạ, xin lỗi (bộ Ngôn 讠)." },
-            "学": { hv: "HỌC", py: "xué", desc: "Học tập, tiếp thu kiến thức (bộ Tử 子)." },
-            "习": { hv: "TẬP", py: "xí", desc: "Luyện tập lặp lại nhiều lần." },
-            "时": { hv: "THỜI", py: "shí", desc: "Thời gian, mùa, lúc (bộ Nhật 日 - mặt trời)." },
-            "间": { hv: "GIAN", py: "jiān", desc: "Khoảng trống ở giữa, không gian." },
-            "理": { hv: "LÝ", py: "lǐ", desc: "Lý lẽ, quy luật, sửa sang (bộ Vương 王)." },
-            "解": { hv: "GIẢI", py: "jiě", desc: "Tháo gỡ, phân tích, hiểu rõ." },
-            "问": { hv: "VẤN", py: "wèn", desc: "Hỏi thăm, chất vấn (cái miệng 口 ở cửa 门)." },
-            "题": { hv: "ĐỀ", py: "tí", desc: "Đầu đề, chủ đề, câu hỏi." },
-            "开": { hv: "KHAI", py: "kāi", desc: "Mở ra, bắt đầu, khởi động." },
-            "始": { hv: "THỦY", py: "shǐ", desc: "Ban đầu, khởi thủy." },
-            "准": { hv: "CHUẨN", py: "zhǔn", desc: "Tiêu chuẩn, chính xác, cho phép." },
-            "备": { hv: "BỊ", py: "bèi", desc: "Trang bị, dự phòng, chuẩn bị." },
-            "惯": { hv: "QUÁN", py: "guàn", desc: "Quen thuộc, thói quen (bộ Tâm 忄)." },
-            "方": { hv: "PHƯƠNG", py: "fāng", desc: "Phương hướng, vuông vức, cách thức." },
-            "法": { hv: "PHÁP", py: "fǎ", desc: "Quy tắc, luật lệ, phương pháp." },
-            "重": { hv: "TRỌNG", py: "zhòng", desc: "Nặng nề, coi trọng, quan trọng." },
-            "要": { hv: "YẾU", py: "yào", desc: "Cốt yếu, cần thiết, muốn." },
-            "决": { hv: "QUYẾT", py: "jué", desc: "Dứt khoát, quyết định." },
-            "定": { hv: "ĐỊNH", py: "dìng", desc: "Ổn định, xác định, quy định." },
-            "经": { hv: "KINH", py: "jīng", desc: "Trải qua, kinh điển, đường kinh." },
-            "验": { hv: "NGHIỆM", py: "yàn", desc: "Kiểm tra, nghiệm chứng, thử nghiệm." },
-            "环": { hv: "HOÀN", py: "huán", desc: "Vòng tròn, bao quanh." },
-            "境": { hv: "CẢNH", py: "jìng", desc: "Cảnh giới, vùng đất, hoàn cảnh." },
-            "变": { hv: "BIẾN", py: "biàn", desc: "Thay đổi, biến đổi." },
-            "化": { hv: "HÓA", py: "huà", desc: "Chuyển hóa, thay đổi trạng thái." },
-            "影": { hv: "ẢNH", py: "yǐng", desc: "Bóng hình, hình ảnh." },
-            "响": { hv: "HƯỞNG", py: "xiǎng", desc: "Âm thanh, vang vọng." },
-            "注": { hv: "CHÚ", py: "zhù", desc: "Rót vào, tập trung vào, ghi chú." },
-            "意": { hv: "Ý", py: "yì", desc: "Ý nghĩ, tâm ý, mong muốn." },
-            "比": { hv: "TỶ", py: "bǐ", desc: "So sánh, đối chiếu." },
-            "较": { hv: "GIẢO", py: "jiào", desc: "So bì, tương đối, khá." },
-            "选": { hv: "TUYỂN", py: "xuǎn", desc: "Chọn lọc, bầu chọn." },
-            "择": { hv: "TRẠCH", py: "zé", desc: "Lựa chọn lấy thứ phù hợp." },
-            "结": { hv: "KẾT", py: "jié", desc: "Buộc lại, kết nối, kết quả." },
-            "构": { hv: "CẤU", py: "gòu", desc: "Xây dựng, cấu tạo." },
-            "目": { hv: "MỤC", py: "mù", desc: "Con mắt, danh mục." },
-            "的": { hv: "ĐÍCH", py: "dì", desc: "Tâm bia bắn, mục tiêu (cũng đọc 'de' làm trợ từ)." },
-            "效": { hv: "HIỆU", py: "xiào", desc: "Hiệu quả, kết quả đạt được." },
-            "率": { hv: "SUẤT", py: "lǜ", desc: "Tỷ lệ, tần suất." },
-            "观": { hv: "QUAN", py: "guān", desc: "Quan sát, nhìn nhận." },
-            "点": { hv: "ĐIỂM", py: "diǎn", desc: "Chấm nhỏ, vị trí, điểm nhấn." },
-            "分": { hv: "PHÂN", py: "fēn", desc: "Chia tách, phân chia, phút." },
-            "析": { hv: "TÍCH", py: "xī", desc: "Chẻ nhỏ, phân tích." },
-            "证": { hv: "CHỨNG", py: "zhèng", desc: "Chứng minh, bằng chứng." },
-            "据": { hv: "CỨ", py: "jù", desc: "Căn cứ, chiếm giữ." },
-            "适": { hv: "THÍCH", py: "shì", desc: "Phù hợp, vừa vặn, thoải mái." },
-            "应": { hv: "ỨNG", py: "yìng", desc: "Đáp lại, phản ứng, nên." },
-            "积": { hv: "TÍCH", py: "jī", desc: "Tích góp, chất chứa." },
-            "累": { hv: "LŨY", py: "lěi", desc: "Chồng chất, tích lũy (cũng đọc 'lèi' là mệt)." },
-            "精": { hv: "TINH", py: "jīng", desc: "Tinh túy, tinh vi, chính xác." },
-            "评": { hv: "BÌNH", py: "píng", desc: "Bình luận, đánh giá." },
-            "估": { hv: "CỔ", py: "gū", desc: "Ước lượng, định giá." },
-            "恢": { hv: "KHÔI", py: "huī", desc: "Mở rộng, lấy lại." },
-            "复": { hv: "PHỤC", py: "fù", desc: "Quay lại, lặp lại, hồi phục." },
-            "机": { hv: "CƠ", py: "jī", desc: "Máy móc, cơ hội, cơ chế." },
-            "制": { hv: "CHẾ", py: "zhì", desc: "Chế tạo, chế độ, kiểm soát." },
-            "原": { hv: "NGUYÊN", py: "yuán", desc: "Nguồn gốc, ban đầu, nguyên vẹn." },
-            "则": { hv: "TẮC", py: "zé", desc: "Quy tắc, chuẩn mực." },
-            "认": { hv: "NHẬN", py: "rèn", desc: "Nhận biết, thừa nhận." },
-            "知": { hv: "TRI", py: "zhī", desc: "Biết, tri thức, hiểu biết." }
+            "谢": { hv: "TẠ", py: "xiè", desc: "Cảm tạ, đa tạ (bộ Ngôn 讠)." },
+            "不": { hv: "BẤT", py: "bù", desc: "Phủ định: không, chẳng." },
+            "客": { hv: "KHÁCH", py: "kè", desc: "Khách khứa, người ngoài." },
+            "气": { hv: "KHÍ", py: "qì", desc: "Khí chất, hơi thở, thái độ." },
+            "对": { hv: "ĐỐI", py: "duì", desc: "Đúng đắn, đối diện, hướng về." },
+            "起": { hv: "KHỞI", py: "qǐ", desc: "Đứng dậy, nổi lên, bắt đầu." },
+            "再": { hv: "TÁI", py: "zài", desc: "Lại, lần nữa." },
+            "见": { hv: "KIẾN", py: "jiàn", desc: "Nhìn thấy, gặp gỡ." },
+            "是": { hv: "THỊ", py: "shì", desc: "Là, đúng, phải." },
+            "的": { hv: "ĐÍCH", py: "de", desc: "Trợ từ sở hữu 'của' (khi đọc thanh nhẹ)." },
+            "有": { hv: "HỮU", py: "yǒu", desc: "Có, sở hữu, tồn tại." },
+            "没": { hv: "MỘT", py: "méi", desc: "Không có, chưa (dùng phủ định cho 有)." },
+            "在": { hv: "TẠI", py: "zài", desc: "Ở tại, đang diễn ra." },
+            "很": { hv: "NGẬN", py: "hěn", desc: "Rất (phó từ chỉ mức độ)." },
+            "和": { hv: "HÒA", py: "hé", desc: "Và, cùng với, hòa thuận." },
+            "吗": { hv: "MA", py: "ma", desc: "Trợ từ nghi vấn đặt cuối câu hỏi Có/Không." },
+            "了": { hv: "LIỄU", py: "le", desc: "Trợ từ biểu thị hành động đã hoàn thành ('rồi')." },
+            "什": { hv: "THẬP", py: "shén", desc: "Ghép với 么 thành 'cái gì'." },
+            "么": { hv: "MA", py: "me", desc: "Hậu tố trong các từ để hỏi (什么, 怎么)." },
+            "谁": { hv: "THÙY", py: "shéi", desc: "Ai, người nào." },
+            "哪": { hv: "NA", py: "nǎ", desc: "Nào (từ để hỏi, có bộ Khẩu 口)." },
+            "儿": { hv: "NHI", py: "ér", desc: "Hậu tố uốn lưỡi chỉ nơi chốn (哪儿, 这儿)." },
+            "这": { hv: "GIÁ", py: "zhè", desc: "Đây, này (chỉ khoảng cách gần)." },
+            "那": { hv: "NA", py: "nà", desc: "Kia, đó (chỉ khoảng cách xa)." },
+            "多": { hv: "ĐA", py: "duō", desc: "Nhiều, đa số." },
+            "少": { hv: "THIỂU", py: "shǎo", desc: "Ít, thiểu số." },
+            "几": { hv: "KỶ", py: "jǐ", desc: "Mấy (hỏi số lượng dưới 10)." },
+            "怎": { hv: "CHẨM", py: "zěn", desc: "Sao, thế nào." },
+            "样": { hv: "DẠNG", py: "yàng", desc: "Hình dáng, trạng thái, kiểu." },
+            "吃": { hv: "NGẬT", py: "chī", desc: "Ăn (bộ Khẩu 口)." },
+            "喝": { hv: "HÁT", py: "hē", desc: "Uống (bộ Khẩu 口)." },
+            "去": { hv: "KHỨ", py: "qù", desc: "Đi (rời xa vị trí hiện tại)." },
+            "来": { hv: "LAI", py: "lái", desc: "Đến, tới (hướng về người nói)." },
+            "看": { hv: "KHÁN", py: "kàn", desc: "Nhìn, xem, đọc sách." },
+            "听": { hv: "THÍNH", py: "tīng", desc: "Nghe (thính giác)." },
+            "说": { hv: "THUYẾT", py: "shuō", desc: "Nói, diễn thuyết (bộ Ngôn 讠)." },
+            "做": { hv: "TỐ", py: "zuò", desc: "Làm, thực hiện." },
+            "买": { hv: "MÃI", py: "mǎi", desc: "Mua sắm." },
+            "学": { hv: "HỌC", py: "xué", desc: "Học tập, tiếp thu kiến thức." },
+            "习": { hv: "TẬP", py: "xí", desc: "Luyện tập lặp lại." },
+            "一": { hv: "NHẤT", py: "yī", desc: "Số 1, một." },
+            "二": { hv: "NHỊ", py: "èr", desc: "Số 2, hai." },
+            "三": { hv: "TAM", py: "sān", desc: "Số 3, ba." },
+            "十": { hv: "THẬP", py: "shí", desc: "Số 10, mười." },
+            "今": { hv: "KIM", py: "jīn", desc: "Hiện tại, nay (cổ kim)." },
+            "天": { hv: "THIÊN", py: "tiān", desc: "Trời, ngày." },
+            "明": { hv: "MINH", py: "míng", desc: "Sáng sủa, rõ ràng, kế tiếp (Nhật 日 + Nguyệt 月)." },
+            "昨": { hv: "TẠC", py: "zuó", desc: "Qua, đã qua (bộ Nhật 日)." },
+            "现": { hv: "HIỆN", py: "xiàn", desc: "Hiện tại, xuất hiện." },
+            "时": { hv: "THỜI", py: "shí", desc: "Thời gian, giờ (bộ Nhật 日)." },
+            "候": { hv: "HẬU", py: "hou", desc: "Thời tiết, lúc, chờ đợi." },
+            "间": { hv: "GIAN", py: "jiān", desc: "Khoảng trống, khoảng thời gian." },
+            "人": { hv: "NHÂN", py: "rén", desc: "Người, con người." },
+            "老": { hv: "LÃO", py: "lǎo", desc: "Già, bậc trưởng bối kính trọng." },
+            "师": { hv: "SƯ", py: "shī", desc: "Thầy, người dạy nghề." },
+            "生": { hv: "SINH", py: "shēng", desc: "Sinh ra, học trò, tươi sống." },
+            "朋": { hv: "BẰNG", py: "péng", desc: "Bạn đồng môn." },
+            "友": { hv: "HỮU", py: "yǒu", desc: "Bạn bè thân thiết." },
+            "家": { hv: "GIA", py: "jiā", desc: "Nhà, gia đình (bộ Miên 宀)." },
+            "医": { hv: "Y", py: "yī", desc: "Y học, thầy thuốc, chữa bệnh." },
+            "院": { hv: "VIỆN", py: "yuàn", desc: "Khu nhà lớn, cơ quan (bệnh viện, học viện)." },
+            "工": { hv: "CÔNG", py: "gōng", desc: "Công việc, lao động." },
+            "作": { hv: "TÁC", py: "zuò", desc: "Làm ra, sáng tác, hành động." },
+            "大": { hv: "ĐẠI", py: "dà", desc: "To, lớn." },
+            "小": { hv: "TIỂU", py: "xiǎo", desc: "Nhỏ, bé." },
+            "高": { hv: "CAO", py: "gāo", desc: "Cao, dâng lên." },
+            "兴": { hv: "HỨNG", py: "xìng", desc: "Hứng khởi, vui mừng." }
         };
 
         const PINYIN_TRICKY_SAMPLES = [
@@ -1335,15 +1450,16 @@
                         stats: { ...appState.stats, ...(parsed.stats || {}) }
                     };
                 }
-                if (!Array.isArray(appState.vocab) || appState.vocab.length === 0) {
-                    appState.vocab = [...INITIAL_VOCABULARY];
-                } else {
-                    const existingIds = new Set(appState.vocab.map(v => v.id));
-                    INITIAL_VOCABULARY.forEach(item => {
-                        if (!existingIds.has(item.id)) {
-                            appState.vocab.push(item);
-                        }
-                    });
+                // Giữ lại các thẻ tự thêm của người dùng (custom_) và cập nhật bộ giáo trình chuẩn HSK 1 tuyến tính
+                const customCards = Array.isArray(appState.vocab)
+                    ? appState.vocab.filter(v => String(v.id).startsWith('custom_'))
+                    : [];
+                appState.vocab = [...INITIAL_VOCABULARY, ...customCards];
+
+                // Đảm bảo bộ lọc chủ đề khớp với danh sách bài học hiện tại
+                const validLessons = new Set(appState.vocab.map(v => v.lesson));
+                if (appState.selectedDeck !== 'all' && !validLessons.has(appState.selectedDeck)) {
+                    appState.selectedDeck = 'Bài 1: Chào hỏi & Đại từ cơ bản';
                 }
             } catch (e) {
                 console.warn("Lỗi đọc dữ liệu cục bộ:", e);
